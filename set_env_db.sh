@@ -76,6 +76,9 @@ echo "export HBNB_MYSQL_HOST=$MYSQL_HOST" >> venv_$ENV/bin/activate
 echo "export HBNB_MYSQL_DB=$MYSQL_DB" >> venv_$ENV/bin/activate
 echo "export HBNB_TYPE_STORAGE=$STORAGE_TYPE" >> venv_$ENV/bin/activate
 
+echo "export HBNB_API_HOST='0.0.0.0'" >> venv_$ENV/bin/activate
+echo "export HBNB_API_PORT='5000'" >> venv_$ENV/bin/activate
+
 echo "Environment setup complete."
 echo "To activate the virtual environment, run: source venv_$ENV/bin/activate"
 
