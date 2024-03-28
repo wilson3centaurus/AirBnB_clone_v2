@@ -63,10 +63,14 @@ section.filters > button:hover {
 }
 .locations:hover > .popover {
     display: block;
+    max-height: 400px;
+    overflow-y:scroll;
 }
 
 .amenities:hover > .popover {
     display: block;
+    max-height: 400px;
+    overflow-y:scroll;
 }
 
 .popover h2 {
