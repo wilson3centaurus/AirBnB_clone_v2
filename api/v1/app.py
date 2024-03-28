@@ -1,8 +1,9 @@
 #!/usr/bin/python3
 
-import app_views from api.v1.views
-import flask from Flask
-import storage from models
+from api.v1.views import app_views
+from flask import Flask
+import os
+from models import storage
 
 app = Flask(__name__)
 
@@ -10,8 +11,8 @@ app.register_blueprint(app_views)
 
 
 @app.teardown_appcontext
-def end_session(exc):
-    """ Ends the current session after each request """
+def teardown_storage(exception):
+    """ Ends the current storage session """
     storage.close()
 
 
