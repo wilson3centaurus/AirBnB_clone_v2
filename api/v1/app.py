@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-""" Task 3 - Main APP """
 
 import app_views from api.v1.views
 import flask from Flask
