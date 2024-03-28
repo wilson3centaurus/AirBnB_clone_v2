@@ -14,7 +14,7 @@ The console is the first segment of the AirBnB project at Holberton School that 
 * [File Descriptions](#file-descriptions)
 * [Usage](#usage)
 * [Examples of use](#examples-of-use)
-* [Bugs](#bugs)
+* [AirBnB clone - RESTful API]()
 * [Authors](#authors)
 * [License](#license)
 
@@ -149,13 +149,34 @@ EOF  all  create  destroy  help  quit  show  update
 ** no instance found **
 (hbnb) quit
 ```
-
-## Bugs
-No known bugs at this time. 
-
+# AirBnB clone - RESTful API
+## General
+* What REST means
+* What API means
+* What CORS means
+* What is an API
+* What is a REST API
+* What are other type of APIs
+* Which is the HTTP method to retrieve resource(s)
+* Which is the HTTP method to create a resource
+* Which is the HTTP method to update resource
+* Which is the HTTP method to delete resource
+* How to request REST API
+# Resources
+## Read or watch:
+## REST API concept page
+* [Learn REST: A RESTful Tutorial] (https://intranet.alxswe.com/rltoken/rycjU2GvZAlahHa61WWDBg)
+* [Designing a RESTful API with Python and Flask]()
+* [HTTP access control (CORS)]()
+* [Flask cheatsheet]()
+* [What are Flask Blueprints, exactly?]()
+* [Flask]()
+* [Modular Applications with Blueprints]()
+* [Flask tests]()
+* [Flask-CORS]()
 ## Authors
-Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
-Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+Mekonen Abera - [Github](https://github.com/Mekonen-Abera)
+Takile Kanaha - [Github](https://github.com/Takile Kanaha)
 
 Second part of Airbnb: Joann Vuong
 ## License
