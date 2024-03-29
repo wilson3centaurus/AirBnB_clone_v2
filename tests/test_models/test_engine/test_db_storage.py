@@ -68,6 +68,20 @@ test_db_storage.py'])
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
 
+    def test_dbs_get_no_args(self):
+        """test the get method in DBStorage with no args"""
+        with self.assertRaises(TypeError):
+            storage.get()
+
+    def test_dbs_get_one_arg(self):
+        """test the get method in DBStorage with one args"""
+        with self.assertRaises(TypeError):
+            storage.get(State)
+
+    def test_dbs_get_two_none_args(self):
+        """test the get method in DBStorage with one args"""
+        self.assertEqual(storage.get(User, None), None)
+
     def test_dbs_count_no_args(self):
         """test the count method in DBStorage with no args"""
         self.assertEqual(storage.count(), len(storage.all()))
