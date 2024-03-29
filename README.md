@@ -1,4 +1,8 @@
-# AirBnB Clone - The Console
+# AirBnb Clone V3
+![image](https://github.com/oswealth/AirBnB_clone_v3/assets/125461010/88ee155b-476a-4166-87d9-33523e961998)
+<p>This is the third version of AirBnb Clone project where we will have to deal with a new concept in our learning journey, which is RESTful API.</p>
+<b>-------------------------------------------------------------------------------------------------------------------------------------------------------------</b><br>
+<h1>AirBnB Clone - The Console</h1>
 The console is the first segment of the AirBnB project at Holberton School that will collectively cover fundamental concepts of higher level programming. The goal of AirBnB project is to eventually deploy our server a simple copy of the AirBnB Website(HBnB). A command interpreter is created in this segment to manage objects for the AirBnB(HBnB) website.
 
 #### Functionalities of this command interpreter:
