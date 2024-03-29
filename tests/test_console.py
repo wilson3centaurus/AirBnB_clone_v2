@@ -4,7 +4,7 @@ Contains the class TestConsoleDocs
 """
 import io
 import os
-import contextlib import redirect_stdout
+from contextlib import redirect_stdout
 import console
 import inspect
 import pep8
