@@ -20,7 +20,7 @@ from models.state import State
 def get_cities_of_a_state(state_id):
     """
     Retrieves the list of all City objects of a State
-    Parameters:
+    Args:
         state_id: uuid for the state object
     """
     state = storage.get(State, state_id)
@@ -38,14 +38,15 @@ def get_cities_of_a_state(state_id):
 def get_a_city_using_id(city_id):
     """
     Retrieves a city object
-    Parameters:
+    Args:
         city_id: uuid for city object
     """
     city = storage.get(City, city_id)
     if city is None:
         abort(404)
 
-    return jsonify(city.to_dict())
+    city_response = city.to_dict()
+    return jsonify(city_response)
 
 
 @app_views.route('/cities/<city_id>',
@@ -80,7 +81,8 @@ def create_a_city(state_id):
     city = City(**dataset)
     city.save()
 
-    return jsonify(city.to_dict()), 201
+    city_response = city.to_dict()
+    return jsonify(city_response), 201
 
 
 @app_views.route('/cities/<city_id>',
@@ -99,4 +101,5 @@ def update_a_city(city_id):
             setattr(city, k, v)
     city.save()
 
-    return jsonify(city.to_dict()), 200
+    city_response = city.to_dict()
+    return jsonify(city_response), 200
