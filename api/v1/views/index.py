@@ -1,17 +1,15 @@
-#!/usr/bin/pythin3
+#!/usr/bin/python3
 """ Index file. """
 
-from flask import Flask, jsonify
+from flask import jsonify
 from api.v1.views import app_views
 from models import storage
-
-# app = Flask(__name__)
 
 
 @app_views.route('/status')
 def status():
     """ Function to return the status. """
-    return jsonify({'Status': 'Ok'})
+    return jsonify({"status": "Ok"})
 
 
 @app_views.route('/stats')
