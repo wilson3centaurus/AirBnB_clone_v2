@@ -120,7 +120,6 @@ class TestFileStorage(unittest.TestCase):
         test_storage = FileStorage()
         test_storage.reload()
         self.assertTrue(test_storage.get.__doc__ is not None)
-        self.assertTrue(test_storage.get(), None)
         test_state_info = {"name": "Mokattam"}
         test_state = State(**test_state_info)
         test_storage.new(test_state)

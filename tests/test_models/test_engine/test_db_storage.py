@@ -73,7 +73,6 @@ class TestDBStorage(unittest.TestCase):
         """Test get method for all class with id with storage"""
         models.storage.reload()
         self.assertTrue(models.storage.get.__doc__ is not None)
-        self.assertTrue(models.storage.get(), None)
         test_state_info = {"name": "Mokattam"}
         test_state = State(**test_state_info)
         models.storage.new(test_state)
