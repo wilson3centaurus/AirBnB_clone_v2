@@ -13,7 +13,7 @@ def status():
     return jsonify({"status": "OK"})
 
 
-@app_views.route('/stats')
+@app_views.route('/stats', methods=['GET'])
 def count_stats():
     """Return the stats of the HBNB"""
     stats = {
