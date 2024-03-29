@@ -18,6 +18,7 @@ import json
 import os
 import pep8
 import unittest
+
 FileStorage = file_storage.FileStorage
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
@@ -113,3 +114,41 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+class TestGetCountDB(unittest.TestCase):
+    '''Testing methods Get and Count'''
+
+    def setUp(self):
+        self.state = State()
+        self.state.name = 'Arizona'
+        self.state.save()
+        self.city1 = City()
+        self.city1.name = 'Mesa'
+        self.city1.state.id = self.state.id
+        self.city1.save()
+        self.city2 = City()
+        self.city2.name = 'Phoenix'
+        self.city2.state.id = self.state.id
+        self.city2.save()
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        '''Checks if method returns state'''
+        real_state = storage.get(State, self.state.id)
+        fake_state = storage.get(State, "78910")
+
+        self.assertEqual(real_state, self.state)
+        self.assertNotEqual(fake_state, self.state)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        '''Checks if method returns the correct number'''
+        c_state = storage.count(State)
+        c_city = storage.count(City)
+        c_place = storage.count(Place)
+        count_all = storage.count()
+
+        self.assertEqual(c_state, 1)
+        self.assertEqual(c_city, 2)
+        self.assertEqual(c_place, 0)
+        self.assertEqual(count_all, 3)
