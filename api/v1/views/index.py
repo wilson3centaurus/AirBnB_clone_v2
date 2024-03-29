@@ -15,13 +15,13 @@ def status():
 @app_views.route('/stats')
 def stats():
     """ Function to return number objects in a storage. """
-    for obj in storage.all():
-        object_counts = {
-                "amenities": storage.count('Amenity'),
-                "cities": storage.count('City'),
-                "places": storage.count('Place'),
-                "reviews": storage.count('Review'),
-                "states": storage.count('State'),
-                "users": storage.cout('Users')
-                }
-        return jsonify(object_counts)
+    # for obj in storage.all():
+    object_counts = {
+            "amenities": storage.count('Amenity'),
+            "cities": storage.count('City'),
+            "places": storage.count('Place'),
+            "reviews": storage.count('Review'),
+            "states": storage.count('State'),
+            "users": storage.count('Users')
+            }
+    return jsonify(object_counts)
