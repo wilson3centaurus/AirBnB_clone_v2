@@ -14,6 +14,7 @@ def status():
 
 @app_views.route('/stats')
 def stats():
+    """ Function to return number objects in a storage. """
     for obj in storage.all():
         object_counts = {
                 "amenities": storage.count('Amenity'),
