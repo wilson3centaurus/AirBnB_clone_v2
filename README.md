@@ -155,7 +155,7 @@ No known bugs at this time.
 
 ## Authors
 Moniaar - [Github](https://github.com/moniaar) / [Twitter](https://twitter.com/moniaar)  
-Solomon - [Github](https://github.com/solomonchidera / [Twitter](https://twitter.com/solomonchidera_)
+Solomon - [Github](https://github.com/SolomonChidera) / [Twitter](https://twitter.com/solomonchidera_)
 
 ## License
 
