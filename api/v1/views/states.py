@@ -18,12 +18,12 @@ def view_states():
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
 def create_state():
     """Creates a new state object"""
-    if not request.json:
+    state_data = request.get_json(silent=True)
+    if not state_data:
         raise abort(400, description="Not a JSON")
     if 'name' not in request.json:
         raise abort(400, description="Missing name")
-    state_data = request.get_json()
-    new_state = State(name=state_data['name'])
+    new_state = State(**state_data)
     new_state.save()
     return jsonify(new_state.to_dict()), 201
 
@@ -41,13 +41,14 @@ def view_state(state_id):
                  strict_slashes=False)
 def update_state(state_id):
     """Updates the state with id 'state_id'"""
-    if not request.json:
+    state_dict = request.get_json(silent=True)
+    if not state_dict:
         raise abort(400, description="Not a JSON")
     for state in storage.all(State).values():
         if state.id == state_id:
-            state_dict = request.get_json()
+            ignore = ['id', 'created_at', 'updated_at']
             for k, v in state_dict.items():
-                if k != 'id' and k != 'created_at' and k != 'updated_at':
+                if k not in ignore:
                     setattr(state, k, v)
             state.save()
             return jsonify(state.to_dict()), 200

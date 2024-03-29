@@ -18,12 +18,12 @@ def view_amenities():
 @app_views.route('/amenities', methods=['POST'], strict_slashes=False)
 def create_amenity():
     """Creates a new amenity object"""
-    if not request.json:
+    amenity_data = request.get_json(silent=True)
+    if not amenity_data:
         raise abort(400, description="Not a JSON")
     if 'name' not in request.json:
         raise abort(400, description="Missing name")
-    amenity_data = request.get_json()
-    new_amenity = Amenity(name=amenity_data['name'])
+    new_amenity = Amenity(**amenity_data)
     new_amenity.save()
     return jsonify(new_amenity.to_dict()), 201
 
@@ -41,11 +41,11 @@ def view_amenity(amenity_id):
                  strict_slashes=False)
 def update_amenity(amenity_id):
     """Updates the amenity with id 'amenity_id'"""
-    if not request.json:
+    amenity_dict = request.get_json(silent=True)
+    if not amenity_dict:
         raise abort(400, description="Not a JSON")
     for amenity in storage.all(Amenity).values():
         if amenity.id == amenity_id:
-            amenity_dict = request.get_json()
             for k, v in amenity_dict.items():
                 if k != 'id' and k != 'created_at' and k != 'updated_at':
                     setattr(amenity, k, v)

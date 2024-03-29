@@ -26,7 +26,7 @@ def view_city_places(city_id):
 def create_place(city_id):
     """Creates a new place object"""
     try:
-        place_data = request.get_json()
+        place_data = request.get_json(silent=True)
         if not place_data:
             raise ValueError("Not a JSON")
     except ValueError as e:
@@ -60,7 +60,7 @@ def view_place(place_id):
 def update_place(place_id):
     """Updates the place with id 'place_id'"""
     try:
-        place_data = request.get_json()
+        place_data = request.get_json(silent=True)
         if not place_data:
             raise ValueError("Not a JSON")
     except ValueError as e:
@@ -68,8 +68,8 @@ def update_place(place_id):
     for place in storage.all(Place).values():
         if place.id == place_id:
             for k, v in place_data.items():
-                if k != 'id' and k != 'created_at' and k != 'city_id'\
-                    and k != 'updated_at' and k != 'user_id':
+                ignore = ['id', 'created_at', 'city_id', 'user_id']
+                if k not in ignore:
                     setattr(place, k, v)
             place.save()
             return jsonify(place.to_dict()), 200

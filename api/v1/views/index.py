@@ -21,10 +21,10 @@ def status_1():
 def status_2():
     """ return number of each object below"""
     return jsonify({
-        "amenities": storage.count(Amenity), 
-        "cities": storage.count(City), 
-        "places": storage.count(Place), 
-        "reviews": storage.count(Review), 
-        "states": storage.count(State), 
+        "amenities": storage.count(Amenity),
+        "cities": storage.count(City),
+        "places": storage.count(Place),
+        "reviews": storage.count(Review),
+        "states": storage.count(State),
         "users": storage.count(User)
-        }) 
+        })
