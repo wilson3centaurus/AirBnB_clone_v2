@@ -71,10 +71,11 @@ def create_a_city(state_id):
         abort(404)
     if not request.json:
         abort(400, description="Not a JSON")
-    if 'name' not in request.json:
-        abort(400, description="Missing name")
 
     dataset = request.get_json()
+    if 'name' not in dataset:
+        abort(400, description="Missing name")
+
     dataset['state_id'] = state_id
     city = City(**dataset)
     city.save()
