@@ -155,7 +155,7 @@ No known bugs at this time.
 
 ## Authors
 Brian Ngumbau - [Github](https://github.com/brianngumbau) 
-Wangui Waweru - [Github](https://github.com/wanguiwaweru)
+Wangui Waweru - [Github](https://github.com/wanguilindsey)
 
 Second part of Airbnb: Joann Vuong
 ## License
