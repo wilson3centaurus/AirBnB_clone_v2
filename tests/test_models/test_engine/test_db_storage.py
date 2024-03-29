@@ -14,6 +14,7 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
+from models.engine import db_storage
 import json
 import os
 import pep8
@@ -77,7 +78,7 @@ class TestDBStorage(unittest.TestCase):
         """Tests if get method retrieves objects correctly"""
 
         # Create a state object
-        storage = DBStorage()
+        storage = db_storage.DBStorage()
         new_state = State()
         new_state.name = "California"
         storage.new(new_state)
@@ -87,3 +88,36 @@ class TestDBStorage(unittest.TestCase):
         retrieved_object = storage.get(State, new_state.id)
 
         self.assertEqual(new_state.id, retrieved_object.idd)
+
+    def test_count_cls(self):
+        """Tests if count method correctly counts
+        objects of a specific class"""
+
+        storage = db_storage.DBStorage()
+        state1 = State()
+        state1.name = "California"
+        storage.new(state1)
+        state2 = State()
+        state1.name = "Arizona"
+        storage.new(state2)
+        storage.save()
+
+        states_count = storage.count(State)
+        self.assertEqual(states_count, 2)
+
+    def test_count_all(self):
+        """Tests if count method correctly counts all objects"""
+
+        storage = db_storage.DBStorage()
+        state1 = State(name="California")
+        storage.new(state1)
+        state2 = State(name="Arizona")
+        storage.new(state2)
+        amenity1 = Amenity(name="TV")
+        storage.new(amenity1)
+        user = User(first_name="Ali")
+        storage.new(user)
+        storage.save()
+
+        count = storage.count()
+        self.assertEqual(count, 4)
