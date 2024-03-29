@@ -106,13 +106,27 @@ class TestDBStorage(unittest.TestCase):
 
     @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db',
                      "not testing db storage")
+    def test_get(self):
+        '''
+            Test if get method retrieves obj requested
+        '''
+        new_state = State(name="NewYork")
+        storage.new(new_state)
+        key = "State.{}".format(new_state.id)
+        result = storage.get("State", new_state.id)
+        self.assertTrue(result.id, new_state.id)
+        self.assertIsInstance(result, State)
+
     def test_count(self):
-        """add new object to db"""
-        startCount = models.storage.count()
-        self.assertEqual(models.storage.count("Blah"), 0)
-        newState = State(name="Montevideo")
-        newState.save()
-        newUser = User(email="ralexrivero@gmail.com.com", password="dummypass")
-        newUser.save()
-        self.assertEqual(models.storage.count("State"), startCount + 1)
-        self.assertEqual(models.storage.count(), startCount + 2)
+        '''
+            Test if count method returns expected number of objects
+        '''
+        storage.reload()
+        old_count = storage.count("State")
+        new_state1 = State(name="NewYork")
+        storage.new(new_state1)
+        new_state2 = State(name="Virginia")
+        storage.new(new_state2)
+        new_state3 = State(name="California")
+        storage.new(new_state3)
+        self.assertEqual(old_count + 3, storage.count("State"))
