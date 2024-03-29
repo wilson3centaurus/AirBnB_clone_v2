@@ -14,6 +14,7 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
+from models import storage
 import json
 import os
 import pep8
@@ -66,6 +67,47 @@ test_db_storage.py'])
                              "{:s} method needs a docstring".format(func[0]))
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
+
+    def test_get(self):
+        """Test get method"""
+        # Create a User object and add it to the database
+        user1 = User(email="bod.marley@gmail.com",
+                     password="8795",
+                     first_name="Bob",
+                     last_name="Marley")
+        storage.new(user1)
+        storage.save()
+
+        # Retrieve the user object using get method
+        retrieved_user = storage.get(User, user1.id)
+        self.assertIsNotNone(retrieved_user)
+        self.assertEqual(retrieved_user.email, "bod.marley@gmail.com")
+
+        # Test get method with non-existent ID
+        non_existent_user = storage.get(User, "non_existent_id")
+        self.assertIsNone(non_existent_user)
+
+    def test_count(self):
+        """Test count method"""
+        # Count the number of User objects before adding any
+        initial_count = storage.count(User)
+
+        # Create and add User objects to the database
+        user1 = User(email="dridi.mohamed@gmail.com",
+                     password="88745",
+                     first_name="Dridi",
+                     last_name="Mohamed")
+        user2 = User(email="nebiyou.belaineh@gmail.com",
+                     password="546",
+                     first_name="Belaineh",
+                     last_name="Nebiyou")
+        storage.new(user1)
+        storage.new(user2)
+        storage.save()
+
+        # Count the number of User objects after adding
+        updated_count = storage.count(User)
+        self.assertEqual(updated_count, initial_count + 2)
 
 
 class TestFileStorage(unittest.TestCase):
