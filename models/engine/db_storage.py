@@ -67,9 +67,34 @@ class DBStorage:
     def reload(self):
         """reloads data from the database"""
         Base.metadata.create_all(self.__engine)
-        sess_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
-        Session = scoped_session(sess_factory)
+        se_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
+        Session = scoped_session(se_factory)
         self.__session = Session
+
+    def get(self, cls, id):
+        """ Function to retrieve one class object. """
+        result = None
+        try:
+            objs = self.__session.query(models.classes[cls]).all()
+            for o in objs:
+                if o.id == id:
+                    result = o
+        except BaseException:
+            pass
+        return result
+
+    def count(self, cls=None):
+        """ Function to count nummber of objects in the DB. """
+        count = 0
+        if cls is not None:
+            objs = self.__session.query(models.classes[cls]).all()
+            count = len(objs)
+        else:
+            for key, value, in models.classes.items():
+                if key != 'BaseModel':
+                    objs = self.__session.query(models.classes[key]).all()
+                    count += len(objs)
+        return count
 
     def close(self):
         """call remove() method on the private session attribute"""
