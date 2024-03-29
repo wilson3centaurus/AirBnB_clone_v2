@@ -4,7 +4,7 @@ Contains the class DBStorage
 some changes
 """
 
-import models
+import logging
 from models.amenity import Amenity
 from models.base_model import BaseModel, Base
 from models.city import City
@@ -94,3 +94,7 @@ class DBStorage:
             counter = len(self.__session.query(cls).all())
 
         return counter
+
+    def drop_all(self):
+        """drop all tables from my sql database"""
+        Base.metadata.drop_all(bind=self.__engine)

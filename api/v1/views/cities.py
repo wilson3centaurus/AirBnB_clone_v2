@@ -9,7 +9,8 @@ from models.place import Place
 from models.state import State
 
 
-@app_views.route('/states/<state_id>/cities', methods=['GET', 'POST'])
+@app_views.route('/states/<state_id>/cities', methods=['GET', 'POST'],
+                 strict_slashes=False)
 def cities(state_id):
     """Retrieves the list of all City objects of a State with GET request
     create a new city with POST request"""
@@ -41,7 +42,8 @@ def cities(state_id):
         return jsonify((city.to_dict())), 201
 
 
-@app_views.route('/cities/<city_id>', methods=['GET', 'DELETE', 'PUT'])
+@app_views.route('/cities/<city_id>', methods=['GET', 'DELETE', 'PUT'],
+                 strict_slashes=False)
 def city(city_id):
     """Retrieves the list of all City objects of a State"""
     city = storage.get(City, city_id)
