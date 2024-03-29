@@ -4,6 +4,7 @@
 import os
 import pycodestyle
 
+
 def check_directory(directory):
     """
     Check every file in a directory for pycodestyle errors.
@@ -27,10 +28,11 @@ def check_directory(directory):
 
     return files_with_errors
 
+
 if __name__ == "__main__":
     directory_to_check = "/path/to/your/directory"
     errors = check_directory(directory_to_check)
-    
+
     if errors:
         print("Files with pycodestyle errors:")
         for file_path, messages in errors:
@@ -39,4 +41,3 @@ if __name__ == "__main__":
                 print(f"  {message}")
     else:
         print("No pycodestyle errors found.")
-
