@@ -16,9 +16,7 @@ def teardown_db(error):
 
 
 if __name__ == '__main__':
-    HBNB_API_HOST = getenv("HBNB_API_HOST")\
-        if getenv("HBNB_API_HOST") else "0.0.0.0"
-    HBNB_API_PORT = int(getenv("HBNB_API_PORT"))\
-        if getenv("HBNB_API_PORT") else 5000
+    host = getenv("HBNB_API_HOST") if getenv("HBNB_API_HOST") else "0.0.0.0"
+    port = int(getenv("HBNB_API_PORT")) if getenv("HBNB_API_PORT") else 5000
 
-    app.run(host=HBNB_API_HOST, port=HBNB_API_PORT, threaded=True, debug=True)
+    app.run(host=host, port=port, threaded=True, debug=True)
