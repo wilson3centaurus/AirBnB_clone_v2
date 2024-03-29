@@ -155,8 +155,7 @@ No known bugs at this time.
 
 ## Authors
 Francis Maina - [Github](https://github.com/Mainagithubrit)  
-Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
-
+Emmanuel Ejeagha - [Github](https://github.com/Emmanuel-Ejeagha)
 Second part of Airbnb: Joann Vuong
 ## License
 Public Domain. No copy write protection. 
