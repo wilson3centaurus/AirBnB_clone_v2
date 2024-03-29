@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""app views blueprint endpoints module"""
 from api.v1.views import app_views
 from flask import jsonify
 from models import storage
@@ -19,10 +20,13 @@ obj_dict = {'amenities': Amenity,
 
 @app_views.route('/status', strict_slashes=False)
 def status():
+    """API /status endpoint"""
     return jsonify({'status': 'OK'})
+
 
 @app_views.route('/stats', strict_slashes=False)
 def stats():
+    """API /stats endpoint, All objects count"""
     json_result = {}
     for key, value in obj_dict.items():
         json_result[key] = storage.count(value)
