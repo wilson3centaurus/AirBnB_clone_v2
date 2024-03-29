@@ -68,21 +68,22 @@ test_db_storage.py'])
                             "{:s} method needs a docstring".format(func[0]))
 
 
-class TestFileStorage(unittest.TestCase):
-    """Test the FileStorage class"""
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_all_returns_dict(self):
-        """Test that all returns a dictionaty"""
-        self.assertIs(type(models.storage.all()), dict)
+@unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db',
+                 'File Storage is being used.')
+class TestDBStorage(unittest.TestCase):
+    """Test the DBStorage class"""
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_all_no_class(self):
-        """Test that all returns all rows when no class is passed"""
+    def test_get(self):
+        """Tests if get method retrieves objects correctly"""
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_new(self):
-        """test that new adds an object to the database"""
+        # Create a state object
+        storage = DBStorage()
+        new_state = State()
+        new_state.name = "California"
+        storage.new(new_state)
+        storage.save()
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_save(self):
-        """Test that save properly saves objects to file.json"""
+        # Retrieve the state object
+        retrieved_object = storage.get(State, new_state.id)
+
+        self.assertEqual(new_state.id, retrieved_object.idd)
