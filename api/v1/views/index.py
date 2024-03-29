@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-
+""" Defines the routes for the API status endpoint """
 from api.v1.views import app_views
 from flask import jsonify
 
