@@ -54,12 +54,19 @@ Classes inherited from Base Model:
 * [state.py](/models/state.py)
 * [user.py](/models/user.py)
 
-#### `/models/engine` directory contains File Storage class that handles JASON serialization and deserialization :
+#### `/models/engine` directory contains FileStorage class that handles JSON serialization and deserialization :
 [file_storage.py](/models/engine/file_storage.py) - serializes instances to a JSON file & deserializes back to instances
 * `def all(self)` - returns the dictionary __objects
 * `def new(self, obj)` - sets in __objects the obj with key <obj class name>.id
 * `def save(self)` - serializes __objects to the JSON file (path: __file_path)
 * ` def reload(self)` -  deserializes the JSON file to __objects
+* `def get(self, cls, id)` - Retrieves an object
+* `def count(self, cls=None)` - Returns the number of objects in storage matching the given class. If no class is passed, it returns the count of all objects in storage
+
+#### `/models/engine` directory contains DBStorage class that interacts with the database:
+[db_storage.py](models/engine/db_storage.py)
+* `def get(self, cls, id)` - Retrieves an object
+* `def count(self, cls=None)` - Returns the number of objects in storage 
 
 #### `/tests` directory contains all unit test cases for this project:
 [/test_models/test_base_model.py](/tests/test_models/test_base_model.py) - Contains the TestBaseModel and TestBaseModelDocs classes
@@ -97,6 +104,14 @@ TestBaseModel class:
 * `def test_pep8_conformance_test_file_storage(self)` - Test that tests/test_models/test_file_storage.py conforms to PEP8
 * `def test_file_storage_module_docstring(self)` - Test for the file_storage.py module docstring
 * `def test_file_storage_class_docstring(self)` - Test for the FileStorage class docstring
+* `def test_get(self)` - Tests if get method retrieves objects correctly
+* `def test_count_cls(self)` - Tests if count method correctly counts objects of a specific class
+* `def test_count_all(self)` - Tests if count method correctly counts all objects
+
+[test_db_storage.py](tests/test_models/test_db_storage.py) - Contains the TestDBStorage class:
+* `def test_get(self)` - Tests if get method retrieves objects correctly
+* `def test_count_cls(self)` - Tests if count method correctly counts objects of a specific class
+* `def test_count_all(self)` - Tests if count method correctly counts all objects
 
 [/test_models/test_place.py](/tests/test_models/test_place.py) - Contains the TestPlaceDoc class:
 * `def setUpClass(cls)` - Set up for the doc tests
