@@ -1,4 +1,4 @@
-# AirBnb Clone V3
+# AirBnb Clone  - RESTful API
 ![image](https://github.com/oswealth/AirBnB_clone_v3/assets/125461010/88ee155b-476a-4166-87d9-33523e961998)
 <p>This is the third version of AirBnb Clone project where we will have to deal with a new concept in our learning journey, which is RESTful API.</p>
 <b>-------------------------------------------------------------------------------------------------------------------------------------------------------------</b><br>
