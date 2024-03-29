@@ -12,13 +12,12 @@ from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
 from models import storage
 from models.user import User
-from models.state import State
 
 
 @app_views.route('/users', methods=['GET'], strict_slashes=False)
 def get_all_users():
     """ Retrieves the list of all User objects """
-    users = User.query.all()
+    users = User.storage.all()
     users_json = []
     for user in users:
         user_json.append(user.to_dict())
