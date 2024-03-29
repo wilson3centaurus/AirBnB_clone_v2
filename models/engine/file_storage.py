@@ -71,6 +71,10 @@ class FileStorage:
 
     def get(self, cls, id):
         """Returns the object based on the class and its ID"""
+        cls = str(cls)
+        cls = cls.split('.')[-1]
+        cls = cls.replace("'>", '')
+        
         if isinstance(cls, str):
             cls = classes.get(cls, None)
 
