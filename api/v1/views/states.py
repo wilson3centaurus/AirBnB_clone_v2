@@ -37,7 +37,8 @@ def view_state(state_id):
     abort(404)
 
 
-@app_views.route('/states/<state_id>', methods=['PUT', 'PATCH'], strict_slashes=False)
+@app_views.route('/states/<state_id>', methods=['PUT', 'PATCH'],
+                 strict_slashes=False)
 def update_state(state_id):
     """Updates the state with id 'state_id'"""
     if not request.json:
@@ -46,14 +47,15 @@ def update_state(state_id):
         if state.id == state_id:
             state_dict = request.get_json()
             for k, v in state_dict.items():
-                if k != 'id' or k != 'created_at' or k != 'updated_at':
+                if k != 'id' and k != 'created_at' and k != 'updated_at':
                     setattr(state, k, v)
             state.save()
             return jsonify(state.to_dict()), 200
     abort(404)
 
 
-@app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/states/<state_id>', methods=['DELETE'],
+                 strict_slashes=False)
 def delete_state(state_id):
     """Deletes the state with id 'state_id'"""
     for state in storage.all(State).values():
