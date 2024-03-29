@@ -86,3 +86,5 @@ class DBStorage:
             except Exception as e:
                 print(f"Could not retrieve because of: {e}")
                 return None
+        else:
+            return None
