@@ -6,13 +6,13 @@ from models import storage
 from models.state import State
 
 
-@app_views.route('/states', method=['GET'])
+@app_views.route('/states', methods=['GET'])
 def get_all_states():
     """Get all states"""
     return jsonify(storage.all(State))
 
 
-@app_views.route('/states/<state_id>', method=['GET'])
+@app_views.route('/states/<state_id>', methods=['GET'])
 def get_state(state_id):
     """Get state based on state_id"""
     try:
@@ -21,7 +21,7 @@ def get_state(state_id):
         abort(404)
 
 
-@app_views.route('/states/<state_id>', method=['DELETE'])
+@app_views.route('/states/<state_id>', methods=['DELETE'])
 def delete_state(state_id):
     """Delete a State"""
     try:
@@ -32,7 +32,7 @@ def delete_state(state_id):
         abort(404)
 
 
-@app_views.route('/states', method=['POST'])
+@app_views.route('/states', methods=['POST'])
 def post_state():
     """Creates a State object"""
     ## get the dict from the request {name}
@@ -50,7 +50,7 @@ def post_state():
         return "Not a JSON", 400
 
 
-@app_views.route('/states/<state_id>', method=['PUT'])
+@app_views.route('/states/<state_id>', methods=['PUT'])
 def put_state(state_id):
     """Updates a State object"""
     try:
