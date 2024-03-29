@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+""" Created a flask app, registed app_view blueprint """
 
 from api.v1.views import app_views
 from flask import Flask, jsonify

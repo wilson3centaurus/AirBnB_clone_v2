@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+""" Creating a flask Blueprint named app_views """
 
 from flask import Blueprint
 
