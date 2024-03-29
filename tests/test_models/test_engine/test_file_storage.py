@@ -29,6 +29,7 @@ class TestFileStorageDocs(unittest.TestCase):
     def setUpClass(cls):
         """Set up for the doc tests"""
         cls.fs_f = inspect.getmembers(FileStorage, inspect.isfunction)
+        # print(cls.fs_f)
 
     def test_pep8_conformance_file_storage(self):
         """Test that models/engine/file_storage.py conforms to PEP8."""
@@ -113,3 +114,69 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """Test the get method of FileStorage"""
+        storage = FileStorage()
+        state = State(name="Mohamedia")
+        storage.new(state)
+        storage.save()
+        retrieved_state = storage.get(State, state.id)
+        self.assertEqual(state, retrieved_state)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get_existing_object(self):
+        """Test the get method of FileStorage with an existing object"""
+        storage = FileStorage()
+        user = User(email="red@drihmia.com")
+        storage.new(user)
+        storage.save()
+        retrieved_user = storage.get(User, user.id)
+        self.assertEqual(retrieved_user, user)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get_nonexistent_object(self):
+        """Test the get method of FileStorage with a non-existent object"""
+        storage = FileStorage()
+        nonexistent_user_id = "nonexistent_id"
+        retrieved_user = storage.get(User, nonexistent_user_id)
+        self.assertEqual(retrieved_user, "Not Found")
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get_different_object_with_correct_id(self):
+        """Test the get method of FileStorage with a different
+        object but correct ID"""
+        storage = FileStorage()
+        user1 = User(email="dri@drihmia.com")
+        user2 = User(email="red@drihmia.com")
+        storage.new(user1)
+        storage.save()
+        retrieved_user = storage.get(User, user2.id)
+        self.assertEqual(retrieved_user, "Not Found")
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count_specific_class(self):
+        """Test the count method of FileStorage"""
+        storage = FileStorage()
+        initial_count = storage.count(State)
+        state1 = State(name="Tetouan")
+        state2 = State(name="Larache")
+        storage.new(state1)
+        storage.new(state2)
+        storage.save()
+        final_count = storage.count(State)
+        self.assertEqual(final_count - initial_count, 2)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count_all_objects(self):
+        """Test the count method of FileStorage for all objects"""
+        storage = FileStorage()
+        initial_count_all = storage.count()
+        user1 = User(email="dri@drihmia.com")
+        user2 = User(email="red@drihmia.com")
+        storage.new(user1)
+        storage.new(user2)
+        storage.save()
+        final_count_all = storage.count()
+        self.assertEqual(final_count_all - initial_count_all, 2)
