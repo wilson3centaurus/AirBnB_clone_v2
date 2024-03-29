@@ -14,6 +14,7 @@ app.register_blueprint(app_views)
 def tear_down(_=None):
     storage.close()
 
+
 @app.errorhandler(404)
 def page_not_found(e):
     """custom error page with http responde's code of 404"""
