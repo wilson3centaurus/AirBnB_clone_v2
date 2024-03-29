@@ -19,6 +19,12 @@ def page_not_found(e):
     """custom error page with http responde's code of 404"""
     return make_response(jsonify({'error': 'Not found'}), 404)
 
+@app.errorhandler(400)
+def bad_request(e):
+    """custom error page with http responde's code of 400"""
+    return make_response(jsonify({'error': "{}".format(
+        e.__dict__['description'])}), 400)
+
 if __name__ == "__main__":
     host = getenv("HBNB_API_HOST") or '0.0.0.0'
     port = int(getenv("HBNB_API_PORT") or 5000)  # to avoid linter warnings.
