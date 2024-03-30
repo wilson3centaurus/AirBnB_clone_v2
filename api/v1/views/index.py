@@ -1,15 +1,15 @@
 #!/usr/bin/python3
-"""Creates flask app"""
+"""Creates Flask app"""
 
-from api.v1.views import app_views
 from flask import jsonify
 from models import storage
+from api.v1.views import app_views
 
 
 @app_views.route('/status')
 def api_status():
     """
-    returns a JSON
+    Returns a JSON with the status
     """
     response = {'status': "OK"}
     return jsonify(response)
@@ -18,13 +18,13 @@ def api_status():
 @app_views.route('/stats')
 def get_stats():
     """
+    Returns a JSON with the statistics
     """
     stats = {
-            'amenities': storage.count('Amenity'),
-            'cities': storage.count('City'),
-            'users': storage.count('User'),
-            'places': storage.count('Place'),
-            'states': storage.count('State'),
-            'users': storage.count('User'),
-            }
+        'amenities': storage.count('Amenity'),
+        'cities': storage.count('City'),
+        'users': storage.count('User'),
+        'places': storage.count('Place'),
+        'states': storage.count('State')
+    }
     return jsonify(stats)
