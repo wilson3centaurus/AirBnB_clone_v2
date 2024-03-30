@@ -68,6 +68,44 @@ Classes inherited from Base Model:
 * `def get(self, cls, id)` - Retrieves an object
 * `def count(self, cls=None)` - Returns the number of objects in storage 
 
+#### `api/v1/app.py` contains:
+* A `CORS` instance allowing '/*' for '0.0.0.0' to enable the web client to access the data.
+
+#### Handling default RESTFul API actions.
+##### `api/v1/views/index.py`
+* `/api/v1/stats` - Retrieves the count of existing objects by type.
+```
+{
+  "amenities": 47, 
+  "cities": 36, 
+  "places": 154, 
+  "reviews": 718, 
+  "states": 27, 
+  "users": 31
+}
+```
+
+##### `api/v1/views/states.py`
+* `/api/v1/states` (GET) - Retrieves a list of all State objects
+* `/api/v1/states/<string:state_id>` (GET) - Retrieves a State object
+* `/api/v1/states/<string:state_id>` (DELETE) - Deletes a State object
+* `/api/v1/states` (POST) - Creates a State object
+* `/api/v1/states/<string:state_id>` (PUT) - Updates a State object
+
+##### `api/v1/views/amenities.py`
+* `/api/v1/amenities` (GET) - Retrieves a list of all Amenity objects
+* `/api/v1/amenities/<string:amenity_id>` (GET) - Retrieves a Amenity object
+* `/api/v1/amenities/<string:amenity_id>` (DELETE) - Deletes a Amenity object
+* `/api/v1/amenities` (POST) - Creates a Amenity object
+* `/api/v1/amenities/<string:amenity_id>` (PUT) - Updates a Amenity object
+
+##### `api/v1/views/places.py`
+* `/api/v1/cities/<string:city_id>/places` (GET) - Retrieves a list of all place objects of a city
+* `/api/v1/places/<string:place_id>` (GET) - Retrieves a place object
+* `/api/v1/places/<string:place_id>` - (DELETE) - Deletes a place object
+* `/api/v1/cities/<string:city_id>/places` (POST) - Creates a place object
+* `/api/v1/places/<string:place_id>` (PUT) - Updates a place object
+
 #### `/tests` directory contains all unit test cases for this project:
 [/test_models/test_base_model.py](/tests/test_models/test_base_model.py) - Contains the TestBaseModel and TestBaseModelDocs classes
 TestBaseModelDocs class:
@@ -141,6 +179,50 @@ TestBaseModel class:
 * `def test_user_module_docstring(self)` - Test for the user.py module docstring
 * `def test_user_class_docstring(self)` - Test for the User class docstring
 
+[/test_v1/test_app.py](tests/test_api/test_v1/test_app.py) - Contains `TestApp` class:
+* `def test_cors_configuration(self)` - Tests CORS configuration
+* `def test_blueprint_registration(self)` - Tests blueprint registration
+* `def test_error_handling(self)` - Tests error handling
+* `def test_environment_variables(self)` - Tests environment variables
+* `def test_doc(self)` - Tests module docstring existence
+* `def test_function_doc(self)` - Tests function docstring existence (for all functions)
+* `def test_pep8(self)` - Tests if module follows PEP8 style
+* `def test_executable(self)` - Tests if the file is executable
+
+[/test_views/test_states.py](tests/test_api/test_v1/test_views/test_states.py) - Contains `TestStates` class:
+* `def test_doc(self)` - Tests module docstring existence
+* `def test_function_doc(self)` - Tests function docstring existence (for all functions)
+* `def test_pep8(self)` - Tests if module follows PEP8 style
+* `def test_executable(self)` - Tests if the file is executable
+* `def test_get_state(self)` - Tests GET request
+* `def test_delete_state(self)` - Tests DELETE request
+* `def test_create_state(self)` - Tests POST request
+* `def test_update_state(self)` - Tests PUT request
+
+[/test_views/test_amenities.py](tests/test_api/test_v1/test_views/test_amenities.py) - Contains `TestAmenities` class:
+* `def test_doc(self)` - Tests module docstring existence
+* `def test_function_doc(self)` - Tests function docstring existence (for all functions)
+* `def test_pep8(self)` - Tests if module follows PEP8 style
+* `def test_executable(self)` - Tests if the file is executable
+* `def test_get_amenities(self)` - Tests GET request
+* `def test_delete_amenity(self)` - Tests DELETE request
+* `def test_create_amenity(self)` - Tests POST request
+* `def test_update_amenity(self)` - Tests PUT request
+
+[/test_views/test_places.py](tests/test_api/test_v1/test_views/test_places.py) - Contains `Testplaces` class:
+* `def test_doc(self)` - Tests module docstring existence
+* `def test_function_doc(self)` - Tests function docstring existence (for all functions)
+* `def test_pep8(self)` - Tests if module follows PEP8 style
+* `def test_executable(self)` - Tests if the file is executable
+* `def test_get_place(self)` - Tests GET request
+* `def test_delete_place(self)` - Tests DELETE request
+* `def test_update_place(self)` - Tests PUT request
+
+[/test_views/test_index.py](tests/test_api/test_v1/test_views/test_index.py) - Contains `TestIndex` class:
+* `def test_doc(self)` - Tests module docstring existence
+* `def test_function_doc(self)` - Tests function docstring existence (for all functions)
+* `def test_pep8(self)` - Tests if module follows PEP8 style
+* `def test_executable(self)` - Tests if the file is executable
 
 ## Examples of use
 ```
