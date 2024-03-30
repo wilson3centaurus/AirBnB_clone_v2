@@ -1,25 +1,28 @@
 #!/usr/bin/python3
-"""Contains index view for API"""
-
-from flask import Flask, request, jsonify
-from api.v1.views import app_views
+"""Contains the index view for the API."""
+from flask import Flask, jsonify
+from models import storage
 from models.amenity import Amenity
 from models.city import City
 from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
-from models import storage
 
+
+# No need to import app_views at the top
 
 # Define a route / status on the object app_views
-@app_views.route('/status')
 def get_status():
     """Gets the status code of the API"""
-    return jsonify(status ="OK")
-@app_views.route('/stats'):
+    from api.v1.views import app_views  # Import inside the function
+    return jsonify(status="OK")
+
+
+# Define a route / stats on the object app_views
 def get_stats():
-    """Gets the number of objects form storage model"""
+    """Gets the number of objects from storage model"""
+    from api.v1.views import app_views  # Import inside the function
     objects = {
         'amenities': Amenity,
         'cities': City,
