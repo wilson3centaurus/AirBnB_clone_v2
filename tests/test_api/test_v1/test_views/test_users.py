@@ -19,7 +19,9 @@ class TestUserAPI(unittest.TestCase):
         self.app.register_blueprint(app_views)
         self.client = self.app.test_client()
         self.state = State(name="Tatooine")
-        self.user = User(email="luke@jedi.com", password="usetheforce", state_id=self.state.id)
+        self.user = User(email="luke@jedi.com",
+                         password="usetheforce",
+                         state_id=self.state.id)
 
     def tearDown(self):
         storage.delete(self.state)
@@ -30,7 +32,9 @@ class TestUserAPI(unittest.TestCase):
         # Create users
         user_emails = ["anakin@sith.com", "leia@rebels.com"]
         for email in user_emails:
-            user = User(email=email, password="password", state_id=self.state.id)
+            user = User(email=email,
+                        password="password",
+                        state_id=self.state.id)
             storage.new(user)
         storage.save()
 
@@ -50,7 +54,8 @@ class TestUserAPI(unittest.TestCase):
 
         # Test POST request
         new_user_data = {'email': 'han@smuggler.com', 'password': 'falcon'}
-        response = self.client.post(f'/api/v1/states/{self.state.id}/users', json=new_user_data)
+        response = self.client.post(f'/api/v1/states/{self.state.id}/users',
+                                    json=new_user_data)
         self.assertEqual(response.status_code, 201)
         data = response.json
         self.assertEqual(data['email'], 'han@smuggler.com')
@@ -67,7 +72,8 @@ class TestUserAPI(unittest.TestCase):
 
         # Test POST request with missing fields
         new_user_data = {'password': 'wookie'}
-        response = self.client.post(f'/api/v1/states/{self.state.id}/users', json=new_user_data)
+        response = self.client.post(f'/api/v1/states/{self.state.id}/users',
+                                    json=new_user_data)
         self.assertEqual(response.status_code, 400)
 
     def test_update_user(self):
@@ -78,8 +84,12 @@ class TestUserAPI(unittest.TestCase):
         storage.save()
 
         # Test PUT request
-        updated_user_data = {'email': 'obi-wan@jedi.com', 'password': 'forceghost'}
-        response = self.client.put(f'/api/v1/users/{self.user.id}', json=updated_user_data)
+        updated_user_data = {
+            'email': 'obi-wan@jedi.com',
+            'password': 'forceghost'
+            }
+        response = self.client.put(f'/api/v1/users/{self.user.id}',
+                                   json=updated_user_data)
         self.assertEqual(response.status_code, 200)
         data = response.json
         self.assertEqual(data['email'], 'obi-wan@jedi.com')
@@ -97,7 +107,8 @@ class TestUserAPI(unittest.TestCase):
 
         # Test PUT request with invalid fields
         updated_user_data = {'invalid_field': 'value'}
-        response = self.client.put(f'/api/v1/users/{self.user.id}', json=updated_user_data)
+        response = self.client.put(f'/api/v1/users/{self.user.id}',
+                                   json=updated_user_data)
         self.assertEqual(response.status_code, 400)
 
         # Ensure the user is not updated
