@@ -16,12 +16,16 @@ class TestStates(unittest.TestCase):
     """Class for testing Hello Route docs"""
 
     def setUp(self):
+        """Creates an app and State object"""
+
         self.app = Flask(__name__)
         self.app.register_blueprint(app_views)
         self.client = self.app.test_client()
         self.state = State(name="California")
 
     def tearDown(self):
+        """Deletes created state"""
+
         storage.delete(self.state)
         storage.save()
 
