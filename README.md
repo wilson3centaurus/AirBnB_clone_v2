@@ -149,6 +149,9 @@ EOF  all  create  destroy  help  quit  show  update
 ** no instance found **
 (hbnb) quit
 ```
+## RESTful API contibution
+
+
 
 ## Bugs
 No known bugs at this time. 
@@ -158,5 +161,9 @@ Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twit
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
 
 Second part of Airbnb: Joann Vuong
+
+RESTful API contributors
+Oyedele Abiodun Magret - [Github] (https://github.com/Magret1730) / [Twitter](https://twitter.com/OyedeleMagret)
+Million Yirdaw - [Github] (https://github.com/millimesi) / [Twitter] (https://twitter.com/Million_Meseret)
 ## License
 Public Domain. No copy write protection. 
