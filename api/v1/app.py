@@ -19,6 +19,12 @@ def teardown(e):
     """close any current active route"""
     storage.close()
 
+@app.errorhandler(404)
+def not_found(error):
+    """404 not found error message"""
+    response = {"error": "Not found"}
+    return jsonify(response)
+
 
 if __name__ == "__main__":
     HOST = getenv('HBNB_API_HOST', '0.0.0.0')
