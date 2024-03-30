@@ -12,7 +12,8 @@ class TestReviewAPI(unittest.TestCase):
         self.app = Flask(__name__)
         self.app.register_blueprint(app_views)
         self.client = self.app.test_client()
-        self.place = Place(name="Mos Eisley Cantina", description="A wretched hive of scum and villainy")
+        self.place = Place(name="Mos Eisley Cantina",
+                           description="A wretched hive of scum and villainy")
         self.review = Review(text="Great spot!", place_id=self.place.id)
 
     def tearDown(self):
@@ -67,7 +68,8 @@ class TestReviewAPI(unittest.TestCase):
 
         # Test POST request
         new_review_data = {'text': 'Amazing place!'}
-        response = self.client.post(f'/api/v1/places/{self.place.id}/reviews', json=new_review_data)
+        response = self.client.post(f'/api/v1/places/{self.place.id}/reviews',
+                                    json=new_review_data)
         self.assertEqual(response.status_code, 201)
         data = response.json
         self.assertEqual(data['text'], 'Amazing place!')
@@ -84,7 +86,8 @@ class TestReviewAPI(unittest.TestCase):
 
         # Test PUT request
         updated_review_data = {'text': 'Decent spot!'}
-        response = self.client.put(f'/api/v1/reviews/{self.review.id}', json=updated_review_data)
+        response = self.client.put(f'/api/v1/reviews/{self.review.id}',
+                                   json=updated_review_data)
         self.assertEqual(response.status_code, 200)
         data = response.json
         self.assertEqual(data['text'], 'Decent spot!')
