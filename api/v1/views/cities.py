@@ -55,7 +55,7 @@ def post_cities_by_state(state_id=None):
     if req_json.get("name") is None:
         abort(400, 'Missing name')
     req_json['state_id'] = state_id
-    city = City(**req_json)
+    new_city = City(**req_json)
     new_city.save()
     return jsonify(new_city.to_dict()), 201
 
