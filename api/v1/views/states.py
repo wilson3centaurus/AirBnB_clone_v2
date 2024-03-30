@@ -67,7 +67,7 @@ def put_state(state_id):
     if req:
         state.name = req["name"]
         state.save()
-        return jsonify(state), 200
+        return jsonify(state.to_dict()), 200
     else:
         return "Not a JSON", 400
 
