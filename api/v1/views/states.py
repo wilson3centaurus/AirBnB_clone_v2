@@ -28,7 +28,8 @@ def get_state(state_id):
     return jsonify(state.to_dict()), 'OK'
 
 
-@app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/states/<state_id>', methods=['DELETE'],
+                 strict_slashes=False)
 def delete_state(state_id):
     """ Deletes a state """
     state = storage.get(State, state_id)
@@ -44,9 +45,9 @@ def create_state():
     """ Create new state """
     response = request.get_json()
     if response is None:
-        abort(404, {'Not a JSON'})
+        abort(404, 'Not a JSON')
     if 'name' not in response:
-        abort(404, {'Missing name'})
+        abort(404, 'Missing name')
     state = State(name=response['name'])
     storage.new(state)
     storage.save()
