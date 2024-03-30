@@ -69,7 +69,12 @@ Classes inherited from Base Model:
 * `def count(self, cls=None)` - Returns the number of objects in storage 
 
 #### `/api`  directory serves as the root of the API implementation, organizing different versions and functionalities.
+
 #### `/api/v1` directory specifically represents version 1 of the API, facilitating backward compatibility and version management.
+[app.py](/api/v1/app.py)
+* `def teardown_storage(exception)` - Ends the current storage session 
+* `def not_found_error(error)` - Return a JSON response with status code 404
+
 #### `/api/v1/views`  directory contains modules defining endpoints for handling HTTP requests related to specific resources, such as users, places, and amenities.
   
 #### `/api/v1/views/` directory contains new files:
