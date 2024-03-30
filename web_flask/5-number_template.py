@@ -1,47 +1,70 @@
 #!/usr/bin/python3
 """
-starts a Flask web application
-"""
+This is 5-number_template Module Documentation
 
+"""
 from flask import Flask, render_template
+
 app = Flask(__name__)
 
 
+# Route to display "Hello HBNB!"
 @app.route('/', strict_slashes=False)
-def index():
-    """returns Hello HBNB!"""
+def hello_hbnb():
+    """
+    This is hello_hbnb Function Documentation
+    """
     return 'Hello HBNB!'
 
 
+# Route to display "HBNB"
 @app.route('/hbnb', strict_slashes=False)
 def hbnb():
-    """returns HBNB"""
+    """
+    This is hbnb Function Documentation
+    """
     return 'HBNB'
 
 
+# Route to display "“C ” followed by the value of the text variable"
 @app.route('/c/<text>', strict_slashes=False)
-def cisfun(text):
-    """display “C ” followed by the value of the text variable"""
-    return 'C ' + text.replace('_', ' ')
+def C_is_fun(text):
+    """
+    This is C_is_fun Function Documentation
+    """
+    text = text.replace('_', ' ')
+    return 'C ' + text
 
 
-@app.route('/python', strict_slashes=False)
+# Route to display "“Python ” followed by the value of the text variable"
+# Default text is cool
 @app.route('/python/<text>', strict_slashes=False)
-def pythoniscool(text='is cool'):
-    """display “Python ”, followed by the value of the text variable"""
-    return 'Python ' + text.replace('_', ' ')
+@app.route('/python/', strict_slashes=False)
+def python_route(text="is cool"):
+    """
+    This is python_route Function Documentation
+    """
+    text = text.replace('_', ' ')
+    return 'Python ' + text
 
 
+# Route to display "“n is a number" ONLY if n is an integer"
 @app.route('/number/<int:n>', strict_slashes=False)
-def imanumber(n):
-    """display “n is a number” only if n is an integer"""
-    return "{:d} is a number".format(n)
+def number_route(n):
+    """
+    This is number_route Function Documentation
+    """
+    return "{} is a number".format(n)
 
 
+# Route to display a HTML page ONLY if n is an integer"
 @app.route('/number_template/<int:n>', strict_slashes=False)
-def numbersandtemplates(n):
-    """display a HTML page only if n is an integer"""
-    return render_template('5-number.html', n=n)
+def number_temp(n):
+    """
+    This is number_temp Function Documentation
+    """
+    return render_template("5-number.html", n=n)
+
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port='5000')
+    app.run(host='0.0.0.0', port=5000, debug=True)
