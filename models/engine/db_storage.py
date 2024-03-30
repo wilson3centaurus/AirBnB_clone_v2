@@ -84,8 +84,7 @@ class DBStorage:
 
     def count(self, cls=None):
         """ Returns the number of objects in storage """
-        if cls:
-            return (len(self.all(cls)))
+        if cls is None:
+            return (len(self.all()))
         else:
-            return (sum(self.__session.query(cls).count() for cls in [User, Place, Review, State, City, Amenity]))
-
+            return (len(self.all(cls)))
