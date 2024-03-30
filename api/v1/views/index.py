@@ -14,13 +14,13 @@ def api_status():
     return (response)
 
 
-@app._views.route("/stats")
+@app_views.route("/stats")
 def get_stats():
     """returns the stats of the api"""
     stats = {
             "amenities": storage.count('Amenity'),
             "cities": storage.count('City'),
-            "places": storeage.count('Place'),
+            "places": storage.count('Place'),
             "reviews": storage.count("Review"),
             "states": storage.count("State"),
             "users": storage.count("User")

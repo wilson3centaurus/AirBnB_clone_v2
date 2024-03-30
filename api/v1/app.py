@@ -4,7 +4,7 @@ Create Flask app, and register the blueprint for app_views
 """
 
 from os import getenv
-from flask import Flask, jsonify
+from flask import Flask, jsonify, make_response
 from models import storage
 from api.v1.views import app_views
 
@@ -14,16 +14,21 @@ app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 app.register_blueprint(app_views)
 
 
+@app.errorhandler(404)
+def page_not_found(error):
+    """ 404 page not found """
+    return make_response(jsonify({"error": "Not found"}), 404)
+
+@app.errorhandler(400)
+def not_a_json(error):
+    """400 error"""
+    return "Not a JSON\n", 400
+
 @app.teardown_appcontext
 def teardown(e):
     """close any current active route"""
     storage.close()
 
-
-@app.errorhandler(404)
-def page_not_foun(error):
-    """ 404 page not found """
-    return make_response(jsonify({"error": "Not found"}), 404)
 
 
 if __name__ == "__main__":
