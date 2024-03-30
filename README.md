@@ -155,7 +155,7 @@ No known bugs at this time.
 
 ## Authors
 Emmanuel Ejeagha - [Github](https://github.com/Emmanuel-Ejeagha) / [Twitter](https://twitter.com/emma_ejeagha)
-Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
+Francis Njoroge - [Github](https://github.com/Mainagithubrit) 
 
 Second part of Airbnb: Joann Vuong
 ## License
