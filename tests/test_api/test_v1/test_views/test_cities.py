@@ -7,7 +7,9 @@ Unittests for the view for City objects
 import unittest
 from flask import Flask
 from api.v1.views import app_views
-from models import storage, State, City
+from models import storage
+from models.state import State
+from models.city import City
 
 class TestCityAPI(unittest.TestCase):
 
