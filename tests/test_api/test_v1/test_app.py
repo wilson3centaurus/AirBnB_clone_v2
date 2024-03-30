@@ -21,7 +21,8 @@ class TestApp(unittest.TestCase):
         """Tests CORS configuration"""
 
         response = self.app.get('/')
-        self.assertEqual(response.headers.get('Access-Control-Allow-Origin'), '0.0.0.0')
+        self.assertEqual(response.headers.get('Access-Control-Allow-Origin'),
+                         '0.0.0.0')
 
     def test_blueprint_registration(self):
         """Tests blueprint registration"""
