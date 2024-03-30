@@ -3,11 +3,12 @@
 
 from api.v1.views import app_views
 from models import storage
-from flask import jsonify
 
 
 @app_views.route('/status', strict_slashes=False)
 def return_status():
     """ Return status """
-    message = dict({"status": "OK"})
+    message = dict({
+        "status": "OK"
+        })
     return message
