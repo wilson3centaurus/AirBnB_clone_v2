@@ -15,8 +15,8 @@ from models.review import Review
 from models.place import Place
 
 
-@app_view.route('/places/<place_id>/reviews',
-                methods['GET'], strict_slashes=False)
+@app_views.route('/places/<place_id>/reviews',
+                methods=['GET'], strict_slashes=False)
 def get_all_reviews(place_id):
     """
     Retrieves the list of all Review objects of a Place
@@ -29,7 +29,7 @@ def get_all_reviews(place_id):
 
     reviews = []
     for review in place.reviews:
-        reviews.append(city.to_dict())
+        reviews.append(review.to_dict())
 
     return jsonify(reviews)
 
@@ -67,7 +67,7 @@ def delete_a_review(review_id):
     return jsonify({}), 200
 
 
-@app_view.route('/places/<place_id>/reviews',
+@app_views.route('/places/<place_id>/reviews',
                 methods=['POST'], strict_slashes=False)
 def create_a_review(place_id):
     """
@@ -93,10 +93,10 @@ def create_a_review(place_id):
         abort(400, description="Missing text")
 
     review_response = review.to_dict()
-    return jsonify(review_response, 200)
+    return jsonify(review_response, 201)
 
 
-@app_view.route('/reviews/<review_id>',
+@app_views.route('/reviews/<review_id>',
                 methods=['PUT'], strict_slashes=False)
 def update_a_review(review_id):
     """

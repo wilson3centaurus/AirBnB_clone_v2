@@ -68,7 +68,7 @@ class TestReviewAPI(unittest.TestCase):
         # Test POST request
         new_review_data = {'text': 'Amazing place!'}
         response = self.client.post(f'/api/v1/places/{self.place.id}/reviews', json=new_review_data)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 201)
         data = response.json
         self.assertEqual(data['text'], 'Amazing place!')
 
