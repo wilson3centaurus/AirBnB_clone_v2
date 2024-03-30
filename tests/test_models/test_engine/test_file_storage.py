@@ -113,3 +113,49 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+# Task 2 Tests
+class TestStorage(unittest.TestCase):
+    """Tests for the Storage class"""
+
+    def setUp(self):
+        """Set up test environment"""
+        self.storage = Storage()
+
+    def test_get_existing_object(self):
+        """Test getting an existing object"""
+        obj = SomeClass()
+        self.storage.add(obj)
+        retrieved_obj = self.storage.get(obj.__class__.__name__, obj.id)
+        self.assertEqual(obj, retrieved_obj)
+
+    def test_get_non_existing_object(self):
+        """Test getting a non-existing object"""
+        obj = SomeClass()
+        retrieved_obj = self.storage.get(obj.__class__.__name__, obj.id)
+        self.assertIsNone(retrieved_obj)
+
+    def test_count_all_objects(self):
+        """Test counting all objects"""
+        obj1 = SomeClass()
+        obj2 = AnotherClass()
+        self.storage.add(obj1)
+        self.storage.add(obj2)
+        self.assertEqual(self.storage.count(), 2)
+
+    def test_count_objects_of_specific_class(self):
+        """Test counting objects of a specific class"""
+        obj1 = SomeClass()
+        obj2 = AnotherClass()
+        self.storage.add(obj1)
+        self.storage.add(obj2)
+        self.assertEqual(self.storage.count("SomeClass"), 1)
+
+    def test_count_objects_of_non_existing_class(self):
+        """Test counting objects of a non-existing class"""
+        obj = SomeClass()
+        self.storage.add(obj)
+        self.assertEqual(self.storage.count("NonExistingClass"), 0)
+
+if __name__ == '__main__':
+    unittest.main()
