@@ -54,7 +54,7 @@ class FileStorage:
             if obj.id == id:
                 return obj
         return None
-    
+
     def count(self, cls=None):
         """ This function return the number of instances of a class
             or the number of all instances
@@ -68,7 +68,7 @@ class FileStorage:
                 jo = json.load(f)
             for key in jo:
                 self.__objects[key] = classes[jo[key]["__class__"]](**jo[key])
-        except:
+        except Exception:
             pass
 
     def delete(self, obj=None):
