@@ -114,48 +114,75 @@ class TestFileStorage(unittest.TestCase):
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
 
-# Task 2 Tests
-class TestStorage(unittest.TestCase):
-    """Tests for the Storage class"""
+
+class TestFileStorageMethods(unittest.TestCase):
 
     def setUp(self):
-        """Set up test environment"""
-        self.storage = Storage()
+        """Set up a FileStorage instance for testing."""
+        self.storage = FileStorage()
 
-    def test_get_existing_object(self):
-        """Test getting an existing object"""
-        obj = SomeClass()
-        self.storage.add(obj)
-        retrieved_obj = self.storage.get(obj.__class__.__name__, obj.id)
-        self.assertEqual(obj, retrieved_obj)
-
-    def test_get_non_existing_object(self):
-        """Test getting a non-existing object"""
-        obj = SomeClass()
-        retrieved_obj = self.storage.get(obj.__class__.__name__, obj.id)
-        self.assertIsNone(retrieved_obj)
+    def tearDown(self):
+        """Clean up after each test."""
+        self.storage._FileStorage__objects = {}
 
     def test_count_all_objects(self):
-        """Test counting all objects"""
-        obj1 = SomeClass()
-        obj2 = AnotherClass()
-        self.storage.add(obj1)
-        self.storage.add(obj2)
-        self.assertEqual(self.storage.count(), 2)
+        """Test counting all objects in storage."""
+        # Create some objects for testing
+        BaseModel().save()
+        BaseModel().save()
+        BaseModel().save()
+
+        # Count all objects
+        count = self.storage.count()
+
+        # Check that the count matches the number of created objects
+        self.assertEqual(count, 3)
 
     def test_count_objects_of_specific_class(self):
-        """Test counting objects of a specific class"""
-        obj1 = SomeClass()
-        obj2 = AnotherClass()
-        self.storage.add(obj1)
-        self.storage.add(obj2)
-        self.assertEqual(self.storage.count("SomeClass"), 1)
+        """Test counting objects of a specific class."""
+        # Create some objects for testing
+        BaseModel().save()
+        BaseModel().save()
+        BaseModel().save()
 
-    def test_count_objects_of_non_existing_class(self):
-        """Test counting objects of a non-existing class"""
-        obj = SomeClass()
-        self.storage.add(obj)
-        self.assertEqual(self.storage.count("NonExistingClass"), 0)
+        # Count objects of the BaseModel class
+        count = self.storage.count("BaseModel")
+
+        # Check that the count matches the number of created BaseModel objects
+        self.assertEqual(count, 3)
+
+    def test_count_no_objects(self):
+        """Test counting when there are no objects in storage."""
+        # Count all objects when there are none
+        count = self.storage.count()
+
+        # Check that the count is zero
+        self.assertEqual(count, 0)
+
+    def test_delete_existing_object(self):
+        """Test deleting an existing object from storage."""
+        # Create an object and save it
+        obj = BaseModel()
+        obj.save()
+
+        # Delete the object
+        self.storage.delete(obj)
+
+        # Check that the object is no longer in storage
+        self.assertIsNone(self.storage.get("BaseModel", obj.id))
+
+    def test_delete_nonexistent_object(self):
+        """Test deleting a nonexistent object from storage."""
+        # Create an object without saving it
+        obj = BaseModel()
+
+        # Try to delete the object
+        self.storage.delete(obj)
+
+        # Check that no error occurs
+        # Since the object was never saved, it shouldn't be in storage anyway
+        self.assertIsNone(self.storage.get("BaseModel", obj.id))
+
 
 if __name__ == '__main__':
     unittest.main()
