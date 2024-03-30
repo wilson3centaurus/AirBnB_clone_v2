@@ -17,10 +17,9 @@ from models.user import User
 @app_views.route('/users', methods=['GET'], strict_slashes=False)
 def get_all_users():
     """ Retrieves the list of all User objects """
-    users = User.storage.all()
+    users = storage.all(User)
     users_json = []
-    for user in users:
-        user_json.append(user.to_dict())
+    users_json = [user.to_dict() for user in users]
     return jsonify(users_json), 200
 
 
@@ -61,9 +60,9 @@ def create_a_user():
         abort(400, description="Not a JSON")
 
     dataset = request.get_json()
-    if 'email' not in request.json:
+    if 'email' not in dataset:
         abort(400, description="Missing email")
-    if 'password' not in request.json:
+    if 'password' not in dataset:
         abort(400, description='Missing password')
 
     user = User(**dataset)
