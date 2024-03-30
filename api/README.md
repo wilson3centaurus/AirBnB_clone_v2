@@ -728,10 +728,3 @@ guillaume@ubuntu:~/AirBnB_v3$ curl -X GET http://0.0.0.0:5000/api/v1/cities/1da2
   "state_id": "2b9a4627-8a9e-4f32-a752-9a84fa7f4efd", 
   "updated_at": "2017-03-25T02:17:06"
 }
-* Curl_http_done: called premature == 0
-* Closing connection 0
-guillaume@ubuntu:~/AirBnB_v3$ 
-Repo:
-
-GitHub repository: AirBnB_clone_v3
-File: api/v1/app.py
