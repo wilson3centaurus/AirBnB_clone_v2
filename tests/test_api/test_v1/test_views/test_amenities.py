@@ -13,7 +13,7 @@ from api.v1.views import amenities
 
 
 class TestAmenities(unittest.TestCase):
-    """Class for testing Hello Route docs"""
+    """Tests amenities module"""
 
     def setUp(self):
         """Creates an app and Amenity object"""
