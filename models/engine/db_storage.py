@@ -79,7 +79,10 @@ class DBStorage:
         """Retrieves an object"""
 
         obj = [value for value in self.all(cls).values()
-               if cls in classes.values() and id and value.id == id]
+               if (cls in classes.values() and
+                   id and
+                   isinstance(id, str) and
+                   value.id == id)]
         if len(obj) == 0:
             return None
         return obj[0]
