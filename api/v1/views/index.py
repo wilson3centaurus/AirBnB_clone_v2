@@ -22,7 +22,12 @@ def return_status():
 @app_views.route('/stats', strict_slashes=False)
 def object_by_type():
     """ Retrieves the number of object by type """
-    objects = {"amenities": Amenity, "cities": City, "places": Place, "reviews": Review, "states": State, "users": User}
+    objects = {"amenities": Amenity,
+               "cities": City,
+               "places": Place,
+               "reviews": Review,
+               "states": State,
+               "users": User}
     for obj in objects:
         objects[obj] = storage.count(objects[obj])
     return jsonify(objects)
