@@ -2,10 +2,10 @@
 """ Starting Flask Application """
 
 
-from flask import Flask, jsonify
+from flask import Flask
 from models import storage
-from api.vi.views import app_views
-import os
+from api.v1.views import app_views
+from os import getenv
 
 
 app = Flask(__name__)
@@ -13,7 +13,7 @@ app.register_blueprint(app_views)
 app.url_map.strict_slashes = False
 
 
-@app.teardwon_appcontext
+@app.teardown_appcontext
 def teardown(self):
     """ Call storage.close """
     storage.close()
