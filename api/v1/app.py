@@ -23,5 +23,6 @@ def page_not_found(e):
     response.status_code = 404
     return response
 
+
 if __name__ == "__main__":
     app.run(getenv("HBNB_API_HOST"), getenv("HBNB_API_PORT"))
