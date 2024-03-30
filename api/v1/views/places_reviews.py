@@ -16,7 +16,7 @@ from models.place import Place
 
 
 @app_views.route('/places/<string:place_id>/reviews',
-                methods=['GET'], strict_slashes=False)
+                 methods=['GET'], strict_slashes=False)
 def get_all_reviews(place_id):
     """
     Retrieves the list of all Review objects of a Place
@@ -68,7 +68,7 @@ def delete_a_review(review_id):
 
 
 @app_views.route('/places/<string:place_id>/reviews',
-                methods=['POST'], strict_slashes=False)
+                 methods=['POST'], strict_slashes=False)
 def create_a_review(place_id):
     """
     Creates a Review
@@ -97,7 +97,7 @@ def create_a_review(place_id):
 
 
 @app_views.route('/reviews/<string:review_id>',
-                methods=['PUT'], strict_slashes=False)
+                 methods=['PUT'], strict_slashes=False)
 def update_a_review(review_id):
     """
     Updates a reviw
