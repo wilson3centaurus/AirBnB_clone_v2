@@ -9,7 +9,7 @@ This module handles all default RESTFul API actions:
 """
 
 from api.v1.views import app_views
-from flask import jsonify, abort, make_response, request
+from flask import jsonify, abort, request
 from models import storage
 from models.state import State
 
@@ -58,14 +58,14 @@ def create_state():
     data = request.get_json()
 
     if not data:
-        return make_response(jsonify({"error": "Not a JSON"}), 400)
+        return jsonify({"error": "Not a JSON"}), 400
     if 'name' not in data:
-        return make_response(jsonify({"error": "Missing name"}), 400)
+        return jsonify({"error": "Missing name"}), 400
 
     state = State(**data)
     state.save()
 
-    return make_response(jsonify(state.to_dict()), 201)
+    return jsonify(state.to_dict()), 201
 
 
 @app_views.route('/states/<string:state_id>', methods=['PUT'],
@@ -81,11 +81,11 @@ def update_state(state_id):
     data = request.get_json()
 
     if not data:
-        return make_response(jsonify({"error": "Not a JSON"}), 400)
+        return jsonify({"error": "Not a JSON"}), 400
 
     for k, v in data.items():
         if k not in ['id', 'created_at', 'updated_at']:
             setattr(state, k, v)
     state.save()
 
-    return make_response(jsonify(state.to_dict()), 200)
+    return jsonify(state.to_dict()), 200
