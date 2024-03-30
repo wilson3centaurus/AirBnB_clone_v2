@@ -56,7 +56,7 @@ def post_state():
         return "Not a JSON", 400
 
 
-@app_views.route('/states/<state_id>', methods=['PUT'])
+@app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def put_state(state_id):
     """Updates a State object"""
     try:
