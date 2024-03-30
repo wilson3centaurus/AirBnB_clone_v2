@@ -113,3 +113,42 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get_returns_object(self):
+        """Test that get returns the correct object based on class name and ID"""
+        storage = FileStorage()
+        for key, value in classes.items():
+            instance = value()
+            storage.new(instance)
+            retrieved_instance = storage.get(value.__name__, instance.id)
+            self.assertEqual(instance, retrieved_instance)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get_returns_none_if_not_found(self):
+        """Test that get returns None if object is not found"""
+        storage = FileStorage()
+        non_existent_instance = storage.get("Dogtooth", "123")
+        self.assertIsNone(non_existent_instance)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count_returns_number_of_objects(self):
+        """Test that count returns the correct number of objects"""
+        storage = FileStorage()
+        for key, value in classes.items():
+            for _ in range(3):  # Create 3 instances of each class
+                instance = value()
+                storage.new(instance)
+        total_count = storage.count()
+        self.assertEqual(total_count, len(classes) * 3)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count_returns_number_of_objects_of_specified_class(self):
+        """Test that count returns the correct number of objects of specified class"""
+        storage = FileStorage()
+        for key, value in classes.items():
+            for _ in range(3):  # Create 3 instances of each class
+                instance = value()
+                storage.new(instance)
+        class_count = storage.count("Amenity")
+        self.assertEqual(class_count, 3)
