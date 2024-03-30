@@ -114,6 +114,7 @@ class TestFileStorage(unittest.TestCase):
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
 
+
 # Task 2 Tests
 class TestStorage(unittest.TestCase):
     """Tests for the Storage class"""
@@ -156,6 +157,7 @@ class TestStorage(unittest.TestCase):
         obj = SomeClass()
         self.storage.add(obj)
         self.assertEqual(self.storage.count("NonExistingClass"), 0)
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -87,24 +87,28 @@ class TestFileStorage(unittest.TestCase):
     def test_save(self):
         """Test that save properly saves objects to file.json"""
 
+
 class TestDBStorageCount(unittest.TestCase):
     """Test the count method in the DBStorage class"""
 
-    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db', "not testing db storage")
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db',
+                     "not testing db storage")
     def test_count_all_objects(self):
         """Test counting all objects"""
         storage = DBStorage()
         count = storage.count()
         self.assertIsInstance(count, int)
 
-    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db', "not testing db storage")
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db',
+                     "not testing db storage")
     def test_count_objects_of_specific_class(self):
         """Test counting objects of a specific class"""
         storage = DBStorage()
         count = storage.count("Amenity")
         self.assertIsInstance(count, int)
 
-    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db', "not testing db storage")
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db',
+                     "not testing db storage")
     def test_count_objects_of_non_existing_class(self):
         """Test counting objects of a non-existing class"""
         storage = DBStorage()
