@@ -2,7 +2,7 @@
 """sets up the Flask application for v1 of the API"""
 
 from api.v1.views import app_views
-from flask import Flask
+from flask import Flask, jsonify
 from models import storage
 import os
 
@@ -14,6 +14,13 @@ app.register_blueprint(app_views)
 @app.teardown_appcontext
 def close_session(exception=None):
     storage.close()
+
+
+@app.errorhandler(404)
+def not_found(error):
+    response = jsonify({"error": "Not found"})
+    response.status_code = 404
+    return response
 
 
 if __name__ == "__main__":
