@@ -68,6 +68,8 @@ Classes inherited from Base Model:
 * `def get(self, cls, id)` - Retrieves an object
 * `def count(self, cls=None)` - Returns the number of objects in storage 
 
+### Test files
+
 #### `/tests` directory contains all unit test cases for this project:
 [/test_models/test_base_model.py](/tests/test_models/test_base_model.py) - Contains the TestBaseModel and TestBaseModelDocs classes
 TestBaseModelDocs class:
