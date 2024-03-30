@@ -57,6 +57,30 @@ class FileStorage:
                 self.__objects[key] = classes[jo[key]["__class__"]](**jo[key])
         except:
             pass
+    # Task 2 (Adding get and count methods)
+
+    def get(self, cls, id):
+        """
+        Returns the object based on the class and its ID,
+        or None if not found
+        """
+        key = f"{}.{}".format(cls, id)
+        if key in self.__objects.keys():
+            return self.__object[key]
+        return None
+
+    def count(self, cls=None):
+        """
+        Returns the number of objects in storage matching the given class.
+        If no class is passed, returns the count of all objects in storage.
+        """
+        if cls:
+            count = 0
+            for object in self.__objects.values():
+                if object.__class__.__name__ == cls:
+                    count += 1
+                return count
+            return len(self.__objects)
 
     def delete(self, obj=None):
         """delete obj from __objects if it’s inside"""
