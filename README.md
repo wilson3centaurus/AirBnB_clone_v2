@@ -68,6 +68,10 @@ Classes inherited from Base Model:
 * `def get(self, cls, id)` - Retrieves an object
 * `def count(self, cls=None)` - Returns the number of objects in storage 
 
+### `/api`  directory serves as the root of the API implementation, organizing different versions and functionalities.
+### `/api/v1` directory specifically represents version 1 of the API, facilitating backward compatibility and version management.
+### `/api/v1/views`  directory contains modules defining endpoints for handling HTTP requests related to specific resources, such as users, places, and amenities.
+  
 #### `/api/v1/views/` directory contains new files:
 * [places.py](/api/v1/views/places.py) - contains routes for Place objects
 * [places_amenities.py](/api/v1/views/places_amenities.py) - contains routes for linking Places and Amenities
