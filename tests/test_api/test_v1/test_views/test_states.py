@@ -13,7 +13,7 @@ from api.v1.views import states
 
 
 class TestStates(unittest.TestCase):
-    """Class for testing Hello Route docs"""
+    """Tests states module"""
 
     def setUp(self):
         """Creates an app and State object"""
