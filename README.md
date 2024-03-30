@@ -74,6 +74,7 @@ Classes inherited from Base Model:
 [app.py](/api/v1/app.py)
 * `def teardown_storage(exception)` - Ends the current storage session 
 * `def not_found_error(error)` - Return a JSON response with status code 404
+* A `CORS` instance allowing '/*' for '0.0.0.0' to enable the web client to access the data.
 
 #### `/api/v1/views`  directory contains modules defining endpoints for handling HTTP requests related to specific resources, such as users, places, and amenities.
   
@@ -210,6 +211,50 @@ TestBaseModel class:
 * `def test_user_module_docstring(self)` - Test for the user.py module docstring
 * `def test_user_class_docstring(self)` - Test for the User class docstring
 
+[/test_v1/test_app.py](tests/test_api/test_v1/test_app.py) - Contains `TestApp` class:
+* `def test_cors_configuration(self)` - Tests CORS configuration
+* `def test_blueprint_registration(self)` - Tests blueprint registration
+* `def test_error_handling(self)` - Tests error handling
+* `def test_environment_variables(self)` - Tests environment variables
+* `def test_doc(self)` - Tests module docstring existence
+* `def test_function_doc(self)` - Tests function docstring existence (for all functions)
+* `def test_pep8(self)` - Tests if module follows PEP8 style
+* `def test_executable(self)` - Tests if the file is executable
+
+[/test_views/test_states.py](tests/test_api/test_v1/test_views/test_states.py) - Contains `TestStates` class:
+* `def test_doc(self)` - Tests module docstring existence
+* `def test_function_doc(self)` - Tests function docstring existence (for all functions)
+* `def test_pep8(self)` - Tests if module follows PEP8 style
+* `def test_executable(self)` - Tests if the file is executable
+* `def test_get_state(self)` - Tests GET request
+* `def test_delete_state(self)` - Tests DELETE request
+* `def test_create_state(self)` - Tests POST request
+* `def test_update_state(self)` - Tests PUT request
+
+[/test_views/test_amenities.py](tests/test_api/test_v1/test_views/test_amenities.py) - Contains `TestAmenities` class:
+* `def test_doc(self)` - Tests module docstring existence
+* `def test_function_doc(self)` - Tests function docstring existence (for all functions)
+* `def test_pep8(self)` - Tests if module follows PEP8 style
+* `def test_executable(self)` - Tests if the file is executable
+* `def test_get_amenities(self)` - Tests GET request
+* `def test_delete_amenity(self)` - Tests DELETE request
+* `def test_create_amenity(self)` - Tests POST request
+* `def test_update_amenity(self)` - Tests PUT request
+
+[/test_views/test_places.py](tests/test_api/test_v1/test_views/test_places.py) - Contains `Testplaces` class:
+* `def test_doc(self)` - Tests module docstring existence
+* `def test_function_doc(self)` - Tests function docstring existence (for all functions)
+* `def test_pep8(self)` - Tests if module follows PEP8 style
+* `def test_executable(self)` - Tests if the file is executable
+* `def test_get_place(self)` - Tests GET request
+* `def test_delete_place(self)` - Tests DELETE request
+* `def test_update_place(self)` - Tests PUT request
+
+[/test_views/test_index.py](tests/test_api/test_v1/test_views/test_index.py) - Contains `TestIndex` class:
+* `def test_doc(self)` - Tests module docstring existence
+* `def test_function_doc(self)` - Tests function docstring existence (for all functions)
+* `def test_pep8(self)` - Tests if module follows PEP8 style
+* `def test_executable(self)` - Tests if the file is executable
 
 ## Examples of use
 ```
