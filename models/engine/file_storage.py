@@ -72,5 +72,12 @@ class FileStorage:
 def get(self,cls, id):
         """get method"""
         if cls and id:
-            if cls in classes.values() and instance(id, str):
-                all_objects = self.all(cls)
+            takeObj = '{}.{}'.format(cls, id)
+            everyObj = self.all(cls)
+            return everyObj.get(takeObj)
+        else:
+            return None
+
+    def count(self, cls=None):
+        '''class that is (optional)'''
+        return (len(self.all(cls)))
