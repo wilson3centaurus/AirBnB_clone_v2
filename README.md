@@ -1,5 +1,5 @@
 # AirBnB Clone - The Console
-The console is the first segment of the AirBnB project at Holberton School that will collectively cover fundamental concepts of higher level programming. The goal of AirBnB project is to eventually deploy our server a simple copy of the AirBnB Website(HBnB). A command interpreter is created in this segment to manage objects for the AirBnB(HBnB) website.
+The console is the first segment of the AirBnB project at Holberton School/ALX that will collectively cover fundamental concepts of higher level programming. The goal of AirBnB project is to eventually deploy our server a simple copy of the AirBnB Website(HBnB). A command interpreter is created in this segment to manage objects for the AirBnB(HBnB) website.
 
 #### Functionalities of this command interpreter:
 * Create a new object (ex: a new User or a new Place)
@@ -67,6 +67,75 @@ Classes inherited from Base Model:
 [db_storage.py](models/engine/db_storage.py)
 * `def get(self, cls, id)` - Retrieves an object
 * `def count(self, cls=None)` - Returns the number of objects in storage 
+
+#### `/api`  directory serves as the root of the API implementation, organizing different versions and functionalities.
+
+#### `/api/v1` directory specifically represents version 1 of the API, facilitating backward compatibility and version management.
+[app.py](/api/v1/app.py)
+* `def teardown_storage(exception)` - Ends the current storage session 
+* `def not_found_error(error)` - Return a JSON response with status code 404
+
+#### `/api/v1/views`  directory contains modules defining endpoints for handling HTTP requests related to specific resources, such as users, places, and amenities.
+  
+#### `/api/v1/views/` directory contains new files:
+
+[places.py](/api/v1/views/places.py) - contains routes for Place objects
+* `def get_places(city_id)` - Retrieves a list of all place objects of a city
+* `def get_place(place_id)` - Retrieves a place object
+* `def delete_place(place_id)` - Deletes a place object
+* `def create_place(city_id)` - Creates a place object
+* `def update_place(place_id)` - Updates a place object
+
+[places_amenities.py](/api/v1/views/places_amenities.py) - contains routes for linking Places and Amenities
+* `def get_place_amenities(place_id)` - Retrieves the list of all Amenity objects of a Place
+* `def delete_place_amenity(place_id, amenity_id)` - Deletes an Amenity object from a Place
+* `def link_place_amenity(place_id, amenity_id)` - Links an Amenity object to a Place
+
+[places_reviews.py](/api/v1/views/places_reviews.py) - contains routes for linking Places and Reviews
+* `def get_all_reviews(place_id)` - Retrieves the list of all Review objects of a Place
+* `def get_a_review(review_id)` - Retrieves a Review object.
+* `def delete_a_review(review_id)` - Deletes a Review object
+* `def create_a_review(place_id)` - Creates a Review
+* `def update_a_review(review_id)` - Updates a review
+ 
+[users.py](/api/v1/views/users.py) - contains routes for User objects
+* `def get_all_users()` - Retrieves the list of all User objects
+* `def get_a_user_using_id(user_id)` - Retrieves a user object
+* `def delete_a_user(user_id)` - Deletes a User object
+* `def create_a_user()` - Creates a User
+* `def update_a_user(user_id)` - Updates a User object
+
+[amenities.py](/api/v1/views/amenities.py) - contains routes for Amenity objects
+* `def get_amenities()` - Retrieves a list of all amenity objects
+* `def get_amenity(amenity_id)` - Retrieves an amenity object
+* `def delete_amenity(amenity_id)` - Deletes an amenity object
+* `def create_amenity()` - Creates an amenity object
+* `def update_amenity(amenity_id)` - Updates an amenity object
+
+[cities.py](/api/v1/views/cities.py) - contains routes for City objects
+* `def get_cities_of_a_state(state_id)` - Retrieves the list of all City objects of a State
+* `def get_a_city_using_id(city_id)` - Retrieves a city object
+* `def delete_a_city(city_id)` - Deletes a City object 
+* `def create_a_city(state_id)` - Creates a City
+* `def update_a_city(city_id)` - Updates a City object
+
+[states.py](/api/v1/views/states.py) - contains routes for State objects
+* `def get_states()` - Retrieves a list of all State objects
+* `def get_state(state_id)` - Retrieves a State object
+* `def delete_state(state_id)` - Deletes a State object
+* `def create_state()` - Creates a State object
+* `def update_state(state_id)` - Updates a State object 
+
+[index.py](/api/v1/views/index.py) - contains routes for index
+* `def get_status()` - Returns a Json response indicating the status
+* `def get_stats()` - Retrieves the count of existing objects by type
+
+* [/api/__init__.py](/api/__init__.py) - Initializes the API package
+* [/api/v1/__init__.py](/api/v1/__init__.py) - Initializes the v1 API package
+* [/api/v1/views/__init__.py](/api/v1/views/__init__.py) - Initializes the views package for v1 of the API
+
+
+## Test files
 
 #### `/tests` directory contains all unit test cases for this project:
 [/test_models/test_base_model.py](/tests/test_models/test_base_model.py) - Contains the TestBaseModel and TestBaseModelDocs classes
