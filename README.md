@@ -68,7 +68,17 @@ Classes inherited from Base Model:
 * `def get(self, cls, id)` - Retrieves an object
 * `def count(self, cls=None)` - Returns the number of objects in storage 
 
-### Test files
+#### `/api/v1/views/` directory contains new files:
+* [places.py](/api/v1/views/places.py) - contains routes for Place objects
+* [places_amenities.py](/api/v1/views/places_amenities.py) - contains routes for linking Places and Amenities
+* [places_reviews.py](/api/v1/views/places_reviews.py) - contains routes for linking Places and Reviews
+* [users.py](/api/v1/views/users.py) - contains routes for User objects
+* [amenities.py](/api/v1/views/amenities.py) - contains routes for Amenity objects
+* [cities.py](/api/v1/views/cities.py) - contains routes for City objects
+* [states.py](/api/v1/views/states.py) - contains routes for State objects
+* [index.py](/api/v1/views/index.py) - contains routes for index
+
+## Test files
 
 #### `/tests` directory contains all unit test cases for this project:
 [/test_models/test_base_model.py](/tests/test_models/test_base_model.py) - Contains the TestBaseModel and TestBaseModelDocs classes
