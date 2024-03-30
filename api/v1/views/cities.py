@@ -17,7 +17,7 @@ def get_cities_by_state(state_id=None):
         abort(404)
 
     allCity = storage.all('City')
-    cities_by_state = [obj.to_json() for obj in allCity.values()
+    cities_by_state = [obj.to_dict() for obj in allCity.values()
                        if obj.state_id == state_id]
     return jsonify(cities_by_state)
 
@@ -28,7 +28,7 @@ def get_cities(city_id=None):
     city = storage.get(City, city_id)
     if city is None:
         abort(404)
-    return jsonify(city.to_json())
+    return jsonify(city.to_dict())
 
 
 @app_views.route('cities/<city_id>', methods=['DELETE'])
@@ -37,7 +37,8 @@ def Del_city(city_id=None):
     city = storage.get(City, city_id)
     if city is None:
         abort(404)
-    city.delete()
+    storage.delete(city)
+    storage.save()
     del city
     return jsonify({}), 200
 
@@ -45,9 +46,9 @@ def Del_city(city_id=None):
 @app_views.route('/states/<state_id>/cities', methods=['POST'])
 def post_cities_by_state(state_id=None):
     """Get state object"""
-    # state_by_id = storage.get(State, state_id)
-    # if state_by_id is None:
-    #     abort(404)
+    state_by_id = storage.get(State, state_id)
+    if state_by_id is None:
+        abort(404)
 
     req_json = request.get_json()
     if req_json is None:
@@ -69,8 +70,8 @@ def put_city(city_id=None):
     req_json = request.get_json()
     if req_json is None:
         abort(400, 'Not a JSON')
-    city.bm_update(req_json)
-    return jsonify(city.to_json()), 200
+    city.cls_update(req_json)
+    return jsonify(city.to_dict()), 200
 
 
 # @app_views.route('/states/<state_id>', methods=['DELETE'])
