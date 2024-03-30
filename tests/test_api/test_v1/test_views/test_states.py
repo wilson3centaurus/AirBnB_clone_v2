@@ -5,11 +5,25 @@ import inspect
 import pep8
 import unittest
 import os
+from api.v1.views import app_views
+from models import storage
+from flask import Flask
+from models.state import State
 from api.v1.views import states
 
 
 class TestStates(unittest.TestCase):
     """Class for testing Hello Route docs"""
+
+    def setUp(self):
+        self.app = Flask(__name__)
+        self.app.register_blueprint(app_views)
+        self.client = self.app.test_client()
+        self.state = State(name="California")
+
+    def tearDown(self):
+        storage.delete(self.state)
+        storage.save()
 
     def test_doc(self):
         """Tests module docstring existence"""
@@ -37,6 +51,61 @@ class TestStates(unittest.TestCase):
         permissions = str(oct(file_stat[0]))
         expected = int(permissions[5:-2]) >= 5
         self.assertTrue(expected)
+
+    def test_get_state(self):
+        """Tests GET request"""
+
+        storage.new(self.state)
+        storage.save()
+
+        response = self.client.get(f'/api/v1/states/{self.state.id}')
+        self.assertEqual(response.status_code, 200)
+        data = response.json
+        self.assertEqual(data['name'], "California")
+
+    def test_delete_state(self):
+        """Tests DELETE request"""
+
+        storage.new(self.state)
+        storage.save()
+
+        response = self.client.delete(f'/api/v1/states/{self.state.id}')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json, {})
+
+        state = storage.get(State, self.state.id)
+        self.assertIsNone(state)
+
+    def test_create_state(self):
+        """Tests POST request"""
+
+        storage.new(self.state)
+        storage.save()
+
+        data = {'name': 'Twilight'}
+        response = self.client.post(f'/api/v1/states/', json=data)
+        self.assertEqual(response.status_code, 201)
+        data = response.json
+        self.assertEqual(data['name'], 'Twilight')
+
+        state = storage.get(State, data['id'])
+        self.assertIsNotNone(state)
+
+    def test_update_state(self):
+        """Tests PUT request"""
+
+        storage.new(self.state)
+        storage.save()
+
+        data = {'name': 'Twilight'}
+        response = self.client.put(f'/api/v1/states/{self.state.id}',
+                                   json=data)
+        self.assertEqual(response.status_code, 200)
+        data = response.json
+        self.assertEqual(data['name'], 'Twilight')
+
+        state = storage.get(State, self.state.id)
+        self.assertEqual(state.name, 'Twilight')
 
 
 if __name__ == "__main__":
