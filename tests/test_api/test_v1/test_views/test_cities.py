@@ -11,6 +11,7 @@ from models import storage
 from models.state import State
 from models.city import City
 
+
 class TestCityAPI(unittest.TestCase):
 
     def setUp(self):
@@ -78,7 +79,8 @@ class TestCityAPI(unittest.TestCase):
 
         # Test POST request
         new_city_data = {'name': 'San Jose'}
-        response = self.client.post(f'/api/v1/states/{self.state.id}/cities', json=new_city_data)
+        response = self.client.post(f'/api/v1/states/{self.state.id}/cities',
+                                    json=new_city_data)
         self.assertEqual(response.status_code, 201)
         data = response.json
         self.assertEqual(data['name'], 'San Jose')
@@ -95,7 +97,8 @@ class TestCityAPI(unittest.TestCase):
 
         # Test PUT request
         updated_city_data = {'name': 'Los Angeles'}
-        response = self.client.put(f'/api/v1/cities/{self.city.id}', json=updated_city_data)
+        response = self.client.put(f'/api/v1/cities/{self.city.id}',
+                                   json=updated_city_data)
         self.assertEqual(response.status_code, 200)
         data = response.json
         self.assertEqual(data['name'], 'Los Angeles')
