@@ -3,7 +3,8 @@
 starts a Flask web application
 """
 from api.v1.views import app_views
-from flask import Flask, jsonify
+from flask import Flask, jsonify, make_response
+from werkzeug.exceptions import HTTPException
 from models import storage
 import os
 # create an instance of flask
@@ -19,9 +20,21 @@ def teardown_db(exception):
     storage.close()
 
 
-@app.errorhandler(404)
-def not_found(error):
-    return jsonify({'error': 'Not found'}), 404
+@app.errorhandler(Exception)
+def global_error_handler(err):
+    """
+        Global Route to handle All Error Status Codes
+    """
+    if isinstance(err, HTTPException):
+            if err.description:
+                message = {'error': err.description}
+            else:
+                message = {'error': ''}
+            code = err.code
+    else:
+        message = {'error': str(err)}
+        code = 500
+    return make_response(jsonify(message), code)
 
 
 if __name__ == '__main__':
