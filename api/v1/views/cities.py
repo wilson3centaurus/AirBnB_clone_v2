@@ -63,7 +63,7 @@ def post_cities_by_state(state_id=None):
 
 @app_views.route('cities/<city_id>', methods=['PUT'])
 def put_city(city_id=None):
-    """Get state object based on ID"""
+    """Get state object based"""
     city = storage.get(City, city_id)
     if city is None:
         abort(404)
