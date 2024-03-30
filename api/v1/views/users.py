@@ -18,7 +18,6 @@ from models.user import User
 def get_all_users():
     """ Retrieves the list of all User objects """
     users = storage.all(User)
-    users_json = []
     users_json = [user.to_dict() for user in users]
     return jsonify(users_json), 200
 
