@@ -54,9 +54,12 @@ class FileStorage:
             with open(self.__file_path, 'r') as f:
                 jo = json.load(f)
             for key in jo:
-                self.__objects[key] = classes[jo[key]["__class__"]](**jo[key])
-        except:
-            pass
+                self.__objects[key] = classes[jo[key]["__class__"]](
+                        **jo[key]
+                )
+        except FileNoFoundError:
+            print("File '{}' not found. No objects loaded. ".
+                  "".format(self.__file_path))
 
     def delete(self, obj=None):
         """delete obj from __objects if it’s inside"""
@@ -68,18 +71,32 @@ class FileStorage:
     def close(self):
         """call reload() method for deserializing the JSON file to objects"""
         self.reload()
-            
+
     def get(self, cls, id):
-        # Implementation to retrieve an object based on class and ID
-        pass
+        '''get:
+        retrieve an object from the file storage by class and id.
+        '''
+
+        if cls and id:
+            if cls in class.values():
+                all_objects = self.all(cls)
+
+                for value in all_objects.value():
+                    if value.id == id:
+                        return value
+            return
+        return
 
     def count(self, cls=None):
-        """Returns the number of objects in storage."""
-        if cls is None:
-            return len(self.__objects)
-        else:
-            count = 0
-            for obj_key in self.__objects:
-                if isinstance(self.__objects[obj_key], cls):
-                    count += 1
-            return count
+        """count:
+        count the number of objects in storage matching the given class.
+        """
+
+        if not cls:
+            inst_of_all_cls = self.all()
+            return len(inst_of_all_cls)
+        if cls in classes.values():
+            all_inst_of_prov_cls = self.all(cls)
+            return len(all_inst_of_prov_cls)
+        if cls not in classes.values():
+            return
