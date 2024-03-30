@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Create Flask app, and registr the blueprint for app_views
+Create Flask app, and register the blueprint for app_views
 """
 
 from os import getenv
@@ -9,9 +9,15 @@ from models import storage
 from api.v1.views import app_views
 
 app = Flask(__name__)
-
+app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 
 app.register_blueprint(app_views)
+
+
+@app.teardown_appcontext
+def teardown(e):
+    """close any current active route"""
+    storage.close()
 
 
 if __name__ == "__main__":
