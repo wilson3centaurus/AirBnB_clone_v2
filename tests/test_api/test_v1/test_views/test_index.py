@@ -2,7 +2,6 @@
 """Unit tests for v1 app"""
 
 import unittest
-import api
 import inspect
 import pep8
 import os
