@@ -113,7 +113,7 @@ def update_a_review(review_id):
     dataset = request.get_json()
     for k, v in dataset.items():
         if k not in ['id', 'state_id', 'created_at', 'updated_at']:
-            setattr(city, k, v)
+            setattr(review, k, v)
     review.save()
 
     review_response = review.to_dict()
