@@ -1,9 +1,10 @@
 #!/usr/bin/python3
 """sets up the Flask application for v1 of the API"""
 
+from api.v1.views import app_views
 from flask import Flask
 from models import storage
-from api.v1.views import app_views
+import os
 
 
 app = Flask(__name__)
