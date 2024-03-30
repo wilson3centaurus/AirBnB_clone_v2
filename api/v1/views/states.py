@@ -6,13 +6,16 @@ from models import storage
 from models.state import State
 
 
-@app_views.route('/states', methods=['GET'])
+@app_views.route('/states', methods=['GET'], strict_slashes=False)
 def get_all_states():
     """Get all states"""
-    return jsonify(storage.all(State))
+    states = storage.all(State)
+    states_list = [value.to_dict() for value in states.values()]
+
+    return jsonify(states_list)
 
 
-@app_views.route('/states/<state_id>', methods=['GET'])
+@app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
 def get_state(state_id):
     """Get state based on state_id"""
     try:
@@ -21,18 +24,20 @@ def get_state(state_id):
         abort(404)
 
 
-@app_views.route('/states/<state_id>', methods=['DELETE'])
+@app_views.route('/states/<state_id>', methods=['DELETE'],
+                 strict_slashes=False)
 def delete_state(state_id):
     """Delete a State"""
     try:
         state = storage.get(State, state_id)
         storage.delete(state)
+        storage.save()
         return jsonify({}), 200
     except Exception as e:
         abort(404)
 
 
-@app_views.route('/states', methods=['POST'])
+@app_views.route('/states', methods=['POST'], strict_slashes=False)
 def post_state():
     """Creates a State object"""
     ## get the dict from the request {name}
@@ -41,9 +46,10 @@ def post_state():
     req = request.get_json()
     if req:
         if "name" in req.keys():
-            state = State(req["name"])
-            storage.new(state)
-            return jsonify(state), 201
+            state = State()
+            state.name = req["name"]
+            state.save()
+            return jsonify(state.to_dict()), 201
         else:
             return "Missing name", 400
     else:
@@ -60,7 +66,7 @@ def put_state(state_id):
     req = request.get_json()
     if req:
         state.name = req["name"]
-        ## I might need to state.save() here
+        state.save()
         return jsonify(state), 200
     else:
         return "Not a JSON", 400
