@@ -78,6 +78,11 @@ Classes inherited from Base Model:
 * [states.py](/api/v1/views/states.py) - contains routes for State objects
 * [index.py](/api/v1/views/index.py) - contains routes for index
 
+[/api/__init__.py](/api/__init__.py) - Initializes the API package
+[/api/v1/__init__.py](/api/v1/__init__.py) - Initializes the v1 API package
+[/api/v1/views/__init__.py](/api/v1/views/__init__.py) - Initializes the views package for v1 of the API
+
+
 ## Test files
 
 #### `/tests` directory contains all unit test cases for this project:
