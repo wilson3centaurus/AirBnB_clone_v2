@@ -16,6 +16,7 @@ def teardown():
     """this method handles the decorator @app.teardown_appcontext"""
     storage.close()
 
+
 if __name__ == "__main__":
     host = os.environ.get('HBNB_API_HOST', '0.0.0.0')
     port = int(os.environ.get('HBNB_API_PORT', 5000))
