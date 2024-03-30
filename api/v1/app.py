@@ -3,6 +3,8 @@
 from flask import Flask, render_template, make_response, jsonify
 from models import storage
 from api.v1.views import app_views
+from flask_cors import CORS
+from os import environ
 
 
 app = Flask(__name__)
