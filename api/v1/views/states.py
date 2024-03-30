@@ -67,7 +67,3 @@ def put_state(state_id):
             abort(404)
     else:
         return jsonify({"error": "Not a JSON"}), 400
-
-
-if __name__ == '__main__':
-    pass

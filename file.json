@@ -1,1 +1,53 @@
-{"Amenity.db2d62c5-0599-4812-ae11-92f9414962fa": {"id": "db2d62c5-0599-4812-ae11-92f9414962fa", "created_at": "2024-03-30T15:18:11.082323", "updated_at": "2024-03-30T15:18:11.082323", "__class__": "Amenity"}, "BaseModel.89b002f8-6efa-43bf-b4a2-1225445642ee": {"id": "89b002f8-6efa-43bf-b4a2-1225445642ee", "created_at": "2024-03-30T15:18:11.082336", "updated_at": "2024-03-30T15:18:11.082336", "__class__": "BaseModel"}, "City.486be58b-51ab-41cb-aea2-4729a429e51b": {"id": "486be58b-51ab-41cb-aea2-4729a429e51b", "created_at": "2024-03-30T15:18:11.082346", "updated_at": "2024-03-30T15:18:11.082346", "__class__": "City"}, "Place.ad5ea8db-e24e-4a79-8c4a-91a6ad65f675": {"id": "ad5ea8db-e24e-4a79-8c4a-91a6ad65f675", "created_at": "2024-03-30T15:18:11.082355", "updated_at": "2024-03-30T15:18:11.082355", "__class__": "Place"}, "Review.a794771b-53d5-4cd1-a4f9-1e4b3580b3d4": {"id": "a794771b-53d5-4cd1-a4f9-1e4b3580b3d4", "created_at": "2024-03-30T15:18:11.082363", "updated_at": "2024-03-30T15:18:11.082363", "__class__": "Review"}, "State.02946984-8d24-46b6-bfa0-aab7f21ced87": {"id": "02946984-8d24-46b6-bfa0-aab7f21ced87", "created_at": "2024-03-30T15:18:11.082372", "updated_at": "2024-03-30T15:18:11.082372", "__class__": "State"}, "User.f797d4b1-6475-4bdc-9fb2-cbbcd4638615": {"id": "f797d4b1-6475-4bdc-9fb2-cbbcd4638615", "created_at": "2024-03-30T15:18:11.082381", "updated_at": "2024-03-30T15:18:11.082381", "__class__": "User"}}
+{
+    "State.61c5e79b-5482-41a1-b75e-f742b9ffe02a": {
+        "id": "61c5e79b-5482-41a1-b75e-f742b9ffe02a",
+        "created_at": "2024-03-30T21:22:50.401621",
+        "updated_at": "2024-03-30T21:22:50.401630",
+        "name": "California",
+        "__class__": "State"
+    },
+    "State.b80fccaf-c889-4209-b540-366866cd55a5": {
+        "id": "b80fccaf-c889-4209-b540-366866cd55a5",
+        "created_at": "2024-03-30T21:23:04.624200",
+        "updated_at": "2024-03-30T21:23:04.624209",
+        "name": "Alabama",
+        "__class__": "State"
+    },
+    "State.8236fecb-27e0-457f-93f0-1553e698068d": {
+        "id": "8236fecb-27e0-457f-93f0-1553e698068d",
+        "created_at": "2024-03-30T21:23:13.859070",
+        "updated_at": "2024-03-30T21:23:13.859077",
+        "name": "New York",
+        "__class__": "State"
+    },
+    "State.19767fb5-8d28-426e-b65a-7cc1737913d2": {
+        "id": "19767fb5-8d28-426e-b65a-7cc1737913d2",
+        "created_at": "2024-03-30T21:23:32.141087",
+        "updated_at": "2024-03-30T21:23:32.141094",
+        "name": "Washington",
+        "__class__": "State"
+    },
+    "State.24333045-a882-4669-97c9-74e1fc24a529": {
+        "id": "24333045-a882-4669-97c9-74e1fc24a529",
+        "created_at": "2024-03-30T21:23:42.658530",
+        "updated_at": "2024-03-30T21:23:42.658538",
+        "name": "Florida",
+        "__class__": "State"
+    },
+    "City.13bfad38-ec7d-45e8-9d63-1fcd05a88345": {
+        "name": "Miami",
+        "created_at": "2024-03-30T21:24:20.525847",
+        "updated_at": "2024-03-30T21:24:20.525944",
+        "id": "13bfad38-ec7d-45e8-9d63-1fcd05a88345",
+        "state_id": "24333045-a882-4669-97c9-74e1fc24a529",
+        "__class__": "City"
+    },
+    "City.3f09640a-aa19-487e-84d3-f65148538667": {
+        "name": "Seattle",
+        "created_at": "2024-03-30T21:26:38.953871",
+        "updated_at": "2024-03-30T21:26:38.954006",
+        "id": "3f09640a-aa19-487e-84d3-f65148538667",
+        "state_id": "19767fb5-8d28-426e-b65a-7cc1737913d2",
+        "__class__": "City"
+    }
+}
