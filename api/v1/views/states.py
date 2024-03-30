@@ -3,7 +3,7 @@
 State view
 """
 from api.v1.views import app_views
-from flask import jsonify, make_response, request
+from flask import abort, jsonify, make_response, request
 from models import storage
 from models.state import State
 
@@ -22,7 +22,7 @@ def get_state_id(state_id):
     if state:
         return jsonify(state.to_dict())
     else:
-        return jsonify({'error': 'Not found'}), 404
+        return abort(404, 'Not found')
 
 
 @app_views.route('/states/<state_id>', methods=['DELETE'],
@@ -35,7 +35,7 @@ def delete_state(state_id):
         storage.save()
         return make_response(jsonify({}), 200)
     else:
-        abort(404)
+        abort(404, 'Not found')
 
 
 @app_views.route('/states/', methods=['POST'], strict_slashes=False)
@@ -43,9 +43,9 @@ def create_state():
     """Creates new state"""
     data = request.get_json()
     if data is None:
-        return jsonify({'error': 'Not a JSON'}), 400
+        return abort(400, 'Not a JSON')
     if 'name' not in data:
-        return jsonify({'error': 'Missing name'}), 400
+        return abort(400, 'Missing name')
 
     new_state = State(**data)
     new_state.save()
@@ -58,20 +58,16 @@ def update_state(state_id):
     """Update a State"""
     state = storage.get(State, state_id)
     if not state:
-        return jsonify({'error': 'Not found'}), 404
+        return abort(404, 'Not found')
 
     data = request.get_json()
     if data is None:
-        return make_response(jsonify({'error': 'Not a JSON'}), 400)
-
-    # Remove keys to be ignored
-    data.pop('id', None)
-    data.pop('created_at', None)
-    data.pop('updated_at', None)
+        return abort(400, 'Not a JSON')
 
     # Update state object with new data
     for key, value in data.items():
-        setattr(state, key, value)
+        if key not in ['id', 'created_at', 'updated_at']:
+            setattr(state, key, value)
 
     state.save()
     return make_response(jsonify(state.to_dict()), 200)
