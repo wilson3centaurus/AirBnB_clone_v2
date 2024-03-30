@@ -155,7 +155,8 @@ No known bugs at this time.
 
 ## Authors
 Francis Njoroge - [Github](https://github.com/Mainagithubrit) 
-Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+
+Emmanuel Ejeagha - [Github](https://github.com/emmanuel-Ejeagha) / [Twitter](https://twitter.com/emma_ejeagha)
 
 Second part of Airbnb: Joann Vuong
 ## License
