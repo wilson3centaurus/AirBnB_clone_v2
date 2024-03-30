@@ -78,7 +78,7 @@ class DBStorage:
     def get(self, cls, id):
         """ Returns the object based on the class and its ID, or None """
         if cls and id:
-            return (self.__session.query(cls).filter_by(id=id).first())
+            return (self.all(cls).get(('{}.{}'.format(cls, id))))
         else:
             return (None)
 
