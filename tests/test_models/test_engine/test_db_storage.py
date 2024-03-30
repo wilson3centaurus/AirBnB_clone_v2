@@ -86,3 +86,29 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get_returns_object(self):
+        """Test that get retrieves an object by class name and id"""
+        # Create an instance of a class, add it to the database, and then retrieve it using the get() method.
+        # Ensure that the retrieved object matches the original one.
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get_returns_none_if_not_found(self):
+        """Test that get returns None if the object is not found"""
+        # Attempt to retrieve an object with an invalid class name or id using the get() method.
+        # Ensure that the method returns None.
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        """Test that count returns the number of objects in the database"""
+        # Create multiple instances of different classes, add them to the database,
+        # and then call the count() method with and without specifying a class name.
+        # Ensure that the returned count matches the expected number of objects.
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count_returns_number_of_objects_of_specified_class(self):
+        """Test that count returns the number of objects of the specified class"""
+        # Create multiple instances of a specific class, add them to the database,
+        # and then call the count() method with the class name as an argument.
+        # Ensure that the returned count matches the expected number of objects of that class.
