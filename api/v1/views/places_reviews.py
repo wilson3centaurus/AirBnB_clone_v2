@@ -15,7 +15,7 @@ from models.review import Review
 from models.place import Place
 
 
-@app_views.route('/places/<place_id>/reviews',
+@app_views.route('/places/<string:place_id>/reviews',
                 methods=['GET'], strict_slashes=False)
 def get_all_reviews(place_id):
     """
@@ -34,7 +34,7 @@ def get_all_reviews(place_id):
     return jsonify(reviews)
 
 
-@app_views.route('/reviews/<review_id>',
+@app_views.route('/reviews/<string:review_id>',
                  methods=['GET'], strict_slashes=False)
 def get_a_review(review_id):
     """
@@ -50,7 +50,7 @@ def get_a_review(review_id):
     return (review_response)
 
 
-@app_views.route('/reviews/<review_id>',
+@app_views.route('/reviews/<string:review_id>',
                  methods=['DELETE'], strict_slashes=False)
 def delete_a_review(review_id):
     """
@@ -62,12 +62,12 @@ def delete_a_review(review_id):
     if review is None:
         abort(404)
 
-    storage.delete(review_id)
+    storage.delete(review)
     storage.save()
     return jsonify({}), 200
 
 
-@app_views.route('/places/<place_id>/reviews',
+@app_views.route('/places/<string:place_id>/reviews',
                 methods=['POST'], strict_slashes=False)
 def create_a_review(place_id):
     """
@@ -96,7 +96,7 @@ def create_a_review(place_id):
     return jsonify(review_response, 201)
 
 
-@app_views.route('/reviews/<review_id>',
+@app_views.route('/reviews/<string:review_id>',
                 methods=['PUT'], strict_slashes=False)
 def update_a_review(review_id):
     """
