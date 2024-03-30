@@ -19,8 +19,7 @@ class TestUserAPI(unittest.TestCase):
         self.app.register_blueprint(app_views)
         self.client = self.app.test_client()
         self.state = State(name="Tatooine")
-        self.user = User(email="luke@jedi.com",
-                         password="usetheforce",
+        self.user = User(email="luke@jedi.com", password="usetheforce",
                          state_id=self.state.id)
 
     def tearDown(self):
@@ -32,8 +31,7 @@ class TestUserAPI(unittest.TestCase):
         # Create users
         user_emails = ["anakin@sith.com", "leia@rebels.com"]
         for email in user_emails:
-            user = User(email=email,
-                        password="password",
+            user = User(email=email, password="password",
                         state_id=self.state.id)
             storage.new(user)
         storage.save()
@@ -85,9 +83,9 @@ class TestUserAPI(unittest.TestCase):
 
         # Test PUT request
         updated_user_data = {
-            'email': 'obi-wan@jedi.com',
-            'password': 'forceghost'
-            }
+                'email': 'obi-wan@jedi.com',
+                'password': 'forceghost'
+                }
         response = self.client.put(f'/api/v1/users/{self.user.id}',
                                    json=updated_user_data)
         self.assertEqual(response.status_code, 200)
