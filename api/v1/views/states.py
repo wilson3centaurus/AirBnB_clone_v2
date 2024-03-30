@@ -3,7 +3,7 @@
 State view
 """
 from api.v1.views import app_views
-from flask import jsonify, request
+from flask import jsonify, make_response, request
 from models import storage
 from models.state import State
 
@@ -33,9 +33,9 @@ def delete_state(state_id):
     if state:
         storage.delete(state)
         storage.save()
-        return jsonify({}), 200
+        return make_response(jsonify({}), 200)
     else:
-        return jsonify({'error': 'Not found'}), 404
+        abort(404)
 
 
 @app_views.route('/states/', methods=['POST'], strict_slashes=False)
@@ -50,7 +50,7 @@ def create_state():
     new_state = State(**data)
     new_state.save()
 
-    return jsonify(new_state.to_dict()), 201
+    return make_response(jsonify(new_state.to_dict()), 201)
 
 
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
@@ -62,7 +62,7 @@ def update_state(state_id):
 
     data = request.get_json()
     if data is None:
-        return jsonify({'error': 'Not a JSON'}), 400
+        return make_response(jsonify({'error': 'Not a JSON'}), 400)
 
     # Remove keys to be ignored
     data.pop('id', None)
@@ -74,4 +74,4 @@ def update_state(state_id):
         setattr(state, key, value)
 
     state.save()
-    return jsonify(state.to_dict()), 200
+    return make_response(jsonify(state.to_dict()), 200)
