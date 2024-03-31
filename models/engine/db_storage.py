@@ -85,6 +85,9 @@ class DBStorage:
         """Count the number of objects in storage, optionally filtered by class."""
         if cls and cls in classes.values():
             return self.__session.query(cls).count()
-        return self.__session.query(BaseModel).count()
-
-
+        elif cls is None:
+            total_count = 0
+            for class_obj in classes.values():
+                total_count += self.__session.query(class_obj).count()
+                return total_count
+        return 0
