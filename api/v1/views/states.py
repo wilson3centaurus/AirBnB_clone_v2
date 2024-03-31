@@ -90,7 +90,6 @@ def update_state(state_id):
         request_data = request.get_json()
     except Exception:
         abort(400, "Not a JSON")
-
     
     for key, value in request_data.items():
         if key not in ('id', 'created_at', 'updated_at'):
