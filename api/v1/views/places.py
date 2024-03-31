@@ -134,7 +134,7 @@ def search_all_places():
         for state_id in states:
             state = storage.get(State, state_id)
             if state:
-                places.update(state.places)
+                places.update(state.cities)
         for city_id in cities:
             city = storage.get(City, city_id)
             if city:
