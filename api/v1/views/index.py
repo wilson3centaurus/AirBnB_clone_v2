@@ -18,13 +18,25 @@ def api_status():
 @app_views.route("/stats", strict_slashes=False)
 def get_stats():
     """returns the stats of the api"""
-    stats = {
-            "amenities": storage.count('Amenity'),
-            "cities": storage.count('City'),
-            "places": storage.count('Place'),
-            "reviews": storage.count("Review"),
-            "states": storage.count("State"),
-            "users": storage.count("User")
-            }
+    stats = {}
+    obj_types = {
+        'Amenity': "amenities",
+        'City': "cities",
+        'Place': "places",
+        'Review': "reviews",
+        'State': "states",
+        'User': "users"
+        }
+    # stats = {
+    #         "amenities": storage.count('Amenity'),
+    #         "cities": storage.count('City'),
+    #         "places": storage.count('Place'),
+    #         "reviews": storage.count("Review"),
+    #         "states": storage.count("State"),
+    #         "users": storage.count("User")
+    #         }
+    for obj in obj_types.keys():
+        if storage.count(obj):
+            stats[obj_types[obj]] = storage.count(obj)
 
     return jsonify(stats)
