@@ -259,6 +259,34 @@ TestBaseModel class:
 * `def test_pep8(self)` - Tests if module follows PEP8 style
 * `def test_executable(self)` - Tests if the file is executable
 
+[/test_views/test_cities.py](tests/test_api/test_v1/test_views/test_cities.py) - Contains `TestCityAPI`
+* `def setUp(self)` - Prep function
+* `def tearDown(self)` - Clean up function
+* `def test_get_cities_by_state(self)` - Tests the retrival of all cities of a state
+* `def test_get_city(self)` - Tests the retrival of a city
+* `def test_delete_city(self)` - Tests the Deletion of a city
+* ` def test_create_city(self)` - Tests the Creation of a city within a state
+* `def test_update_city(self)` - Tests the updating of a state and city
+
+[/test_views/test_user.py](tests/test_api/test_v1/test_views/test_user.py)
+* `def test_get_all_users(self)` - Tests the retrival of all user
+* `def test_create_user(self)` - Tests the creation of user
+* `def test_create_user_missing_fields(self)` - tests the creating of a user with missing fields
+* `def test_update_user(self)` - Tests the normal updating of user
+* `def test_update_user_invalid_fields(self)` - Tests the updating of invalid fields
+
+[/test_views/test_places_amenities.py](tests/test_api/test_v1/test_views/test_places_amenities.py)
+* `def test_get_place_amenities(self)` - Test GET /api/v1/places/<place_id>/amenities
+* `def test_delete_place_amenity(self)` - Test DELETE /api/v1/places/<place_id>/amenities/<amenity_id>
+* `def test_link_place_amenity(self)` - Test POST /api/v1/places/<place_id>/amenities/<amenity_id>
+
+[/test_views/test_places_reviews.py](tests/test_api/test_v1/test_views/test_places_reviews.py)
+* `def test_get_all_reviews(self)` - Tests the retieval of all review of a place
+* `def test_get_review(self)` - Tests the retrieval of a review 
+* `def test_delete_review(self)` - Tests the deletion of a review
+* `def test_create_review(self)` - Tests the creation of a review
+* `def test_update_review(self)` - Tests the updating of a review
+
 ## Examples of use
 ```
 vagrantAirBnB_clone$./console.py

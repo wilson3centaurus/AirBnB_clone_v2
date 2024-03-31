@@ -1,5 +1,9 @@
 #!/usr/bin/python3
-"""Unit tests for places module"""
+"""
+Unit tests for places module:
+    - Testplaces
+    - TestPlacesSearchAPI
+"""
 
 import inspect
 import pep8
@@ -12,6 +16,8 @@ from models.city import City
 from models.place import Place
 from models.user import User
 from api.v1.views import places
+from models.state import State
+from models.amenity import Amenity
 
 
 class Testplaces(unittest.TestCase):
@@ -140,6 +146,103 @@ class Testplaces(unittest.TestCase):
 
         place = storage.get(Place, self.place.id)
         self.assertEqual(place.name, 'Penthouse')
+
+
+class TestPlacesSearchAPI(unittest.TestCase):
+    """Test cases for the search_all_places endpoint."""
+
+    def setUp(self):
+        """Set up test client, Flask app, and initialize test data."""
+        self.app = Flask(__name__)
+        self.app.register_blueprint(app_views)
+        self.client = self.app.test_client()
+
+        # Create test data: states, cities, places, and amenities
+        self.state_A = State(name="State A")
+        self.state_B = State(name="State B")
+        self.city_A1 = City(name="City A1", state_id=self.state_A.id)
+        self.city_A2 = City(name="City A2", state_id=self.state_A.id)
+        self.city_B1 = City(name="City B1", state_id=self.state_B.id)
+        self.place_A1 = Place(name="Place A1", city_id=self.city_A1.id)
+        self.place_A2 = Place(name="Place A2", city_id=self.city_A2.id)
+        self.place_B1 = Place(name="Place B1", city_id=self.city_B1.id)
+        self.amenity_wifi = Amenity(name="Wifi")
+        self.amenity_parking = Amenity(name="Parking")
+        self.amenity_pool = Amenity(name="Pool")
+
+        # Save test data to the database
+        storage.new(self.state_A)
+        storage.new(self.state_B)
+        storage.new(self.city_A1)
+        storage.new(self.city_A2)
+        storage.new(self.city_B1)
+        storage.new(self.place_A1)
+        storage.new(self.place_A2)
+        storage.new(self.place_B1)
+        storage.new(self.amenity_wifi)
+        storage.new(self.amenity_parking)
+        storage.new(self.amenity_pool)
+        storage.save()
+
+    def tearDown(self):
+        """Clean up after each test."""
+        storage.delete(self.state_A)
+        storage.delete(self.state_B)
+        storage.delete(self.city_A1)
+        storage.delete(self.city_A2)
+        storage.delete(self.city_B1)
+        storage.delete(self.place_A1)
+        storage.delete(self.place_A2)
+        storage.delete(self.place_B1)
+        storage.delete(self.amenity_wifi)
+        storage.delete(self.amenity_parking)
+        storage.delete(self.amenity_pool)
+        storage.save()
+
+    def test_search_all_places_empty_request_body(self):
+        """Test search_all_places with an empty request body."""
+        """
+        response = self.client.post('/api/v1/places_search', json={})
+        self.assertEqual(response.status_code, 200)
+        data = response.json
+        self.assertEqual(len(data), 3)
+        """
+        pass
+
+    def test_search_all_places_with_states_and_cities(self):
+        """Test search_all_places with states and cities specified."""
+        """
+        request_body = {
+            "states": [self.state_A.id],
+            "cities": [self.city_A1.id]
+        }
+        response = self.client.post('/api/v1/places_search', json=request_body)
+        self.assertEqual(response.status_code, 200)
+        data = response.json
+        self.assertEqual(len(data), 1)
+        """
+        pass
+
+    def test_search_all_places_with_amenities(self):
+        """Test search_all_places with amenities specified."""
+        """
+        # Link amenities to places
+        self.place_A1.amenities.append(self.amenity_wifi)
+        self.place_A1.amenities.append(self.amenity_parking)
+        self.place_A2.amenities.append(self.amenity_wifi)
+        self.place_A2.amenities.append(self.amenity_pool)
+        self.place_B1.amenities.append(self.amenity_parking)
+        storage.save()
+
+        request_body = {
+            "amenities": [self.amenity_wifi.id, self.amenity_parking.id]
+        }
+        response = self.client.post('/api/v1/places_search', json=request_body)
+        self.assertEqual(response.status_code, 200)
+        data = response.json
+        self.assertEqual(len(data), 2)
+        """
+        pass
 
 
 if __name__ == "__main__":

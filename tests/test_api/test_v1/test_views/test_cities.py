@@ -13,8 +13,14 @@ from models.city import City
 
 
 class TestCityAPI(unittest.TestCase):
+    """
+    Test cases for the view for City objects.
+    """
 
     def setUp(self):
+        """
+        Set up test client, Flask app, and initialize test data.
+        """
         self.app = Flask(__name__)
         self.app.register_blueprint(app_views)
         self.client = self.app.test_client()
@@ -22,10 +28,16 @@ class TestCityAPI(unittest.TestCase):
         self.city = City(name="San Francisco", state_id=self.state.id)
 
     def tearDown(self):
+        """
+        Clean up after each test.
+        """
         storage.delete(self.state)
         storage.save()
 
     def test_get_cities_by_state(self):
+        """
+        Test retrieving cities by state.
+        """
         # Create a state
         storage.new(self.state)
         storage.save()
@@ -46,6 +58,9 @@ class TestCityAPI(unittest.TestCase):
         self.assertIn("San Diego", [city['name'] for city in data])
 
     def test_get_city(self):
+        """
+        Test retrieving a city by its ID.
+        """
         # Create a state and city
         storage.new(self.state)
         storage.new(self.city)
@@ -58,6 +73,9 @@ class TestCityAPI(unittest.TestCase):
         self.assertEqual(data['name'], "San Francisco")
 
     def test_delete_city(self):
+        """
+        Test deleting a city by its ID.
+        """
         # Create a state and city
         storage.new(self.state)
         storage.new(self.city)
@@ -73,6 +91,9 @@ class TestCityAPI(unittest.TestCase):
         self.assertIsNone(city)
 
     def test_create_city(self):
+        """
+        Test creating a new city.
+        """
         # Create a state
         storage.new(self.state)
         storage.save()
@@ -90,6 +111,9 @@ class TestCityAPI(unittest.TestCase):
         self.assertIsNotNone(city)
 
     def test_update_city(self):
+        """
+        Test updating an existing city.
+        """
         # Create a state and city
         storage.new(self.state)
         storage.new(self.city)
