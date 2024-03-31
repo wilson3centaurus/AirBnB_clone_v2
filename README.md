@@ -156,7 +156,3 @@ No known bugs at this time.
 ## Authors
 Ayoub Ajeddab - [Github](https://github.com/AjeAyoub) / [Twitter](https://twitter.com/ayoub_aje)  
 Edmilson Cassecasse - [Github](https://github.com/eacassecasse) / [Twitter](https://twitter.com/eacassecasse)
-
-Second part of Airbnb: Joann Vuong
-## License
-Public Domain. No copy write protection. 
