@@ -154,7 +154,8 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Authors
-Farah Fassal - [Github](https://github.com/03farahfassal) / [Twitter](https://twitter.com/farah_fassal)  
+Farah Fassal - [Github](https://github.com/03farahfassal) / [Twitter](https://twitter.com/farah_fassal)
+Damina Iliya - [Github](https://github.com/iDamina) / [Twitter](https://twitter.com/iamijdamina)
 
 ## License
 Public Domain. No copy write protection. 
