@@ -16,7 +16,8 @@ def new_storage_values():
 
 
 @app_views.route('/states', methods=['GET', 'POST'], strict_slashes=False)
-@app_views.route('/states/<state_id>', methods=['GET', 'DELETE', 'PUT'])
+@app_views.route('/states/<state_id>', methods=['GET', 'DELETE', 'PUT'],
+                 strict_slashes=False)
 def all_states(state_id=None):
     """list of all or given state_id State Objects"""
     state_instances = [val.to_dict() for val in g.state_dict.values()]
@@ -52,4 +53,4 @@ def all_states(state_id=None):
             if key not in ['id', 'created_at', 'update_id']:
                 setattr(obj_inst, key, data[key])
         obj_inst.save()
-        return obj_inst.to_dict()
+        return make_response(jsonify(obj_inst.to_dict()), 200)
