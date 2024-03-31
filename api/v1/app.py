@@ -1,10 +1,10 @@
 #!/usr/bin/python3
 """ This script creates an api flask for hbnb project"""
 from api.v1.views import app_views
-from flask import Flask, jsonify
 from flask_cors import CORS
-from models import storage
 from os import environ
+from flask import Flask, jsonify
+from models import storage
 
 
 app = Flask(__name__)
@@ -14,18 +14,10 @@ CORS(app, origins='0.0.0.0')
 
 
 @app.teardown_appcontext
-def teardown_db(exception):
+def teardown_db(exception=None):
     """ This function called each time the database is updated
     """
     storage.close()
-
-
-"""<---------------- error handling --------------->"""
-@app.errorhandler(400)
-def name_not_found(msg):
-    """ This function handels status_code '400'
-    """
-    return jsonify({'error': msg.description}), 400
 
 
 @app.errorhandler(404)
