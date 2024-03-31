@@ -19,7 +19,7 @@ def states():
 @app_views.route("/states/<state_id>", methods=["GET"], strict_slashes=False)
 def state_id(state_id):
     """Retrieves a State Object based on its id"""
-    state = storage.get("State", state_id)
+    state = storage.get(State, state_id)
     if not state:
         abort(404)
     return jsonify(state.to_dict())
@@ -29,10 +29,10 @@ def state_id(state_id):
                  strict_slashes=False)
 def delete_state(state_id):
     """Deletes a State object"""
-    state = storage.get("State", state_id)
+    state = storage.get(State, state_id)
     if not state:
         abort(404)
-    state.delete(state)
+    state.delete()
     storage.save()
     return make_response(jsonify({}), 200)
 
@@ -54,7 +54,7 @@ def create_state():
 @app_views.route("/states/<state_id>", methods=["PUT"], strict_slashes=False)
 def update_state(state_id):
     """Updates a State object"""
-    state = storage.get("State", state_id)
+    state = storage.get(State, state_id)
     if not state:
         abort(404)
     body_request = request.get_json()
