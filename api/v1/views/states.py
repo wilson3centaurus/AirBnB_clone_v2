@@ -22,7 +22,7 @@ def get_object_by_id(cls, obj_id):
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 def retrieve_all_states():
     states = storage.all(State).values()
-    return jsonify([state.to_dict() for state in states])
+    return [state.to_dict() for state in states]
 
 
 @app_views.route(
@@ -63,9 +63,12 @@ def create_state():
     """ This function creates a new state object
     """
     try:
-        request_data = request.get_json()
-    except BadRequest:
+        if not request.get_json():
+            abort(400, "Not a JSON")
+    except Exception:
         abort(400, "Not a JSON")
+
+    request_data = request.get_json()
 
     if 'name' not in request_data:
         abort(400, "Missing name")
@@ -88,7 +91,7 @@ def update_state(state_id):
     try:
         if not request.get_json():
             abort(400, "Not a JSON")
-    except BadRequest:
+    except Exception as e:
         abort(400, "Not a JSON")
 
     request_data = request.get_json()

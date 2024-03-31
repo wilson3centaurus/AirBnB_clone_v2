@@ -34,15 +34,14 @@ def name_not_found(msg):
 def not_found(error):
     """ This function handels status_code '404'
     """
-    return make_response(jsonify({"error": "Not found"}), 404)
+    return jsonify({"error": "Not found"}), 404
 
 
 if __name__ == "__main__":
-    if __name__ == '__main__':
-        host = getenv("HBNB_API_HOST")
-        port = getenv("HBNB_API_PORT")
-        if host is None:
-            host = '0.0.0.0'
-        if port is None:
-            port = '5000'
-        app.run(host=host, port=port)
+    host = getenv("HBNB_API_HOST")
+    port = getenv("HBNB_API_PORT")
+    if host is None:
+        host = '0.0.0.0'
+    if port is None:
+        port = '5000'
+    app.run(host=host, port=port, threaded=True)
