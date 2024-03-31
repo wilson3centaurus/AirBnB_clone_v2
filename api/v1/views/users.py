@@ -5,8 +5,7 @@ from flask import Blueprint, jsonify, abort, request
 from werkzeug.exceptions import BadRequest
 from models import storage
 from models.user import User
-
-app_users = Blueprint("app_users", __name__)
+from api.v1.views import app_views
 
 
 def get_object_by_id(cls, obj_id):
@@ -18,13 +17,13 @@ def get_object_by_id(cls, obj_id):
     return None
 
 
-@app_users.route("/", methods=['GET'])
+@app_views.route("/", methods=['GET'])
 def retrive_all_users():
     """ This function return list of all users """
     return [obj.to_dict() for _, obj in storage.all(User).items()]
 
 
-@app_users.route("/<user_id>", methods=['GET'])
+@app_views.route("/<user_id>", methods=['GET'])
 def retrive_user(user_id):
     """ This function is used to retrive a specific user
         object using its id
@@ -35,7 +34,7 @@ def retrive_user(user_id):
     return user.to_dict()
 
 
-@app_users.route("/<user_id>", methods=['DELETE'])
+@app_views.route("/<user_id>", methods=['DELETE'])
 def delete_user(user_id):
     """ This function is used to delete an user object when
         the DELETE method is called
@@ -48,7 +47,7 @@ def delete_user(user_id):
     return {}, 200
 
 
-@app_users.route("/", methods=['POST'])
+@app_views.route("/", methods=['POST'])
 def create_user():
     """ This function creates a new user object
     """
@@ -69,7 +68,7 @@ def create_user():
     return new_user.to_dict(), 201
 
 
-@app_users.route("/<user_id>", methods=['PUT'])
+@app_views.route("/<user_id>", methods=['PUT'])
 def update_user(user_id):
     """ This function updates an existing user object
     """
