@@ -2,7 +2,7 @@
 """ This module is to handle routes related to the amenities
 """
 from api.v1.views import app_views
-from flask import abort, request
+from flask import Blueprint, abort, request
 from werkzeug.exceptions import BadRequest
 from models import storage
 from models.amenity import Amenity
@@ -17,13 +17,19 @@ def get_object_by_id(cls, obj_id):
     return None
 
 
-@app_views.route("/", methods=['GET'])
+@app_views.route(
+        "/amenities",
+        methods=['GET'],
+        strict_slashes=False)
 def retrive_all_amenities():
     """ This function return list of all amenities """
     return [obj.to_dict() for _, obj in storage.all(Amenity).items()]
 
 
-@app_views.route("/<amenity_id>", methods=['GET'])
+@app_views.route(
+        "/amenities/<amenity_id>",
+        methods=['GET'],
+        strict_slashes=False)
 def retrive_amenity(amenity_id):
     """ This function is used to retrive a specific amenity
         object using its id
@@ -34,7 +40,10 @@ def retrive_amenity(amenity_id):
     return amenity.to_dict()
 
 
-@app_views.route("/<amenity_id>", methods=['DELETE'])
+@app_views.route(
+        "/amenities/<amenity_id>",
+        methods=['DELETE'],
+        strict_slashes=False)
 def delete_amenity(amenity_id):
     """ This function is used to delete an amenity object when
         the DELETE method is called
@@ -47,7 +56,10 @@ def delete_amenity(amenity_id):
     return {}, 200
 
 
-@app_views.route("/", methods=['POST'])
+@app_views.route(
+        "/amenities",
+        methods=['POST'],
+        strict_slashes=False)
 def create_amenity():
     """ This function creates a new amenity object
     """
@@ -64,7 +76,10 @@ def create_amenity():
     return new_amenity.to_dict(), 201
 
 
-@app_views.route("/<amenity_id>", methods=['PUT'])
+@app_views.route(
+        "/amenities/<amenity_id>",
+        methods=['PUT'],
+        strict_slashes=False)
 def update_amenity(amenity_id):
     """ This function updates an existing amenity object
     """

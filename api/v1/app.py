@@ -1,13 +1,18 @@
 #!/usr/bin/python3
-
+"""
+API
+"""
 from api.v1.views import app_views
 from flask import Flask, make_response, jsonify
+from flask_cors import CORS
 from models import storage
-import os
+from os import getenv
 
 
 app = Flask(__name__)
+"""<----------------- view routes ----------------->"""
 app.register_blueprint(app_views)
+CORS(app, origins='0.0.0.0')
 
 
 @app.teardown_appcontext
@@ -29,10 +34,15 @@ def name_not_found(msg):
 def not_found(error):
     """ This function handels status_code '404'
     """
-    return make_response(jsonify({'error': 'Not found'}), 404)
+    return make_response(jsonify({"error": "Not found"}), 404)
 
 
 if __name__ == "__main__":
-    app.run(host=os.getenv('HBNB_API_HOST', '0.0.0.0'),
-            port=int(os.getenv('HBNB_API_PORT', '5000')),
-            threaded=True)
+    if __name__ == '__main__':
+        host = getenv("HBNB_API_HOST")
+        port = getenv("HBNB_API_PORT")
+        if host is None:
+            host = '0.0.0.0'
+        if port is None:
+            port = '5000'
+        app.run(host=host, port=port)

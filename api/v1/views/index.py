@@ -12,20 +12,24 @@ from models import storage
 from models.user import User
 
 
-@app_views.route("/status")
+@app_views.route("/status", strict_slashes=False)
 def status():
     """ This function returns the status of my API
     """
     return jsonify({"status": "OK"})
 
 
-@app_views.route('stats')
+@app_views.route('/stats', strict_slashes=False)
 def number_of_objects():
     """ This function return the number of each object
     """
     result = {}
-    objects = {"amenities": Amenity, "cities": City, "places": Place,
-               "reviews": Review, "states": State, "users": User}
+    objects = {
+            "amenities": Amenity,
+            "cities": City,
+            "places": Place,
+            "reviews": Review,
+            "states": State, "users": User}
     for key, obj in objects.items():
         result[key] = storage.count(obj)
 

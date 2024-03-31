@@ -1,8 +1,10 @@
 #!/usr/bin/python3
-""" This module is to handle routes related to the cities
+"""
+view for City objects that handles
+all default RESTFul API actions
 """
 from api.v1.views import app_views
-from flask import abort, request
+from flask import Blueprint, jsonify, abort, request, make_response
 from werkzeug.exceptions import BadRequest
 from models import storage
 from models.state import State
@@ -18,7 +20,10 @@ def get_object_by_id(cls, obj_id):
     return None
 
 
-@app_views.route("/<state_id>/cities", methods=['GET'])
+@app_views.route(
+        "/states/<state_id>/cities",
+        methods=['GET'],
+        strict_slashes=False)
 def retrive_cities_by_state(state_id):
     """ This function return list of all cities related to a state
     """
@@ -28,7 +33,10 @@ def retrive_cities_by_state(state_id):
     return [city.to_dict() for city in state.cities]
 
 
-@app_views.route("/<city_id>", methods=['GET'])
+@app_views.route(
+        "/cities/<city_id>",
+        methods=['GET'],
+        strict_slashes=False)
 def retrive_city(city_id):
     """ This function is used to retrive a specific city
         object using its id
@@ -39,8 +47,11 @@ def retrive_city(city_id):
     return city.to_dict()
 
 
-@app_views.route("/<city_id>", methods=['DELETE'])
-def delete_state(city_id):
+@app_views.route(
+        "/cities/<city_id>",
+        methods=['DELETE'],
+        strict_slashes=False)
+def delete_city(city_id):
     """ This function is used to delete an city object when
         the DELETE method is called
     """
@@ -52,7 +63,10 @@ def delete_state(city_id):
     return {}, 200
 
 
-@app_views.route("/<state_id>/cities", methods=['POST'])
+@app_views.route(
+        "/states/<state_id>/cities",
+        methods=['POST'],
+        strict_slashes=False)
 def create_city(state_id):
     """ This function creates a new city object
     """
@@ -73,7 +87,10 @@ def create_city(state_id):
     return new_city.to_dict(), 201
 
 
-@app_views.route("/<city_id>", methods=['PUT'])
+@app_views.route(
+        "/cities/<city_id>",
+        methods=['PUT'],
+        strict_slashes=False)
 def update_city(city_id):
     """ This function updates an existing city object
     """

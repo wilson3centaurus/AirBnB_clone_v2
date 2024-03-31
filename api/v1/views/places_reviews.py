@@ -1,13 +1,15 @@
 #!/usr/bin/python3
-""" This module is to handle routes related to the reviews
 """
-from flask import abort, request, make_response
+view for Review object that handles
+all default RESTFul API actions
+"""
+from api.v1.views import app_views
+from flask import Blueprint, jsonify, abort, request, make_response
 from werkzeug.exceptions import BadRequest
 from models import storage
 from models.review import Review
 from models.place import Place
 from models.user import User
-from api.v1.views import app_views
 
 
 def get_object_by_id(cls, obj_id):
@@ -19,7 +21,10 @@ def get_object_by_id(cls, obj_id):
     return None
 
 
-@app_views.route("/<place_id>/reviews", methods=['GET'])
+@app_views.route(
+        "/places/<place_id>/reviews",
+        methods=['GET'],
+        strict_slashes=False)
 def retrive_reviews_of_place(place_id):
     """ This function return list of all reviews related to a place
     """
@@ -29,7 +34,10 @@ def retrive_reviews_of_place(place_id):
     return [review.to_dict() for review in place.places]
 
 
-@app_views.route("/<review_id>", methods=['GET'])
+@app_views.route(
+        "/reviews/<review_id>",
+        methods=['GET'],
+        strict_slashes=False)
 def retrive_review(review_id):
     """ This function is used to retrive a specific review
         object using its id
@@ -40,7 +48,10 @@ def retrive_review(review_id):
     return review.to_dict()
 
 
-@app_views.route("/<review_id>", methods=['DELETE'])
+@app_views.route(
+        "/reviews/<review_id>",
+        methods=['DELETE'],
+        strict_slashes=False)
 def delete_review(review_id):
     """ This function is used to delete an review object when
         the DELETE method is called
@@ -53,7 +64,10 @@ def delete_review(review_id):
     return {}, 200
 
 
-@app_views.route("/<place_id>/reviews", methods=['POST'])
+@app_views.route(
+        "/places/<place_id>/reviews",
+        methods=['POST'],
+        strict_slashes=False)
 def create_review(place_id):
     """ This function creates a new review object
     """
@@ -84,8 +98,11 @@ def create_review(place_id):
     return new_review.to_dict(), 201
 
 
-@app_views.route("/<review_id>", methods=['PUT'])
-def update_city(review_id):
+@app_views.route(
+        "/reviews/<review_id>",
+        methods=['PUT'],
+        strict_slashes=False)
+def update_review(review_id):
     """ This function updates an existing review object
     """
     review = get_object_by_id(Review, review_id)
