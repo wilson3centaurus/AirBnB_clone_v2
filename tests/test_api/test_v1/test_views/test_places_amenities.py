@@ -38,7 +38,6 @@ class TestPlacesAmenitiesAPI(unittest.TestCase):
         Test GET /api/v1/places/<place_id>/amenities.
         """
 
-        # Ensure GET request returns status code 200 and an empty list initially
         response = self.client.get(
             f'/api/v1/places/{self.place.id}/amenities'
         )
