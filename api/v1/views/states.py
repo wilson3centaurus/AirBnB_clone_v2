@@ -36,7 +36,7 @@ def retrive_state(state_id):
     state = get_object_by_id(State, state_id)
     if not state:
         abort(404)
-    return state.to_dict()
+    return jsonify(state.to_dict())
 
 
 @app_views.route(
@@ -52,7 +52,7 @@ def delete_state(state_id):
         abort(404)
     storage.delete(state)
     storage.save()
-    return {}, 200
+    return jsonify({}), 200
 
 
 @app_views.route(
@@ -72,7 +72,7 @@ def create_state():
     new_state = State()
     new_state.name = request_data.get('name')
     new_state.save()
-    return new_state.to_dict(), 201
+    return jsonify(new_state.to_dict()), 201
 
 
 @app_views.route(
@@ -86,12 +86,14 @@ def update_state(state_id):
     if not state:
         abort(404)
     try:
-        request_data = request.get_json()
+        if not request.get_json():
+            abort(400, "Not a JSON")
     except BadRequest:
         abort(400, "Not a JSON")
 
+    request_data = request.get_json()
     for key, value in request_data.items():
         if key not in ('id', 'created_at', 'updated_at'):
             setattr(state, key, value)
     state.save()
-    return state.to_dict(), 200
+    return jsonify(state.to_dict()), 200

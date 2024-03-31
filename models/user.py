@@ -16,12 +16,6 @@ class User(BaseModel, Base):
         password = Column(String(128), nullable=False)
         first_name = Column(String(128), nullable=True)
         last_name = Column(String(128), nullable=True)
-<<<<<<< HEAD
-        places = relationship("Place", cascade='all, delete, delete-orphan',
-                              backref="user")
-        reviews = relationship("Review", cascade='all, delete, delete-orphan',
-                               backref="user")
-=======
         places = relationship(
                 "Place",
                 backref="user",
@@ -30,7 +24,6 @@ class User(BaseModel, Base):
                 "Review",
                 backref="user",
                 cascade='all, delete, delete-orphan')
->>>>>>> c9949bbf03987e284089d5f8740ce6b4e6c8fa44
     else:
         email = ""
         password = ""
