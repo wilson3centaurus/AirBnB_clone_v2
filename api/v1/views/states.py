@@ -22,7 +22,7 @@ def get_object_by_id(cls, obj_id):
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 def retrieve_all_states():
     states = storage.all(State).values()
-    return [state.to_dict() for state in states]
+    return jsonify([state.to_dict() for state in states])
 
 
 @app_views.route(
