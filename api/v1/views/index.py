@@ -15,17 +15,20 @@ def get_status():
 def get_stats():
     """ Retrieves the count of existing objects by type """
 
+    from models.amenity import Amenity
+    from models.city import City
+    from models.place import Place
+    from models.review import Review
+    from models.state import State
+    from models.user import User
+
     classes = {
-        "amenities": "Amenity",
-        "cities": "City",
-        "places": "Place",
-        "reviews": "Review",
-        "states": "State",
-        "users": "User"
+        "amenities": storage.count(Amenity),
+        "cities": storage.count(City),
+        "places": storage.count(Place),
+        "reviews": storage.count(Review),
+        "states": storage.count(State),
+        "users": storage.count(User)
         }
-    stats = {}
 
-    for k, v in classes.items():
-        stats[k] = storage.count(v)
-
-    return jsonify(stats)
+    return jsonify(classes)
