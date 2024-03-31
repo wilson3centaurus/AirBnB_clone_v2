@@ -15,7 +15,6 @@ from os import getenv
 import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
-from mysql.connector import connect
 
 classes = {"Amenity": Amenity, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
@@ -81,27 +80,17 @@ class DBStorage:
         '''get:
         retrieve an object from the file storage by class and id
         '''
-
         if cls and id:
-            if cls in classes.value() and isinstance(id, str):
-                all_objects = self.all(cls)
-                for key, value in all_objects.items():
-                    if key.split(',')[1] == id:
-                        return value
-                else:
-                    return
-            return
+            tempo = cls, __name__+ "." + id
+            count = self.all(cls)
+            for key in count:
+                if key == tempo:
+                    return count[key]
+        
+        else:
+            return None
+
 
     def count(self, cls=None):
-        '''count:
-        count the number of objects in storage matching the given class.
-        '''
-
-        if not cls:
-            inst_of_all_cls = self.all()
-            return len(inst_of_all_cls)
-        if cls in classes.values():
-            all_inst_of_prov_cls = self.all(cls)
-            return len(all_inst_of_prov_cls)
-        if cls not in classes.values():
-            return
+        '''class (optional)'''
+        return (len(self.all(cls)))
