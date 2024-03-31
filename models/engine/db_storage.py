@@ -79,13 +79,11 @@ class DBStorage:
 
     def get(self, cls, id):
         """Get an object of type `cls` with the given `id`"""
-        if cls is None or id is None:
-            return None
-
-        for obj in self.__session.query(classes[cls]).all():
-            if obj.id == id:
-                return obj
-
+        dict_cls = self.all(cls)
+        for key, value in dict_cls.items():
+            g_id = key.split('.')[1]
+            if g_id == id:
+                return value
         return None
 
     def count(self, cls=None):
