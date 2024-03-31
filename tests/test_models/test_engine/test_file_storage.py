@@ -3,6 +3,7 @@
 Contains the TestFileStorageDocs classes
 """
 
+
 from datetime import datetime
 import inspect
 import models
@@ -136,7 +137,7 @@ class TestFileStorage(unittest.TestCase):
         self.assertEqual(count_with_one_object, initial_count + 1)
 
     def test_count_with_no_class(self):
-        """Test count method with no class specified"""
+        """Test count method with no exact class"""
         storage = FileStorage()
         total_count = storage.count()
         expected_count = len(storage.all().values())
