@@ -7,7 +7,12 @@ from datetime import datetime
 from models import *
 import os
 from models.base_model import Base
+from models.city import City
+from models.engine import db_storage
 from models.engine.db_storage import DBStorage
+from models.place import Place
+from models.state import State
+from models.user import User
 
 
 storage_type = os.environ.get('HBNB_TYPE_STORAGE')
