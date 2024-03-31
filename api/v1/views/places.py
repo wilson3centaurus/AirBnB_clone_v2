@@ -120,45 +120,32 @@ def search_all_places():
     Retrieves all Place objects depending
     on the JSON in the body of the request
     """
-    data = request.get_json()
+    if not request.json:
+        abort(400, description="Not a JSON")
 
-    if not data:
-        return jsonify({"error": "Not a JSON"}), 400
+    states = request.json.get('states', [])
+    cities = request.json.get('cities', [])
+    amenities = request.json.get('amenities', [])
 
-    states = data.get('states', [])
-    cities = data.get('cities', [])
-    amenities = data.get('amenities', [])
-
-    # Retrieve places based on states and cities
-    places = []
-    if states or cities:
+    if not states and not cities:
+        places = storage.all(Place).values()
+    else:
+        places = set()
         for state_id in states:
             state = storage.get(State, state_id)
             if state:
-                for city in state.cities:
-                    if city.id not in cities:
-                        cities.append(city.id)
+                places.update(state.places)
         for city_id in cities:
             city = storage.get(City, city_id)
             if city:
-                places.extend(city.places)
+                places.update(city.places)
 
-    # Filter places based on amenities
     if amenities:
         filtered_places = []
         for place in places:
-            has_all_amenities = True
-            for amenity_id in amenities:
-                amenity_found = False
-                for amenity in place.amenities:
-                    if amenity.id == amenity_id:
-                        amenity_found = True
-                        break
-                if not amenity_found:
-                    has_all_amenities = False
-                    break
-            if has_all_amenities:
+            place_amenities = {amenity.id for amenity in place.amenities}
+            if set(amenities).issubset(place_amenities):
                 filtered_places.append(place)
         places = filtered_places
 
-    return jsonify([place.to_dict() for place in places])
+    return jsonify([place.to_dict() for place in places]), 200
