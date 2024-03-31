@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """ holds class User"""
-
+from typing import Any
 import models
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String
@@ -10,19 +10,14 @@ import hashlib
 
 class User(BaseModel, Base):
     """Representation of a user """
-
     if models.storage_t == 'db':
         __tablename__ = 'users'
         email = Column(String(128), nullable=False)
         password = Column(String(128), nullable=False)
-        first_name = Column(String(128))
-        last_name = Column(String(128))
-        places = relationship("Place",
-                              cascade="all, delete-orphan",
-                              backref="user")
-        reviews = relationship("Review",
-                               cascade="all, delete-orphan",
-                               backref="user")
+        first_name = Column(String(128), nullable=True)
+        last_name = Column(String(128), nullable=True)
+        places = relationship("Place", backref="user")
+        reviews = relationship("Review", backref="user")
     else:
         email = ""
         password = ""
@@ -31,7 +26,6 @@ class User(BaseModel, Base):
 
     def __init__(self, *args, **kwargs):
         """initializes user"""
-
         super().__init__(*args, **kwargs)
 
     def __setattr__(self, attr, value):
