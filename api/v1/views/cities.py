@@ -29,7 +29,7 @@ def get_city(city_id):
     return jsonify(city.to_dict())
 
 
-@app_view.route("/cities/<city_id>", methods=["DELETE"],
+@app_views.route("/cities/<city_id>", methods=["DELETE"],
                 strict_slash=False)
 def delete_city(city_id):
     """"Deletes a city"""
@@ -41,7 +41,7 @@ def delete_city(city_id):
     return jsonify({}), 200
 
 
-@app_view.route("/states/<state_id>/cities", methods=["POST"],
+@app_views.route("/states/<state_id>/cities", methods=["POST"],
                 strict_slash=False)
 def create_city(state_id):
     """Adds a new city"""
@@ -59,7 +59,7 @@ def create_city(state_id):
     return jsonify(city.to_dict()), 201
 
 
-@app_view.route("cities/<city_id>", methods=["PUT"],
+@app_views.route("cities/<city_id>", methods=["PUT"],
                 strict_slash=False)
 def update_city(city_id):
     """Update a city"""
