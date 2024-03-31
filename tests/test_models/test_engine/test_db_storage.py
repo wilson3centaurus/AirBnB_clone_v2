@@ -114,6 +114,6 @@ class TestDBStorage(unittest.TestCase):
         my_state = State(name="Texas")
         my_state.save()
         self.assertEqual(models.storage.count("State"), count + 1)
-        my_user = User(email = "lex@gmail.com", password="pwd21")
+        my_user = User(email="lex@gmail.com", password="pwd21")
         my_user.save()
         self.assertEqual(models.storage.count(), count + 2)
