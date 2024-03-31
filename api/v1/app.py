@@ -4,6 +4,7 @@ from api.v1.views import app_views, app_states, app_cities, app_amenities
 from flask import Flask, make_response, jsonify
 from api.v1.views import app_users, app_places, app_places_reviews
 from models import storage
+import os
 
 HBNB_API_HOST = '0.0.0.0'
 HBNB_API_PORT = '5000'
@@ -63,5 +64,5 @@ def not_found(error):
 
 
 if __name__ == "__main__":
-    app.run(host=HBNB_API_HOST,
-            port=HBNB_API_PORT)
+    app.run(host=os.getenv('HBNB_API_HOST', '0.0.0.0'),
+            port=int(os.getenv('HBNB_API_PORT', '5000')))
