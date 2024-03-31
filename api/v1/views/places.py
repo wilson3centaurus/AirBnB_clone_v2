@@ -1,13 +1,15 @@
 #!/usr/bin/python3
-
+"""
+view for Place objects that handles
+all default RESTFul API actions
+"""
+from api.v1.views import app_views
 from flask import Blueprint, abort, request
 from werkzeug.exceptions import BadRequest
 from models import storage
 from models.city import City
 from models.place import Place
 from models.user import User
-
-app_places = Blueprint("app_places", __name__)
 
 
 def get_object_by_id(cls, obj_id):
@@ -18,7 +20,10 @@ def get_object_by_id(cls, obj_id):
     return None
 
 
-@app_places.route("/<city_id>/places", methods=['GET'])
+@app_views.route(
+        "/cities/<city_id>/places",
+        methods=['GET'],
+        strict_slashes=False)
 def retrive_places_by_city(city_id):
     """  """
     city = get_object_by_id(City, city_id)
@@ -27,7 +32,10 @@ def retrive_places_by_city(city_id):
     return [place.to_dict() for place in city.places]
 
 
-@app_places.route("/<place_id>", methods=['GET'])
+@app_views.route(
+        "/places/<place_id>",
+        methods=['GET'],
+        strict_slashes=False)
 def retrive_place(place_id):
     """  """
     place = get_object_by_id(Place, place_id)
@@ -36,8 +44,11 @@ def retrive_place(place_id):
     return place.to_dict()
 
 
-@app_places.route("/<place_id>", methods=['DELETE'])
-def delete_state(place_id):
+@app_views.route(
+        "/places/<place_id>",
+        methods=['DELETE'],
+        strict_slashes=False)
+def delete_place(place_id):
     place = get_object_by_id(Place, place_id)
     if not place:
         abort(404)
@@ -46,7 +57,10 @@ def delete_state(place_id):
     return {}, 200
 
 
-@app_places.route("/<city_id>/places", methods=['POST'])
+@app_views.route(
+        "/cities/<city_id>/places",
+        methods=['POST'],
+        strict_slashes=False)
 def create_place(city_id):
     city = get_object_by_id(City, city_id)
     if city is None:
@@ -75,8 +89,11 @@ def create_place(city_id):
     return new_place.to_dict(), 201
 
 
-@app_places.route("/<place_id>", methods=['PUT'])
-def update_city(place_id):
+@app_views.route(
+        "/places/<place_id>",
+        methods=['PUT'],
+        strict_slashes=False)
+def update_place(place_id):
     place = get_object_by_id(Place, place_id)
     if not place:
         abort(404)
