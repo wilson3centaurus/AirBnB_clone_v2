@@ -118,7 +118,7 @@ def search_all_places():
     Retrieves all Place objects depending
     on the JSON in the body of the request
     """
-    dataset = request.get_json()
+    data = request.get_json()
 
     if not data:
         return jsonify({"error": "Not a JSON"}), 400
