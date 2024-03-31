@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/python
 """API routes"""
 
 from flask import jsonify
