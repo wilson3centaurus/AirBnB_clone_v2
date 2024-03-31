@@ -159,7 +159,9 @@ Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://tw
 
 Second part of Airbnb: Joann Vuong
 
-Version3 of Airbnb: * Tessy Ezeali
-		    * Fabrice Niyonkuru
+Airbnb version3 authors:
+☆ Tessy Ezeali
+☆ Fabrice Niyonkuru
+
 ## License
 Public Domain. No copy write protection. 
