@@ -64,7 +64,7 @@ def update_state(state_id):
     keys_to_ignore = ["id", "created_at", "updated_at"]
 
     for key, value in body_request.items():
-        if key not in keys_to_ignore:
+        if key not in keys_to_ignore and hasattr(state, key):
             setattr(state, key, value)
 
     storage.save()
