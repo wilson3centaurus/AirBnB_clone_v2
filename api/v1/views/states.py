@@ -4,8 +4,7 @@ view for State objects that handles
 all default RESTFul API actions
 """
 from api.v1.views import app_views
-from flask import jsonify, abort, request, make_response
-from werkzeug.exceptions import BadRequest
+from flask import jsonify, abort, request
 from models import storage
 from models.state import State
 
