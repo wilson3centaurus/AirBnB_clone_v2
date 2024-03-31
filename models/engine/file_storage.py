@@ -87,4 +87,4 @@ class FileStorage:
         dict_cls = self.all(cls)
         count = len(dict_cls)
         return count
-
+    
