@@ -2,8 +2,7 @@
 """ This module is to handle routes related to the amenities
 """
 from api.v1.views import app_views
-from flask import Blueprint, abort, request
-from werkzeug.exceptions import BadRequest
+from flask import abort, request
 from models import storage
 from models.amenity import Amenity
 
@@ -65,7 +64,7 @@ def create_amenity():
     """
     try:
         request_data = request.get_json()
-    except BadRequest:
+    except Exception:
         abort(400, description="Not a JSON")
 
     if 'name' not in request_data:
@@ -88,7 +87,7 @@ def update_amenity(amenity_id):
         abort(404)
     try:
         request_data = request.get_json()
-    except BadRequest:
+    except Exception:
         abort(400, description="Not a JSON")
 
     for key, value in request_data.items():

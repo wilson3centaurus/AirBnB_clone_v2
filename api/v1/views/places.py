@@ -67,7 +67,7 @@ def create_place(city_id):
         abort(404)
     try:
         request_data = request.get_json()
-    except BadRequest:
+    except Exception:
         abort(400, description="Not a JSON")
 
     if 'user_id' not in request_data:
@@ -99,7 +99,7 @@ def update_place(place_id):
         abort(404)
     try:
         request_data = request.get_json()
-    except BadRequest:
+    except Exception:
         abort(400, description="Not a JSON")
 
     for key, value in request_data.items():

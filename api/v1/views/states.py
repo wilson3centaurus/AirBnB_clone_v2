@@ -62,8 +62,7 @@ def create_state():
     """ This function creates a new state object
     """
     try:
-        if not request.get_json():
-            abort(400, "Not a JSON")
+        request_data = request.get_json()
     except Exception:
         abort(400, "Not a JSON")
 
@@ -88,12 +87,11 @@ def update_state(state_id):
     if not state:
         abort(404)
     try:
-        if not request.get_json():
-            abort(400, "Not a JSON")
-    except Exception as e:
+        request_data = request.get_json()
+    except Exception:
         abort(400, "Not a JSON")
 
-    request_data = request.get_json()
+    
     for key, value in request_data.items():
         if key not in ('id', 'created_at', 'updated_at'):
             setattr(state, key, value)

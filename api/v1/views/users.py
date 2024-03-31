@@ -2,8 +2,7 @@
 """ This module handles the users routes
 """
 from api.v1.views import app_views
-from flask import Blueprint, jsonify, abort, request
-from werkzeug.exceptions import BadRequest
+from flask import jsonify, abort, request
 from models import storage
 from models.user import User
 
@@ -65,7 +64,7 @@ def create_user():
     """
     try:
         request_data = request.get_json()
-    except BadRequest:
+    except Exception:
         abort(400, description="Not a JSON")
 
     if 'email' not in request_data:
@@ -92,7 +91,7 @@ def update_user(user_id):
         abort(404)
     try:
         request_data = request.get_json()
-    except BadRequest:
+    except Exception:
         abort(400, description="Not a JSON")
 
     for key, value in request_data.items():
