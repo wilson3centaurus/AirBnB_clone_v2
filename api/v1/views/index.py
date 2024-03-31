@@ -22,7 +22,7 @@ def api_status():
 @app_views.route("/stats", stricy_slashes=False)
 def get_stats():
     '''Retrieves the number of each objects by type'''
-    return jsonfy({
+    return jsonify({
         "amenities": storage.count(Amenity),
         "cities": storage.count(City),
         "places": storage.count(Places),
