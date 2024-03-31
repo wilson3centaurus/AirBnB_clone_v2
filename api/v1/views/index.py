@@ -12,14 +12,14 @@ from models import storage
 from models.user import User
 
 
-@app_views.route("/status", strict_slashes=False)
+@app_views.route("/status")
 def status():
     """ This function returns the status of my API
     """
     return jsonify({"status": "OK"})
 
 
-@app_views.route('stats', strict_slashes=False)
+@app_views.route('stats')
 def number_of_objects():
     """ This function return the number of each object
     """
