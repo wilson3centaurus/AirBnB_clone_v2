@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 """
-This module startes app
+This module startes app ............
 """
 from api.v1.views import app_views
-from flask import Flask, make_response, jsonify
+from flask import Flask, jsonify
 from flask_cors import CORS
 from models import storage
 from os import getenv
@@ -16,7 +16,7 @@ CORS(app, origins='0.0.0.0')
 
 
 @app.teardown_appcontext
-def teardown_db(exception=None):
+def teardown_db(exception):
     """ This function called each time the database is updated
     """
     storage.close()
