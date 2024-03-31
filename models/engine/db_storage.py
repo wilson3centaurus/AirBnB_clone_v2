@@ -78,7 +78,7 @@ class DBStorage:
     """new modification"""
 
     def get(self, cls, id):
-        """Get an object of type `cls` with the given `id`"""
+        """retrieve one object"""
         dict_cls = self.all(cls)
         for key, value in dict_cls.items():
             g_id = key.split('.')[1]
@@ -87,5 +87,9 @@ class DBStorage:
         return None
 
     def count(self, cls=None):
-        """Count the number of objects in storage"""
-        return len(self.all(cls))
+        """count the number of objects in storage"""
+        count = 0
+        dict_cls = self.all(cls)
+        count = len(dict_cls)
+        return count
+
