@@ -19,30 +19,32 @@ def list_users():
 def get_user(user_id):
     """Retrieve a user by ID"""
     user = storage.get(User, user_id)
-    if user:
-        return jsonify(user.to_dict())
-    else:
+    if user is None:
         abort(404)
+    return jsonify(user.to_dict())
 
 
 @app_views.route('/users/<user_id>', methods=['DELETE'], strict_slashes=False)
 def delete_user(user_id):
     """Delete a user by ID"""
     user = storage.get(User, user_id)
-    if user:
-        storage.delete(user)
-        storage.save()
-        return jsonify({}), 200
-    else:
+    if user is None:
         abort(404)
+    storage.delete(user)
+    storage.save()
+    return jsonify({}), 200
 
 
 @app_views.route('/users/', methods=['POST'], strict_slashes=False)
 def post_user():
     """Create a new user"""
     data = request.get_json()
-    if not data or 'email' not in data or 'password' not in data:
-        abort(400, 'Invalid JSON or missing email/password')
+    if not data:
+        abort(400, 'Not a JSON')
+    if 'email' not in data:
+        abort(400, 'Missing email')
+    if 'password' not in data:
+        abort(400, 'Missing password')
 
     new_user = User(**data)
     storage.new(new_user)
@@ -55,17 +57,17 @@ def post_user():
 def update_user(user_id):
     """Update a user by ID"""
     user = storage.get(User, user_id)
-    if not user:
+    if user is None:
         abort(404)
 
     data = request.get_json()
     if not data:
         abort(400, 'Not a JSON')
 
-    if 'email' in data:
-        user.email = data['email']
-    if 'password' in data:
-        user.password = data['password']
+    ignored_keys = ['id', 'email', 'created_at', 'updated_at']
+    for key, value in data.items():
+        if key not in ignored_keys:
+            setattr(user, key, value)
 
     storage.save()
 
