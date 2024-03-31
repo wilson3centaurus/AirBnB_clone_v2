@@ -15,7 +15,7 @@ def api_status():
     return (response)
 
 
-@app_views.route("/stats")
+@app_views.route("/stats", strict_slashes=False)
 def get_stats():
     """returns the stats of the api"""
     stats = {
