@@ -157,6 +157,6 @@ No known bugs at this time.
 Alex Delei - [Github](https://github.com/AlexDelei) / [Twitter](https://twitter.com/DeleiAlex)  
 
 
-Second part of Airbnb: Joann Vuong
+Second part of Airbnb: Alex Delei
 ## License
 Public Domain. No copy write protection. 
