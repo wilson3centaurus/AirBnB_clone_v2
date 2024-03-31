@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-API
+This module startes app
 """
 from api.v1.views import app_views
 from flask import Flask, make_response, jsonify
