@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 
-from flask import Flask, make_response, jsonify
-from models import storage
 from api.v1.views import app_views, app_states, app_cities, app_amenities
 from api.v1.views import app_users, app_places, app_places_reviews
+from flask import Flask, make_response, jsonify
+from models import storage
 
 HBNB_API_HOST = '0.0.0.0'
 HBNB_API_PORT = '5000'
