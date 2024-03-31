@@ -3,7 +3,7 @@
 Contains the TestFileStorageDocs classes
 """
 
-from datetime import datetime
+import hashlib
 import inspect
 import models
 from models.engine import file_storage
@@ -177,3 +177,21 @@ class TestFileStorage(unittest.TestCase):
 
         count = storage.count()
         self.assertEqual(count, 4)
+
+    def test_save_password_hashed(self):
+        """Test that save method saves hashed password to file"""
+
+        strg = FileStorage()
+        user = User(email="test@example.com", password="password123")
+        strg.new(user)
+        strg.save()
+        with open("file.json", "r") as f:
+            data = json.load(f)
+        self.assertIn("User." + user.id, data)
+        self.assertIn("password", data["User." + user.id])
+
+        hashed_password = data["User." + user.id]["password"]
+        md5_hash = hashlib.md5()
+        md5_hash.update("password123".encode())
+        expected_hash = md5_hash.hexdigest()
+        self.assertEqual(hashed_password, expected_hash)

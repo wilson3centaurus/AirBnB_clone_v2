@@ -3,6 +3,7 @@
 from datetime import datetime
 import inspect
 import models
+from models.user import User
 import pep8 as pycodestyle
 import time
 import unittest
@@ -158,3 +159,11 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(old_created_at, new_created_at)
         self.assertTrue(mock_storage.new.called)
         self.assertTrue(mock_storage.save.called)
+
+    def test_to_dict_exclude_password(self):
+        """Test that to_dict() excludes password when include_password=False"""
+
+        user = User()
+        user.password = "test_password"
+        user_dict = user.to_dict()
+        self.assertNotIn("password", user_dict)
