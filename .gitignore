@@ -1,0 +1,22 @@
+# Project files
+file.json
+test_*.py
+
+# Byte-compiled / optimized files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore Vi/Vim swap files
+*.swp
+
+# Ignore Emacs backup files
+*~
+
+# Ignore C compiled code
+*.o
+*.out
+
+# vscode config
+.vscode
