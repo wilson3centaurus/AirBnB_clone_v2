@@ -153,6 +153,7 @@ TestBaseModel class:
 * `def test_created_at_instantiation(self)` - Test created_at is a pub. instance attribute of type datetime
 * `def test_updated_at_instantiation(self)` - Test updated_at is a pub. instance attribute of type datetime
 * `def test_diff_datetime_objs(self)` - Test that two BaseModel instances have different datetime objects
+* `def test_to_dict_exclude_password(self)` - Test that to_dict() excludes password when include_password=False
 
 [/test_models/test_amenity.py](/tests/test_models/test_amenity.py) - Contains the TestAmenityDocs class:
 * `def setUpClass(cls)` - Set up for the doc tests
@@ -177,6 +178,7 @@ TestBaseModel class:
 * `def test_get(self)` - Tests if get method retrieves objects correctly
 * `def test_count_cls(self)` - Tests if count method correctly counts objects of a specific class
 * `def test_count_all(self)` - Tests if count method correctly counts all objects
+* `def test_save_password_hashed(self)` - Test that save method saves hashed password to file
 
 [test_db_storage.py](tests/test_models/test_db_storage.py) - Contains the TestDBStorage class:
 * `def test_get(self)` - Tests if get method retrieves objects correctly
@@ -210,6 +212,7 @@ TestBaseModel class:
 * `def test_pep8_conformance_test_user(self)` - Test that tests/test_models/test_user.py conforms to PEP8
 * `def test_user_module_docstring(self)` - Test for the user.py module docstring
 * `def test_user_class_docstring(self)` - Test for the User class docstring
+* `def test_password_hashing(self)` - Test that the password is correctly hashed to MD5
 
 [/test_v1/test_app.py](tests/test_api/test_v1/test_app.py) - Contains `TestApp` class:
 * `def test_cors_configuration(self)` - Tests CORS configuration
