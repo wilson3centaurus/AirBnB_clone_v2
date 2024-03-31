@@ -36,8 +36,8 @@ def get_stats():
         'User': "users"
         }
 
-    # for obj in obj_types.keys():
-    #     if storage.count(obj):
-    #         stats[obj_types[obj]] = storage.count(obj)
+    for obj in obj_types.keys():
+        if storage.count(obj):
+            stats[obj_types[obj]] = storage.count(obj)
 
     return jsonify(stats)
