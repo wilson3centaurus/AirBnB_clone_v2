@@ -114,6 +114,29 @@ class TestFileStorage(unittest.TestCase):
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
 
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """Test that the get property returns the requested object"""
+        storage = FileStorage()
+        self.assertIs(storage.get("User", "xyz"), None)
+        self.assertIs(storage.get("xyz", "xyz"), None)
+        new_user = User()
+        new_user.save()
+        self.assertEqual(storage.get("User", new_user.id), new_user)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count(self):
+        """Test that count works as it should"""
+        storage = FileStorage()
+        length = len(storage.all())
+        self.assertEqual(storage.count(), length)
+        state_len = len(storage.all("State"))
+        self.assertEqual(storage.count("State"), state_len)
+        new_state = State()
+        new_state.save()
+        self.assertEqual(storage.count(), length + 1)
+        self.assertEqual(storage.count("State"), state_len + 1)
+
 
 class TestFileStorageMethods(unittest.TestCase):
 
@@ -182,6 +205,7 @@ class TestFileStorageMethods(unittest.TestCase):
         # Check that no error occurs
         # Since the object was never saved, it shouldn't be in storage anyway
         self.assertIsNone(self.storage.get("BaseModel", obj.id))
+
 
 
 if __name__ == '__main__':

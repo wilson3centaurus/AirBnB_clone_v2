@@ -84,6 +84,13 @@ class TestDBStorageMethods(unittest.TestCase):
         state = State(name="Test State")
         state.save()
 
+
+
+class TestDBStorageCount(unittest.TestCase):
+    """Test the count method in the DBStorage class"""
+
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db',
+                     "not testing db storage")
         # Get the object by its ID
         retrieved_state = self.storage.get(State, state.id)
 
@@ -112,6 +119,23 @@ class TestDBStorageMethods(unittest.TestCase):
         # Check that the count matches the number of created objects
         self.assertEqual(count, 3)
 
+
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db',
+                     "not testing db storage")
+    def test_count_objects_of_specific_class(self):
+        """Test counting objects of a specific class"""
+        storage = DBStorage()
+        count = storage.count("Amenity")
+        self.assertIsInstance(count, int)
+
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db',
+                     "not testing db storage")
+    def test_count_objects_of_non_existing_class(self):
+        """Test counting objects of a non-existing class"""
+        storage = DBStorage()
+        count = storage.count("NonExistingClass")
+        self.assertEqual(count, 0)
+
     def test_count_objects_of_specific_class(self):
         """Test counting objects of a specific class."""
         # Create some objects for testing
@@ -124,6 +148,7 @@ class TestDBStorageMethods(unittest.TestCase):
 
         # Check that the count matches the number of created State objects
         self.assertEqual(count, 2)
+
 
 
 if __name__ == '__main__':
