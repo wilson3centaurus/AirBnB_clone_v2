@@ -117,7 +117,7 @@ class TestFileStorage(unittest.TestCase):
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_count_with_no_class(self):
-        """Test count method with no exact class"""
+        """Test count method with no exact class."""
         storage = DBStorage()
         total_count = storage.count()
         expected_count = len(storage.all().values())
