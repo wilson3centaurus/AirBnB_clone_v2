@@ -2,10 +2,10 @@
 """
 Contains the class DBStorage
 """
-
 import models
 from models.amenity import Amenity
-from models.base_model import BaseModel, Base
+from models.base_model import BaseModel
+from models.base_model import Base
 from models.city import City
 from models.place import Place
 from models.review import Review
@@ -44,7 +44,7 @@ class DBStorage:
         """query on the current database session"""
         obj_data = {}
         if cls:
-              all_obj = self.__session.query(cls).all()
+            all_obj = self.__session.query(cls).all()
         else:
             all_obj = []
             for cls_name, cls_model in classes.items():
@@ -75,7 +75,11 @@ class DBStorage:
                         'updated_at': val.updated_at,
                         '_sa_instance_state': val._sa_instance_state
                     }
-                    return ("[{}] ({}) {}".format(cls.__name__, val.id, one_obj))
+                    return ("[{}] ({}) {}".format(
+                                             cls.__name__,
+                                             val.id, one_obj
+                                           ))
+
         return None
 
     def count(self, cls=None):
