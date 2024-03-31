@@ -61,7 +61,7 @@ class TestPlacesAmenitiesAPI(unittest.TestCase):
     def test_delete_place_amenity(self):
         """
         Test DELETE /api/v1/places/<place_id>/amenities/<amenity_id>.
-        
+
         # Link an amenity to the place
         self.client.post(
             f'/api/v1/places/{self.place.id}/amenities/{self.amenity.id}'
@@ -86,7 +86,7 @@ class TestPlacesAmenitiesAPI(unittest.TestCase):
     def test_link_place_amenity(self):
         """
         Test POST /api/v1/places/<place_id>/amenities/<amenity_id>.
-        
+
 
         # Ensure POST request links an amenity to the place
         response = self.client.post(
