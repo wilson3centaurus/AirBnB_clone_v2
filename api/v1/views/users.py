@@ -36,7 +36,7 @@ def retrive_user(user_id):
     user = get_object_by_id(User, user_id)
     if not user:
         abort(404)
-    return user.to_dict()
+    return jsonify(user.to_dict())
 
 
 @app_views.route(
