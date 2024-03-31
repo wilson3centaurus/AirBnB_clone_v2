@@ -81,15 +81,13 @@ class DBStorage:
         retrieve an object from the file storage by class and id
         '''
         if cls and id:
-            tempo = cls, __name__+ "." + id
+            tempo = cls, __name__ + "." + id
             count = self.all(cls)
             for key in count:
                 if key == tempo:
                     return count[key]
-        
         else:
             return None
-
 
     def count(self, cls=None):
         '''class (optional)'''
