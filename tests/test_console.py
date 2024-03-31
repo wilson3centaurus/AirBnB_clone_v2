@@ -116,7 +116,7 @@ class test_console(unittest.TestCase):
         self.assertEqual("** no instance found **\n", x)
 
     def test_create(self):
-        """ Test that create works """
+        """ Test that create works"""
         console = self.create()
         console.onecmd("create User email=adriel@hbnb.com password=abc")
         self.assertTrue(isinstance(self.capt_out.getvalue(), str))
