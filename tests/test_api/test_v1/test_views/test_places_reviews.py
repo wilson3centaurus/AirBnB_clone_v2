@@ -1,3 +1,6 @@
+#!/usr/bin/python3
+"""Unit tests for ReviewAPI"""
+
 import unittest
 from flask import Flask
 from api.v1.views import app_views
@@ -7,8 +10,12 @@ from models.review import Review
 
 
 class TestReviewAPI(unittest.TestCase):
+    """
+    Test cases for the ReviewAPI endpoints.
+    """
 
     def setUp(self):
+        """Set up test client, Flask app, and initialize test data."""
         self.app = Flask(__name__)
         self.app.register_blueprint(app_views)
         self.client = self.app.test_client()
@@ -17,11 +24,12 @@ class TestReviewAPI(unittest.TestCase):
         self.review = Review(text="Great spot!", place_id=self.place.id)
 
     def tearDown(self):
+        """Clean up after each test."""
         storage.delete(self.place)
         storage.save()
 
     def test_get_all_reviews(self):
-        """ Create place and reviews """
+        """Test GET request to retrieve all reviews."""
         storage.new(self.place)
         for _ in range(3):
             review = Review(text="Nice place!", place_id=self.place.id)
@@ -35,7 +43,7 @@ class TestReviewAPI(unittest.TestCase):
         self.assertEqual(len(data), 3)
 
     def test_get_review(self):
-        """ Create place and review """
+        """Test GET request to retrieve a specific review."""
         storage.new(self.place)
         storage.new(self.review)
         storage.save()
@@ -47,7 +55,7 @@ class TestReviewAPI(unittest.TestCase):
         self.assertEqual(data['text'], "Great spot!")
 
     def test_delete_review(self):
-        """ Create place and review """
+        """Test DELETE request to delete a review."""
         storage.new(self.place)
         storage.new(self.review)
         storage.save()
@@ -62,7 +70,7 @@ class TestReviewAPI(unittest.TestCase):
         self.assertIsNone(review)
 
     def test_create_review(self):
-        """ Create place """
+        """Test POST request to create a new review."""
         storage.new(self.place)
         storage.save()
 
@@ -79,7 +87,7 @@ class TestReviewAPI(unittest.TestCase):
         self.assertIsNotNone(review)
 
     def test_update_review(self):
-        """ Create place and review """
+        """Test PUT request to update an existing review."""
         storage.new(self.place)
         storage.new(self.review)
         storage.save()
