@@ -27,14 +27,7 @@ def get_stats():
         'State': "states",
         'User': "users"
         }
-    # stats = {
-    #         "amenities": storage.count('Amenity'),
-    #         "cities": storage.count('City'),
-    #         "places": storage.count('Place'),
-    #         "reviews": storage.count("Review"),
-    #         "states": storage.count("State"),
-    #         "users": storage.count("User")
-    #         }
+
     for obj in obj_types.keys():
         if storage.count(obj):
             stats[obj_types[obj]] = storage.count(obj)
