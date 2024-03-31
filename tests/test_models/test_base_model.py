@@ -84,9 +84,15 @@ class TestBaseModel(unittest.TestCase):
         value."""
         tic = datetime.now()
         inst1 = BaseModel()
+        inst1.save()
         toc = datetime.now()
-        self.assertTrue(tic <= inst1.created_at <= toc)
+        print("Saving instance with updated_at:", inst1.updated_at)
+        print("inst1.created_at:", inst1.created_at)
+        print("toc:", toc)
+        self.assertTrue(inst1.created_at <= toc)
+        self.assertTrue(tic <= inst1.created_at)
         time.sleep(1e-4)
+
         tic = datetime.now()
         inst2 = BaseModel()
         toc = datetime.now()
