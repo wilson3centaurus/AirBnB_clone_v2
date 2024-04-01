@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-"""Contains classes' db_storage
+"""Database storage engine using SQLAlchemy with a mysql+mysqldb database
+connection.
 """
 
 import os
@@ -12,7 +13,7 @@ from models.review import Review
 from models.user import User
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
-nameToclass = {
+name2class = {
     'Amenity': Amenity,
     'City': City,
     'Place': Place,
@@ -44,12 +45,12 @@ class DBStorage:
             self.reload()
         objects = {}
         if type(cls) == str:
-            cls = nameToclass.get(cls, None)
+            cls = name2class.get(cls, None)
         if cls:
             for obj in self.__session.query(cls):
                 objects[obj.__class__.__name__ + '.' + obj.id] = obj
         else:
-            for cls in nameToclass.values():
+            for cls in name2class.values():
                 for obj in self.__session.query(cls):
                     objects[obj.__class__.__name__ + '.' + obj.id] = obj
         return objects
@@ -83,8 +84,8 @@ class DBStorage:
     def get(self, cls, id):
         """Retrieve an object"""
         if cls is not None and type(cls) is str and id is not None and\
-           type(id) is str and cls in nameToclass:
-            cls = nameToclass[cls]
+           type(id) is str and cls in name2class:
+            cls = name2class[cls]
             result = self.__session.query(cls).filter(cls.id == id).first()
             return result
         else:
@@ -93,10 +94,10 @@ class DBStorage:
     def count(self, cls=None):
         """Count number of objects in storage"""
         total = 0
-        if type(cls) == str and cls in nameToclass:
-            cls = nameToclass[cls]
+        if type(cls) == str and cls in name2class:
+            cls = name2class[cls]
             total = self.__session.query(cls).count()
         elif cls is None:
-            for cls in nameToclass.values():
+            for cls in name2class.values():
                 total += self.__session.query(cls).count()
         return total
