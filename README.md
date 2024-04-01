@@ -155,6 +155,7 @@ No known bugs at this time.
 
 ## Authors
 Oussama Bernou - [Github](https://github.com/0ussamaBernou) / [Twitter](https://twitter.com/bernoussama)  
+Ricardo Sass - [Github](https://github.com/bluegalaxy13)
 
 ## License
 Public Domain. No copy write protection. 
