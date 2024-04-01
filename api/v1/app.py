@@ -19,11 +19,11 @@ def tear_down_db(exception):
     storage.close()
 
 
-@app_views.errorhandler(404)
+@app.errorhandler(404)
 def page_not_found(e):
     """handling not found templates"""
     error = {"error": "Not found"}
-    return jsonify(error)
+    return jsonify(error), 404
 
 
 if __name__ == '__main__':
