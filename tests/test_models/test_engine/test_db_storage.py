@@ -72,9 +72,9 @@ test_db_storage.py'])
         new_city = City(name="RABAT")
         models.storage.new(new_city)
         key = "City." + new_city.id
-        rs = models.storage.get(City, key)
-        self.assertTrue(rs.id, new_city.id)
+        rs = models.storage.get("City", key)
         self.assertIsInstance(rs, City)
+        self.assertTrue(rs.id, new_city.id)
 
     def test_count(self):
         '''
@@ -89,6 +89,7 @@ test_db_storage.py'])
         new_state3 = State(name="California")
         models.storage.new(new_state3)
         self.assertEqual(old_count + 3, models.storage.count("State"))
+
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
@@ -113,10 +114,10 @@ class TestFileStorage(unittest.TestCase):
         """Test for get method """
         new_city = City(name="RABAT")
         models.storage.new(new_city)
-        key = "City." + new_city.id
-        rs = models.storage.get(City, key)
-        self.assertTrue(rs.id, new_city.id)
+        key = "City." + str(new_city.id)
+        rs = models.storage.get("City", key)
         self.assertIsInstance(rs, City)
+        self.assertTrue(rs.id, new_city.id)
 
     def test_count(self):
         '''

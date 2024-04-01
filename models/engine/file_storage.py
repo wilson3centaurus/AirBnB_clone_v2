@@ -73,7 +73,7 @@ class FileStorage:
         """ gets an object """
         obj_dict = self.all(cls)
         for k, v in obj_dict.items():
-            strr = cls + '.' + id
+            strr = str(id)
             if k == strr:
                 return v
         return None
