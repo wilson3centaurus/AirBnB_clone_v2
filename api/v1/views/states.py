@@ -54,7 +54,7 @@ def delete_state(state_id):
 @swag_from('documentation/state/post_state.yml', methods=['POST'])
 def post_state():
     """
-    Creates a State
+    Creates a State object
     """
     if not request.get_json():
         abort(400, description="Not a JSON")
