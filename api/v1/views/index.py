@@ -25,7 +25,6 @@ def stats():
                    states=storage.count("State"),
                    users=storage.count("User"))
     """
-    # importing classes
     from models.amenity import Amenity
     from models.city import City
     from models.place import Place
