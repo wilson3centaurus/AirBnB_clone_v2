@@ -21,7 +21,7 @@ def retrive_places_by_city(city_id):
     city = storage.get(City, city_id)
     if not city:
         abort(404)
-    return [place.to_dict() for place in city.places]
+    return jsonify([place.to_dict() for place in city.places])
 
 
 @app_views.route(
@@ -35,7 +35,7 @@ def retrive_place(place_id):
     place = storage.get(Place, place_id)
     if not place:
         abort(404)
-    return place.to_dict()
+    return jsonify(place.to_dict())
 
 
 @app_views.route(
@@ -51,7 +51,7 @@ def delete_place(place_id):
         abort(404)
     storage.delete(place)
     storage.save()
-    return {}, 200
+    return jsonify({}), 200
 
 
 @app_views.route(
@@ -82,7 +82,7 @@ def create_place(city_id):
     new_place = Place(**request_data)
     new_place.city_id = city_id
     new_place.save()
-    return new_place.to_dict(), 201
+    return jsonify(new_place.to_dict()), 201
 
 
 @app_views.route(
@@ -105,4 +105,4 @@ def update_place(place_id):
             setattr(place, key, value)
 
     place.save()
-    return place.to_dict(), 200
+    return jsonify(place.to_dict()), 200
