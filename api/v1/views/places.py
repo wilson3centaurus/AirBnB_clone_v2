@@ -11,18 +11,19 @@ from models.city import City
 
 @app_views.route("/cities/<city_id>/places", methods=["GET"],
                  strict_slashes=False)
-def get_places():
+def get_places(city_id):
     """Gets the list of all places"""
     city = storage.get(City, city_id)
     if not city:
-        bort(404)
-    data = [place.to_dict() for place in storage.all(City).values()]
+        abort(404)
+    data = [place.to_dict() for place in storage.all(Place).values()
+            if place.city_id == city_id]
     return jsonify(data)
 
 
 @app_views.route("/places/<place_id>", methods=["GET"],
                  strict_slashes=False)
-def get_user(place_id):
+def get_place(place_id):
     """Retrieves a place object"""
     place = storage.get(Place, place_id)
     if place:
@@ -47,7 +48,8 @@ def create_place(city_id):
     if not user:
         abort(404)
     if "name" not in new_place_data:
-        abort(404, "Missing name")
+        abort(400, "Missing name")
+    new_place_data['city_id'] = city_id
     new_place = Place(**new_place_data)
     storage.new(new_place)
     storage.save()
@@ -82,4 +84,4 @@ def delete_place(place_id):
         storage.save()
         return jsonify({}), 200
     else:
-        abort(400)
+        abort(404)
