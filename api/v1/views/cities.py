@@ -16,7 +16,7 @@ def get_city_by_state(state_id):
         abort(404)
     for city in City.cities:
         if city.state_id == state_id:
-            cities.append(city.to_json())
+            cities.append(city.to_dict())
     return jsonify(cities)
 
 
@@ -34,7 +34,7 @@ def post_city(state_id):
     city = City(**new_city)
     setattr(city, 'state_id', state_id)
     city.save()
-    return jsonify(city.to_json()), 201
+    return jsonify(city.to_dict()), 201
 
 
 @app_views.route("/cities/<city_id>", methods=["GET"], strict_slashes=False)
@@ -43,7 +43,7 @@ def get_city_by_id(city_id):
     city_object = storage.get("City", str(city_id))
     if city_object is None:
         abort(404)
-    return jsonify(city_object.to_json())
+    return jsonify(city_object.to_dict())
 
 
 @app_views.route("cities/<city_id>",  methods=["PUT"], strict_slashes=False)
@@ -59,7 +59,7 @@ def put_city(city_id):
         if key not in ["id", "created_at", "updated_at", "state_id"]:
             setattr(city_object, key, val)
     city_object.save()
-    return jsonify(city_object.to_json())
+    return jsonify(city_object.to_dict())
 
 
 @app_views.route("/cities/<city_id>",  methods=["DELETE"],
