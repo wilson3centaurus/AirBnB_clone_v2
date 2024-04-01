@@ -27,13 +27,6 @@ def get_or_post_amenities():
         return make_response(jsonify(data), 201)
 
 
-@app_views.route('/amenities/', methods=['POST'],
-                 strict_slashes=False)
-def post_amenity():
-    """ create a new amenity """
-    return (jsonify(obj.to_dict()), 201)
-
-
 @app_views.route('/amenities/<amenity_id>', methods=['GET', 'PUT', 'DELETE'],
                  strict_slashes=False)
 def get_or_update_amenity(amenity_id):
