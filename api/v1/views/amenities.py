@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" objects that handles all default RestFul API actions for Amenities"""
+"""This objects that handles all default RestFul API actions for Amenities"""
 from models.amenity import Amenity
 from models import storage
 from api.v1.views import app_views
