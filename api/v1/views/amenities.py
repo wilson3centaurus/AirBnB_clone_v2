@@ -18,7 +18,7 @@ def all_amenities():
                  strict_slashes=False)
 def get_amenity(amenity_id):
     '''Retrieves a Amenity obj'''
-    amenity = storage.all(Amenity, amenity_id)
+    amenity = storage.get(Amenity, amenity_id)
     if amenity is None:
         abort(404)
     amenity = amenity.to_dict()
@@ -66,6 +66,6 @@ def put_amenity(amenity_id):
     for key, value in data.items():
         if key not in skeys:
             setattr(amenity, key, value)
-        amenity.save()
-        amenity = amenity.to_DICT()
-        return jsonify(amenity), 200
+    amenity.save()
+    amenity = amenity.to_dict()
+    return jsonify(amenity), 200
