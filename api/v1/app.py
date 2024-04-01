@@ -10,9 +10,11 @@ app.register_blueprint(app_views)
 
 CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
 
+
 @app.teardown_appcontext
 def close_storage(exception):
     storage.close()
+
 
 @app.errorhandler(404)
 def not_found(error):
