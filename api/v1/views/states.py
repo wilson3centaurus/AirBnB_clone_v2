@@ -3,10 +3,14 @@ from models.state import State  # Import the State model
 from models import storage  # Import the storage object
 from api.v1.views import app_views
 
+
 # Define the route for handling GET and POST requests for all states
 # and DELETE, GET, PUT requests for specific state by ID
-@app_views.route("/states", methods=["GET", "POST"], strict_slashes=False)
-@app_views.route("/states/<state_id>", methods=["GET", "DELETE", "PUT"], strict_slashes=False)
+@app_views.route("/states", methods=["GET", "POST"],
+                 strict_slashes=False)
+@app_views.route("/states/<state_id>",
+                 methods=["GET", "DELETE", "PUT"],
+                 strict_slashes=False)
 def stateEdit(state_id=None):
     """
     Edit the State objects according to the specified HTTP method:
