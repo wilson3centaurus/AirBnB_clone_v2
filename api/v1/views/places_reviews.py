@@ -62,7 +62,7 @@ def add_review(review_id):
         abort(400, 'Missing text')
     if storage.get(User, data['user_id']) is None:
         abort(404)
-    data['place_id'] = place_id
+    data['place_id'] = review_id
     review = Review(**data)
     review.save()
     return jsonify(review.to_dict()), 201
