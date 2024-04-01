@@ -44,5 +44,3 @@ def stats():
     response.status_code = 200
 
     return response
-
-
