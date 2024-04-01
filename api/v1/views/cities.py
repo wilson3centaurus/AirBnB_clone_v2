@@ -22,7 +22,7 @@ def get_cities(state_id):
     return jsonify([city.to_dict() for city in state.cities])
 
 
-@app_views.route("/states/cities/<city_id>", methods=["POST"],
+@app_views.route("/states/cities/<city_id>", methods=["GET"],
                  strict_slashes=False)
 def get_city(city_id):
     """Gets city object"""
@@ -55,15 +55,15 @@ def create_city(state_id):
     if not state:
         abort(404)
 
-    city = request.get_json()
+    city_data = request.get_json()
 
     if not city:
         abort(400, "Not a JSON")
 
-    if "name" not in city:
+    if "name" not in city_data:
         abort(400, "Missing name")
 
-    new_city = City(**city)
+    new_city = City(**city_data)
     setattr(new_city, "state_id", state_id)
     storage.new(new_city)
     storage.save()
