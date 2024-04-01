@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""routes"""
 import os
 from flask import Flask, jsonify
 from models import storage
