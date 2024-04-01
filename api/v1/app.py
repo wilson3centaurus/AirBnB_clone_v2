@@ -1,5 +1,9 @@
 #!/usr/bin/python3
-""" Created a flask app, registed app_view blueprint """
+"""
+Created a flask app, registed app_view blueprint,
+created a handler for 404 errors and handled
+cross origin relationships.
+"""
 
 from api.v1.views import app_views
 from flask import Flask, jsonify
@@ -15,13 +19,15 @@ app.register_blueprint(app_views)
 
 @app.teardown_appcontext
 def teardown_storage(exception):
-    """ Ends the current storage session """
+    """Ends the current storage session"""
+
     storage.close()
 
 
 @app.errorhandler(404)
 def not_found_error(error):
-    """ Return a JSON response with status code 404 """
+    """Return a JSON response with status code 404"""
+
     return jsonify({"error": "Not found"}), 404
 
 
