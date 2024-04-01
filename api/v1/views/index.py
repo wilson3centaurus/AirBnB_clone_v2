@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """index"""
-from api.v1.views import app_views
+from api import app_views
 from flask import jsonify
 from models import storage
 from models.user import User
