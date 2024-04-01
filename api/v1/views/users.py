@@ -1,4 +1,4 @@
-#!usr/bin/python3
+#!/usr/bin/python3
 """ Users View """
 
 from models.user import User
