@@ -12,11 +12,13 @@ from models.user import User
 
 @app_views.route('/status', methods=['GET'])
 def status():
-    return jsonify({"status": "OK"})
+    """set status"""
+    return jsonify({'status': 'OK'})
 
 
 @app_views.route('/stats', methods=['GET'])
 def stats():
+    """status"""
     return jsonify({
         "amenities": storage.count(Amenity),
         "cities": storage.count(City),
