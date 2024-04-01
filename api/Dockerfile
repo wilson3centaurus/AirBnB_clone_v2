@@ -16,4 +16,7 @@ ENV HBNB_API_PORT=5000
 EXPOSE 5000
 
 CMD ["python3", "-m", "api.v1.app"]
+<<<<<<< HEAD
 
+=======
+>>>>>>> fc62d37a1defab105e8e4c3467c0e1df7c900088
