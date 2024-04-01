@@ -1,5 +1,9 @@
 #!/usr/bin/python3
-'''the city'''
+"""
+View for City objects that handles
+ll default RESTFul API actions
+"""
+
 from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
 from models import storage
