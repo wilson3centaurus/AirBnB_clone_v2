@@ -35,6 +35,6 @@ class User(BaseModel, Base):
         if __key == "password":
             pwd_hash = hashlib.md5()
             pwd_hash.update(__value.encode('utf-8'))
-            super().__setattr__(__key, pwd_hash.hexdigest())
+            super(User, self).__setattr__(__key, pwd_hash.hexdigest())
         else:
-            super().__setattr__(__key, __value)
+            super(User, self).__setattr__(__key, __value)
