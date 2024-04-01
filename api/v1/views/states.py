@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+"""State"""
 from flask import jsonify, abort, request
 from models.state import State  # Import the State model
 from models import storage  # Import the storage object
