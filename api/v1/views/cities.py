@@ -9,11 +9,6 @@ from flask import make_response, jsonify, abort, request
 from models.city import City
 
 
-@app_views.before_request
-def new_storage_values():
-    """Called before any request is made to refresh storage"""
-
-
 @app_views.route('/states/<state_id>/cities', methods=['GET', 'POST'],
                  strict_slashes=False)
 def all_cities(state_id, cities=None):
@@ -21,6 +16,7 @@ def all_cities(state_id, cities=None):
     state_inst = storage.get('State', state_id)
     if not state_inst:
         abort(404)
+
     if request.method == 'GET':
         city_instances = [city.to_dict() for city in state_inst.cities]
         return make_response(jsonify(city_instances), 200)
@@ -41,7 +37,6 @@ def all_cities(state_id, cities=None):
 def city_obj(city_id):
     """Retrieves a City Object"""
     city_inst = storage.get(City, city_id)
-
     if not city_inst:
         abort(404)
 

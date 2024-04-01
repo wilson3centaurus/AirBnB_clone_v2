@@ -9,18 +9,13 @@ from flask import make_response, jsonify, abort, request, g
 from models.state import State
 
 
-@app_views.before_request
-def new_storage_values():
-    """Called before any request is made to refresh storage"""
-    g.state_dict = storage.all(State)
-
-
 @app_views.route('/states', methods=['GET', 'POST'], strict_slashes=False)
 @app_views.route('/states/<state_id>', methods=['GET', 'DELETE', 'PUT'],
                  strict_slashes=False)
 def all_states(state_id=None):
     """list of all or given state_id State Objects"""
-    state_instances = [val.to_dict() for val in g.state_dict.values()]
+    state_dict = storage.all(State)
+    state_instances = [val.to_dict() for val in state_dict.values()]
     if not state_id:
         if request.method == 'GET':
             return make_response(jsonify(state_instances), 200)
@@ -29,19 +24,20 @@ def all_states(state_id=None):
             if not request.is_json or not request.get_json().get('name', None):
                 abort(400)
             data = request.get_json()
-            new_instance = State(**data)
-            new_instance.save()
-            data = storage.get("State", new_instance.id).to_dict()
+            new_inst = State(**data)
+            new_inst.save()
+            data = storage.get("State", new_inst.id).to_dict()
             return make_response(jsonify(data), 201)
 
     obj_inst = storage.get('State', state_id)
     if not obj_inst:
         abort(404)
+
     if request.method == 'GET':
         return make_response(jsonify(obj_inst.to_dict()), 200)
 
     elif request.method == 'DELETE':
-        storage.delete(obj_inst)
+        obj_inst.delete()
         storage.save()
         return jsonify({}), 200
 
