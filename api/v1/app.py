@@ -2,7 +2,7 @@
 """
 flask web application
 """
-from flask import Flask, make_response
+from flask import Flask, make_response, jsonify
 from models import storage
 from api.v1.views import app_views
 import os
@@ -15,6 +15,7 @@ app.register_blueprint(app_views)
 def close_db(obj):
     """this method handles the decorator @app.teardown_appcontext"""
     storage.close()
+
 
 @app.errorhandler(404)
 def not_found(error):
