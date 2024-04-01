@@ -15,7 +15,7 @@ def cities():
     state = storage.get(State, state_id)
     if state:
         cities_lst = [obj.to_dict() for obj in state.cities]
-    eles:
+    else:
         abort(404)
     return jsonify(cities_lst)
 
