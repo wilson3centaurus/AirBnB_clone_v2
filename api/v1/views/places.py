@@ -82,7 +82,7 @@ def create_place(city_id):
     new_place = Place(**request_data)
     new_place.city_id = city_id
     new_place.save()
-    return jsonify(new_place.to_dict()), 201
+    return new_place.to_dict(), 201
 
 
 @app_views.route(
@@ -105,4 +105,4 @@ def update_place(place_id):
             setattr(place, key, value)
 
     place.save()
-    return place.to_dict(), 200
+    return jsonify(place.to_dict()), 200
