@@ -6,7 +6,19 @@ from api.v1.views import app_views
 from flask import jsonify, Flask
 
 
-@app_views('/status')
+@app_views('/status', strict_slashes=False)
 def get_status():
     '''returns a JSON object'''
     return jsonify({"status": "OK"})
+
+@app_views('/api/v1/stats', strict_slashes=False)
+def get_object():
+    '''retrieves the number of ech objects by type'''
+    return jsonify({"amenities": storage.count("Amenity"),
+                    "cities": storage.count("City"),
+                    "places": storage.count("Place"),
+                    "reviews": storage.count("Review"),
+                    "states": storage.count("State"),
+                    "users": storage.count("User")
+                    }
+
