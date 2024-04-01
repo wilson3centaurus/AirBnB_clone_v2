@@ -114,7 +114,7 @@ class TestBmFsInstances(unittest.TestCase):
         actual = 1
         try:
             serialized = json.dumps(my_model_json)
-        except:
+        except Exception:
             actual = 0
         self.assertTrue(1 == actual)
 
@@ -313,4 +313,3 @@ class TestStorageCount(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main
-    
