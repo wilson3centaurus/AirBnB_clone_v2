@@ -49,5 +49,15 @@
         "id": "3f09640a-aa19-487e-84d3-f65148538667",
         "state_id": "19767fb5-8d28-426e-b65a-7cc1737913d2",
         "__class__": "City"
+    },
+    "User.64718185-5852-4a81-8b96-6139ebfa66bd": {
+        "last_name": "test",
+        "first_name": "user",
+        "password": "5f4dcc3b5aa765d61d8327deb882cf99",
+        "email": "test@airbnb.com",
+        "created_at": "2024-04-01T22:02:00.456681",
+        "updated_at": "2024-04-01T22:02:00.456698",
+        "id": "64718185-5852-4a81-8b96-6139ebfa66bd",
+        "__class__": "User"
     }
 }
