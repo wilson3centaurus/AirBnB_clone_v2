@@ -17,7 +17,7 @@ classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
 
 
 class FileStorage:
-    """serialize instances to a JSON file & deserializes back to instances"""
+    """serialize to a JSON file & deserializes back to instances"""
 
     # string - path to the JSON file
     __file_path = "file.json"
