@@ -48,7 +48,7 @@ def delete_review(review_id):
 
 @app_views.route("/reviews/<review_id>", methods=["POST"],
                  strict_slashes=False)
-def add_review(place_id):
+def add_review(review_id):
     """Adds a new review of a place"""
     place = storage.get(Place, place_id)
     if place is None:
