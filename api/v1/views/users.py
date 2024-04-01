@@ -11,7 +11,7 @@ from models.user import User
                  strict_slashes=False)
 def get_users():
     """Gets the list of all users"""
-    data = [user.to_dict() for user in storage.all(Users).values()]
+    data = [user.to_dict() for user in storage.all(User).values()]
     return jsonify(data)
 
 
