@@ -24,9 +24,9 @@ def page_not_found(error):
 def not_a_json(error):
     """400 error"""
     if not request.is_json:
-        return jsonify("Not a JSON"), 400
+        return jsonify({"error": "Not a JSON"}), 400
     elif not request.get_json().get('name', None):
-        return jsonify("Missing name"), 400
+        return jsonify({"error": "Missing name"}), 400
 
 
 @app.teardown_appcontext
