@@ -20,10 +20,9 @@ def get_amenities():
 def get_amenity(amenity_id):
     """Retrieves amenity object"""
     amenity = storage.get(Amenity, amenity_id)
-    if amenity:
-        return jsonify(amenity.to_dict())
-    else:
-        abort(404)
+    if not amenity:
+        abort(400)
+    return jsonify(amenity.to_dict())
 
 
 @app_views.route("/amenities", methods=["POST"],
@@ -61,9 +60,8 @@ def update_amenity(amenity_id):
 def delete_amenity(amenity_id):
     """Deletes an amenity object"""
     amenity = storage.get(Amenity, amenity_id)
-    if amenity:
-        storage.delete(amenity)
-        storage.save()
-        return jsonify({}), 200
-    else:
-        abort(404)
+    if not amenity:
+        abort(400)
+    storage.delete(amenity)
+    storage.save()
+    return jsonify({}), 200
