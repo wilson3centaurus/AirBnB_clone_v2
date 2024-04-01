@@ -16,7 +16,7 @@ def get_all_states():
     list_state = []
     for state in states:
         list_state.append(state.to_dict())
-    return jsonify(list_state)
+    return (jsonify(list_state))
 
 
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
@@ -25,7 +25,7 @@ def get_state(state_id):
     state = storage.get(State, state_id)
     if state is None:
         abort(404)
-    return jsonify(state.to_dict())
+    return (jsonify(state.to_dict()))
 
 
 @app_views.route('/states/<state_id>', methods=['DELETE'],
@@ -37,7 +37,7 @@ def delete_state(state_id):
         abort(404)
     storage.delete(state)
     storage.save()
-    return jsonify({}), 200
+    return (jsonify({}), 200)
 
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
@@ -48,12 +48,10 @@ def create_state():
         abort(404, 'Not a JSON')
     if 'name' not in response:
         abort(404, 'Missing name')
-    state = State(name=response['name'])
-    states = []
-    storage.new(state)
+    new_state = State(**response)
+    storage.new(new_state)
     storage.save()
-    states.append(state.to_dict())
-    return jsonify(states[0]), 201
+    return (jsonify(new_state.to_dict()), 201)
 
 
 @app_views.route('/state/<state_id>', methods=['PUT'], strict_slashes=False)
@@ -66,8 +64,8 @@ def update_state(state_id):
     response = request.get_json()
     if 'name' not in response:
         abort(400, 'Not a JSON')
-    for key in response.items():
+    for key, value in response.items():
         if key not in Keys:
-            setattr(state, key)
+            setattr(state, key, value)
     storage.save()
-    return jsonify(state.to_dict()), 200
+    return (jsonify(state.to_dict()), 200)
