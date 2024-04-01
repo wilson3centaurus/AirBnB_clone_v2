@@ -36,6 +36,18 @@ def get_review(review_id):
 
 @app_views.route("/reviews/<review_id>", methods=["DELETE"],
                  strict_slashes=False)
+def delete_review(review_id):
+    """"Deletes a review"""
+    review = storage.get(Review, review_id)
+    if review is None:
+        abort(404)
+    storage.delete(review)
+    storage.save()
+    return jsonify({}), 200
+
+
+@app_views.route("/reviews/<review_id>", methods=["DELETE"],
+                 strict_slashes=False)
 def add_review(place_id):
     """Adds a new review of a place"""
     place = storage.get(Place, place_id)
