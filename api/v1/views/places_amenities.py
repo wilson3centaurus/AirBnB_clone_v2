@@ -63,7 +63,7 @@ def create_new_amenity(place_id, amenity_id):
         abort(404)
     if Amenity in place.amenities:
         return jsonify(Amenity.to_dict()), 200
-    
+
     place.amenities.append(Amenity)
     storage.save()
     return jsonify(Amenity.to_dict()), 201
