@@ -9,15 +9,6 @@ from models import storage
 from models.state import State
 
 
-def get_object_by_id(cls, obj_id):
-    """ This function is used to retrive a specific object using its id
-    """
-    for _, obj in storage.all(cls).items():
-        if obj.id == obj_id:
-            return obj
-    return None
-
-
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 def retrieve_all_states():
     states = storage.all(State).values()
@@ -32,7 +23,7 @@ def retrive_state(state_id):
     """ This function is used to retrive a specific state
         object using its id
     """
-    state = get_object_by_id(State, state_id)
+    state = storage.get(State, state_id)
     if not state:
         abort(404)
     return jsonify(state.to_dict())
@@ -46,7 +37,7 @@ def delete_state(state_id):
     """ This function is used to delete an state object when
         the DELETE method is called
     """
-    state = get_object_by_id(State, state_id)
+    state = storage.get(State, state_id)
     if not state:
         abort(404)
     storage.delete(state)
@@ -70,8 +61,7 @@ def create_state():
 
     if 'name' not in request_data:
         abort(400, "Missing name")
-    new_state = State()
-    new_state.name = request_data.get('name')
+    new_state = State(**request_data)
     new_state.save()
     return jsonify(new_state.to_dict()), 201
 
@@ -83,7 +73,7 @@ def create_state():
 def update_state(state_id):
     """ This function updates an existing state object
     """
-    state = get_object_by_id(State, state_id)
+    state = storage.get(State, state_id)
     if not state:
         abort(404)
     try:
