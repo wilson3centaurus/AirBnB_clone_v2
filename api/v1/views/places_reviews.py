@@ -14,7 +14,7 @@ def get_places_reviews(place_id):
     place = storage.get(Place, place_id)
     if not place:
         abort(404)
-    data = [review.to_dict() for review in places.review]
+    data = [review.to_dict() for review in places.reviews]
     return jsonify(data)
 
 
@@ -34,7 +34,7 @@ def get_review(review_id):
 def create_review(place_id):
     """Creates a review object"""
     place = storage.get(Place, place_id)
-    if not city:
+    if not place:
         abort(404)
     new_review_data = request.get_json()
     if not new_review_data:
