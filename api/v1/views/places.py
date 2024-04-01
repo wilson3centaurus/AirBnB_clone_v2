@@ -5,7 +5,7 @@ from flask import jsonify, abort, request
 from api.v1.views import app_views, storage
 from models.place import Place
 from models.city import City
-
+from models.user import User
 
 @app_views.route('/cities/<city_id>/places', methods=['GET'],
                  strict_slashes=False)
@@ -31,8 +31,8 @@ def post_place(city_id):
     if not storage.get("City", city_id):  # check if state_id exists
         abort(404)
     if 'user_id' not in new_place:
-        abort(400, 'Missing user_id')
-    state_objects = storage.get("User", user_id)
+       abort(400, 'Missing user_id')
+    state_objects = storage.get("User", new_place.get("user_id"))
     if state_objects is None:
         abort(404)
     if 'name' not in new_place:
