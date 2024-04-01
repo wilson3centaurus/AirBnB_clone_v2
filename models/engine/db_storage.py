@@ -21,7 +21,7 @@ classes = {"Amenity": Amenity, "City": City,
 
 
 class DBStorage:
-    """interaacts with the MySQL database"""
+    """interaact with the database"""
     __engine = None
     __session = None
 
@@ -82,7 +82,7 @@ class DBStorage:
         return None
 
     def count(self, cls=None):
-        """Count the number of objects in storage, optionally filtered by class."""
+        """optionally filtered by class."""
         if cls and cls in classes.values():
             return self.__session.query(cls).count()
         elif cls is None:
