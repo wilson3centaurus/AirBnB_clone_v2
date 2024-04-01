@@ -67,6 +67,15 @@ test_db_storage.py'])
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
 
+    def test_get(self):
+        """Test for get method """
+        new_city = City(name="RABAT")
+        models.storage.new(new_city)
+        key = "City." + new_city.id
+        rs = models.storage.get(City, key)
+        self.assertTrue(rs.id, new_city.id)
+        self.assertIsInstance(rs, City)
+
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
