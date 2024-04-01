@@ -43,11 +43,9 @@ def delete_amenity_from_place(place_id, amenity_id):
 
     if storage.__class__.__name__ == 'DBStorage':
         place.amenities.remove(amenity)
-        storage.delete(amenity)
         storage.save()
     else:
         place.amenity_ids.remove(amenity_id)
-        storage.delete(amenity)
         storage.save()
     return jsonify({}), 200
 
