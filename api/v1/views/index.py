@@ -23,6 +23,7 @@ def get_stats():
     from models.place import Place
     from models.review import Review
     from models.user import User
+    from models.base_model import BaseModel
 
     return jsonify({
         "states": storage.count(State),
