@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """places_reviews"""
-from api import app_views
+from api.v1.views import app_views
 from flask import jsonify, abort, request
 from models import storage
 from models.place import Place
