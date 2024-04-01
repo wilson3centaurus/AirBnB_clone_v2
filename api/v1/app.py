@@ -20,13 +20,6 @@ def teardown_db(exception=None):
     storage.close()
 
 
-@app.errorhandler(400)
-def name_not_found(msg):
-    """ This function handels status_code '400'
-    """
-    return jsonify({'error': msg.description}), 400
-
-
 @app.errorhandler(404)
 def not_found(error):
     """ This function handels status_code '404'
