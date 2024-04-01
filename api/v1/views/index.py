@@ -1,28 +1,46 @@
 #!/usr/bin/python3
-"""Creates Flask app"""
+"""
+index
+"""
 
 from flask import jsonify
-from models import storage
 from api.v1.views import app_views
 
+from models import storage
 
-@app_views.route('/status')
-def api_status():
+
+@app_views.route("/status", methods=['GET'], strict_slashes=False)
+def status():
     """
-    Returns a JSON with the status
+    status route
+    :return: response with json
     """
-    response = {'status': "OK"}
-    return jsonify(response)
+    data = {
+        "status": "OK"
+    }
+
+    resp = jsonify(data)
+    resp.status_code = 200
+
+    return resp
 
 
-@app_views.route('/stats', methods=['GET'], strict_slashes=False)
-def get_stats():
-    """Retrieves the number of each objects by type"""
-    stats = {}
-    classes = ["Amenity", "City", "Place", "Review", "State", "User"]
+@app_views.route("/stats", methods=['GET'], strict_slashes=False)
+def stats():
+    """
+    stats of all objs route
+    :return: json of all objs
+    """
+    data = {
+        "amenities": storage.count("Amenity"),
+        "cities": storage.count("City"),
+        "places": storage.count("Place"),
+        "reviews": storage.count("Review"),
+        "states": storage.count("State"),
+        "users": storage.count("User"),
+    }
 
-    for cls_name in classes:
-        cls_count = storage.count(cls_name)
-        stats[cls_name] = cls_count
+    resp = jsonify(data)
+    resp.status_code = 200
 
-    return jsonify(stats)
+    return resp
