@@ -35,7 +35,7 @@ def retrive_place(place_id):
     place = storage.get(Place, place_id)
     if not place:
         abort(404)
-    return jsonify(place.to_dict())
+    return place.to_dict()
 
 
 @app_views.route(
@@ -51,7 +51,7 @@ def delete_place(place_id):
         abort(404)
     storage.delete(place)
     storage.save()
-    return {}, 200
+    return jsonify({}), 200
 
 
 @app_views.route(
