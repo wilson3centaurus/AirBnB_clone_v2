@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-""" Create a new view for State objects that handles all default RestFul API actions """
+""" Create a new view for State objects that
+ handles all default RestFul API actions """
 from api.v1.views import app_views
 from models import storage
 from models.state import State
@@ -26,7 +27,8 @@ def get_state(state_id):
     return jsonify(state.to_dict())
 
 
-@app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/states/<state_id>',
+                 methods=['DELETE'], strict_slashes=False)
 def delete_state(state_id):
     """ Deletes a State object """
     state = storage.get(State, state_id)
