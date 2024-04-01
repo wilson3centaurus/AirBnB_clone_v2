@@ -5,7 +5,7 @@ from models.amenity import Amenity
 from models import storage
 from api.v1.views import app_views
 from os import environ
-from flask import abort, jsonify, make_response, request
+from flask import abort, jsonify, make_response
 
 
 @app_views.route('places/<place_id>/amenities', methods=['GET'],
@@ -86,4 +86,3 @@ def post_place_amenity(place_id, amenity_id):
 
     storage.save()
     return make_response(jsonify(amenity.to_dict()), 201)
-
