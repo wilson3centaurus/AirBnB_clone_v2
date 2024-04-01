@@ -26,7 +26,7 @@ class FileStorage:
     CNC = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State,
            "User": User}
-    
+
     def __init__(self):
         """Initialize FileStorage and call reload"""
         self.reload()
