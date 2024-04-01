@@ -77,9 +77,9 @@ def update_city(city_id):
     city = storage.get(City, city_id)
     if not city:
         abort(404)
-    if not request.is_json:
-        abort(400, "Not a JSON")
     data_to_update = request.get_json()
+    if not data_to_update:
+        abort(400, "Not a JSON")
     for key, value in data_to_update.items():
         if key not in ["id", "created_at", "updated_at"]:
             setattr(city, key, value)
