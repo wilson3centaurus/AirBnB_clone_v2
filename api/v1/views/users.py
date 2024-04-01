@@ -30,9 +30,9 @@ def get_user(user_id):
                  strict_slashes=False)
 def create_user():
     """Creates a user"""
-    if not request.is_json:
-        abort(400, "Not a JSON")
     new_user_data = request.get_json()
+    if not new_user_data:
+        abort(400, "Not a JSON")
     if "email" not in new_user_data:
         abort(400, "Missing email")
     if "password" not in new_user_data:
@@ -64,8 +64,8 @@ def update_user(user_id):
 def delete_user(user_id):
     user = storage.get(User, user_id)
     if user:
-        user.delete()
-        user.save()
+        storage.delete(user)
+        storage.save()
         return jsonify({}), 200
     else:
         abort(400)
