@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 View for City objects that handles
-all default RESTFul API actions
+ll default RESTFul API actions
 """
 
 from flask import jsonify, abort, request, make_response
