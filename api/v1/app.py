@@ -12,7 +12,7 @@ app.register_blueprint(app_views)
 
 
 @app.teardown_appcontext
-def teardown():
+def close_db():
     """this method handles the decorator @app.teardown_appcontext"""
     storage.close()
 
