@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""routes"""
+"""routes handler base application"""
 import os
 from flask import Flask, jsonify
 from models import storage
@@ -20,7 +20,7 @@ def close_storage(exception):
 
 @app.errorhandler(404)
 def not_found(error):
-    """"not found error"""
+    """"not found error page"""
     return jsonify({"error": "Not found"}), 404
 
 
