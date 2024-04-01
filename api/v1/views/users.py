@@ -70,9 +70,7 @@ def create_user():
     if "password" not in request_data:
         abort(400, "Missing password")
 
-    new_user = User()
-    new_user.email = request_data.get('email')
-    new_user.password = request_data.get('password')
+    new_user = User(**request_data)
     new_user.save()
     return jsonify(new_user.to_dict()), 201
 
