@@ -137,7 +137,7 @@ class TestDBStorage(unittest.TestCase):
         storage.new(state_instance)
         storage.save()
 
-        retrieved_state = storage.get(State, state_instance.id)
+        # print(retrieved_state) = storage.get(State, state_instance.id)
 
         self.assertEqual(state_instance, retrieved_state)
 
