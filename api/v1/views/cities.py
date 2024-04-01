@@ -1,9 +1,5 @@
 #!/usr/bin/python3
-"""
-View for City objects that handles
-all default RESTFul API actions
-"""
-
+"""City"""
 from flask import jsonify, abort, request
 from models.state import State
 from models.city import City
