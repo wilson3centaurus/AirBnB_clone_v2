@@ -63,7 +63,6 @@ class DBStorage:
         """delete from the current database session obj if not None"""
         if obj is not None:
             self.__session.delete(obj)
-
     def reload(self):
         """reloads data from the database"""
         Base.metadata.create_all(self.__engine)
@@ -79,6 +78,10 @@ class DBStorage:
         """Returns the object based on the class and its ID, or None if not
         found"""
         return self.__session.query(cls).filter(cls.id == id).one_or_none()
+    
+    def get_all(self, cls):
+        """Returns a list of all objects of a given class"""
+        return self.__session.query(cls).all()
 
     def count(self, cls=None):
         """Returns the number of objects in storage matching the given class.
