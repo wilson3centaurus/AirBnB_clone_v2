@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-index
+index file
 """
 
 from flask import jsonify
