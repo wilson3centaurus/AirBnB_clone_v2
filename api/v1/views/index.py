@@ -15,10 +15,10 @@ def api_status():
     return (response)
 
 
-@app_views.route("/stats", methods=['GET'], strict_slashes=False)
+@app_views.route("/stats", strict_slashes=False)
 def get_stats():
     """returns the stats of the api"""
-    stats = {}
+    stat = {}
     obj_types = {
         'Amenity': "amenities",
         'City': "cities",
@@ -30,6 +30,6 @@ def get_stats():
 
     for obj in obj_types.keys():
         if storage.count(obj):
-            stats[obj_types[obj]] = storage.count(obj)
+            stat[obj_types[obj]] = storage.count(obj)
 
-    return jsonify(stats), 200
+    return jsonify(stat), 200
