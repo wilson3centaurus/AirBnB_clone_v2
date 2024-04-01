@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""City"""
+"""Handling City Routes"""
 from flask import jsonify, abort, request
 from models.state import State
 from models.city import City
