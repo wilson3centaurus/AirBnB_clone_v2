@@ -1,9 +1,11 @@
 #!usr/bin/python3
+""" states view """
 
 from models.state import State
 from models import storage
 from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
+
 
 @app_views.route('/states/', methods=["GET"], strict_slashes=False)
 def state_get():
@@ -25,7 +27,8 @@ def get_state_with_id(state_id):
     return jsonify(state.to_dict())
 
 
-@app_views.route('/states/<state_id>', methods=["DELETE"], strict_slashes=False)
+@app_views.route('/states/<state_id>',
+                 methods=["DELETE"], strict_slashes=False)
 def state_delete(state_id):
     """ deletes a state """
     state = storage.get(State, state_id)

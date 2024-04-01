@@ -1,13 +1,15 @@
 #!usr/bin/python3
+""" Amenities View """
 
 from models.amenity import Amenity
 from models import storage
 from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
 
+
 @app_views.route('/amenities/', methods=["GET"], strict_slashes=False)
 def amenities_get():
-    """ gets states"""
+    """ gets amenities """
     amenities = []
     for key, values in storage.all(Amenity).items():
         amenities.append(values.to_dict())
@@ -15,9 +17,10 @@ def amenities_get():
     return jsonify(amenities)
 
 
-@app_views.route('/amenities/<amenity_id>', methods=["GET"], strict_slashes=False)
-def get_state_with_id(amenity_id):
-    """ gets state with id """
+@app_views.route('/amenities/<amenity_id>',
+                 methods=["GET"], strict_slashes=False)
+def get_amenity_with_id(amenity_id):
+    """ gets amenity with id """
     amenities = storage.get(Amenity, amenity_id)
     if not amenities:
         abort(404)
@@ -25,9 +28,10 @@ def get_state_with_id(amenity_id):
     return jsonify(amenities.to_dict())
 
 
-@app_views.route('/amenities/<amenities_id>', methods=["DELETE"], strict_slashes=False)
+@app_views.route('/amenities/<amenities_id>',
+                 methods=["DELETE"], strict_slashes=False)
 def amenities_delete(amenity_id):
-    """ deletes a state """
+    """ deletes an amenity """
     amenity = storage.get(Amenity, amenity_id)
 
     if not amenity:
@@ -40,8 +44,8 @@ def amenities_delete(amenity_id):
 
 
 @app_views.route('/amenities', methods=["POST"], strict_slashes=False)
-def state_post():
-    """ creates a state """
+def amenity_post():
+    """ creates an amenity """
     data = request.get_json()
     if not data:
         abort(400, description="Not a JSON")
@@ -54,9 +58,10 @@ def state_post():
     return make_response(jsonify(new_amenity.to_dict()), 201)
 
 
-@app_views.route('/amenities/<amenity_id>', methods=["PUT"], strict_slashes=False)
+@app_views.route('/amenities/<amenity_id>',
+                 methods=["PUT"], strict_slashes=False)
 def amenities_put(amenity_id):
-    """ updates a state """
+    """ updates an amenity """
     amenity = storage.get(Amenity, amenity_id)
     data = request.get_json()
 
