@@ -5,6 +5,7 @@ from flask import jsonify, request, abort, make_response
 from models import storage
 from datetime import datetime
 from models.city import City
+from models.state import State
 from api.v1.views import app_views
 
 
@@ -47,12 +48,12 @@ def create_city(state_id):
     """ Create a new city """
     response = request.get_json()
     if response is None:
-        abort(404, description='Not a JSON')
+        abort(400, 'Not a JSON')
     if 'name' not in response:
-        abort(404, description='Missing name')
+        abort(400, 'Missing name')
     new_city = City(**response)
     new_city.state_id = state_id
-    storage.save()
+    new_city.save()
     return make_response(jsonify(new_city.to_dict()), 201)
 
 
@@ -64,7 +65,7 @@ def update_city(city_id):
         abort(404)
     response = request.get_json()
     if response is None:
-        abort(404, description='Not a JSON')
+        abort(400, 'Not a JSON')
     keys = ['id', 'state_id', 'created_at', 'updated_at']
     for key, value in response.items():
         if key not in keys:
