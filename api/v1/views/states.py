@@ -61,7 +61,8 @@ def create_state():
 
     if 'name' not in request_data:
         abort(400, "Missing name")
-    new_state = State(**request_data)
+    new_state = State()
+    new_state.name = request_data.get('name')
     new_state.save()
     return jsonify(new_state.to_dict()), 201
 

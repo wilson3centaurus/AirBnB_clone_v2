@@ -1,60 +1,88 @@
 #!/usr/bin/python3
-""" the view for the amenities """
-from api.v1.views import app_views
-from flask import jsonify, abort, request
-from models import storage
+""" objects that handle all default RestFul API actions for Place - Amenity """
 from models.place import Place
 from models.amenity import Amenity
+from models import storage
+from api.v1.views import app_views
 from os import environ
-storage_t = environ.get('HBNB_TYPE_STORAGE')
+from flask import abort, jsonify, make_response
 
 
-@app_views.route('/places/<place_id>/amenities', strict_slashes=False)
-def place_amenities_route(place_id):
-    """ Retrieves the list of all Amenity objects of a Place """
+@app_views.route('places/<place_id>/amenities', methods=['GET'],
+                 strict_slashes=False)
+def get_place_amenities(place_id):
+    """
+    Retrieves the list of all Amenity objects of a Place
+    """
     place = storage.get(Place, place_id)
+
     if not place:
         abort(404)
 
-    amenities = []
-    if storage_t != 'db':
-        amenities = place.amenity_ids
+    if environ.get('HBNB_TYPE_STORAGE') == "db":
+        amenities = [amenity.to_dict() for amenity in place.amenities]
     else:
-        amenities = place.amenities
-    amenities = [amenity.to_dict() for amenity in amenities]
+        amenities = [storage.get(Amenity, amenity_id).to_dict()
+                     for amenity_id in place.amenity_ids]
+
     return jsonify(amenities)
 
 
 @app_views.route('/places/<place_id>/amenities/<amenity_id>',
-                 methods=['DELETE', 'POST'],
-                 strict_slashes=False)
-def place_amenity_route(place_id, amenity_id):
-    """ the Delete and Post http requests """
+                 methods=['DELETE'], strict_slashes=False)
+def delete_place_amenity(place_id, amenity_id):
+    """
+    Deletes a Amenity object of a Place
+    """
     place = storage.get(Place, place_id)
-    amenity = storage.get(Amenity, amenity_id)
-    if not place or not amenity:
+
+    if not place:
         abort(404)
 
-    if request.method == 'DELETE':
-        place_amenities = []
-        if storage_t == 'db':
-            place_amenities = place.amenities
-        else:
-            place_amenities = place.amenity_ids
-        if amenity not in place_amenities:
-            abort(404)
-        place_amenities.remove(amenity)
-        place.save()
-        return {}
-    elif request.method == 'POST':
-        place_amenities = []
-        if storage_t == 'db':
-            place_amenities = place.amenities
-        else:
-            place_amenities = place.amenity_ids
-        if amenity in place_amenities:
-            return amenity.to_dict()
-        place_amenities.append(amenity)
-        place.save()
+    amenity = storage.get(Amenity, amenity_id)
 
-        return amenity.to_dict(), 201
+    if not amenity:
+        abort(404)
+
+    if environ.get('HBNB_TYPE_STORAGE') == "db":
+        if amenity not in place.amenities:
+            abort(404)
+        place.amenities.remove(amenity)
+    else:
+        if amenity_id not in place.amenity_ids:
+            abort(404)
+        place.amenity_ids.remove(amenity_id)
+
+    storage.save()
+    return make_response(jsonify({}), 200)
+
+
+@app_views.route('/places/<place_id>/amenities/<amenity_id>', methods=['POST'],
+                 strict_slashes=False)
+def post_place_amenity(place_id, amenity_id):
+    """
+    Link a Amenity object to a Place
+    """
+    place = storage.get(Place, place_id)
+
+    if not place:
+        abort(404)
+
+    amenity = storage.get(Amenity, amenity_id)
+
+    if not amenity:
+        abort(404)
+
+    if environ.get('HBNB_TYPE_STORAGE') == "db":
+        if amenity in place.amenities:
+            return make_response(jsonify(amenity.to_dict()), 200)
+        else:
+            place.amenities.append(amenity)
+    else:
+        if amenity_id in place.amenity_ids:
+            return make_response(jsonify(amenity.to_dict()), 200)
+        else:
+            place.amenity_ids.append(amenity_id)
+
+    storage.save()
+    return make_response(jsonify(amenity.to_dict()), 201)
