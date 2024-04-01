@@ -22,7 +22,7 @@ def get_cities(state_id):
     return jsonify([city.to_dict() for city in state.cities])
 
 
-@app_views.route("/states/cities/<city_id>", methods=["GET"],
+@app_views.route("/cities/<city_id>", methods=["GET"],
                  strict_slashes=False)
 def get_city(city_id):
     """Gets city object"""
