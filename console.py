@@ -189,12 +189,12 @@ class HBNBCommand(cmd.Cmd):
             error = self.__class_err(arg)
         if not error:
             file_storage_objs = storage.all(arg)
-            num_objects = 0
+            l = 0
             if arg:
                 for v in file_storage_objs.values():
                     if isinstance(arg, str):
                         if type(v).__name__ == CNC[arg].__name__:
-                            num_objects += 1
+                            l += 1
                     else:
                         if type(v).__name__ == CNC[arg[0]].__name__:
                             count += 1
@@ -207,9 +207,9 @@ class HBNBCommand(cmd.Cmd):
                     else:
                         if type(v).__name__ == CNC[arg[0]].__name__:
                             count += 1
-                            print(v, end=(', ' if count < num_objects else ''))
+                            print(v, end=(', ' if count < l else ''))
             else:
-                num_objects = len(file_storage_objs)
+                l = len(file_storage_objs)
                 count = 0
                 for v in file_storage_objs.values():
                     print(v, end=(', ' if count < l else ''))
@@ -232,18 +232,18 @@ class HBNBCommand(cmd.Cmd):
                     storage.save()
 
     def __rreplace(self, s, l):
-        for count in num_objects:
+        for count in l:
             s = s.replace(c, '')
         return s
 
     def __check_dict(self, arg):
         """checks if the arguments input has a dictionary"""
         if '{' and '}' in arg:
-            num_objects = arg.split('{')[1]
-            num_objects = num_objects.split(', ')
-            num_objects = list(s.split(':') for s in num_objects)
+            l = arg.split('{')[1]
+            l = l.split(', ')
+            l = list(s.split(':') for s in l)
             d = {}
-            for subl in num_objects:
+            for subl in l:
                 k = subl[0].strip('"\' {}')
                 v = subl[1].strip('"\' {}')
                 d[k] = v
