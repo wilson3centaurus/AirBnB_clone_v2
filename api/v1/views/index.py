@@ -12,6 +12,7 @@ def status():
     '''returns a JSON object'''
     return jsonify({"status": "OK"})
 
+
 @app_views.route('/stats', strict_slashes=False)
 def get_object():
     '''retrieves the number of ech objects by type'''
@@ -22,4 +23,3 @@ def get_object():
                     "states": storage.count("State"),
                     "users": storage.count("User")
                     })
-
