@@ -4,19 +4,10 @@ view for City objects that handles
 all default RESTFul API actions
 """
 from api.v1.views import app_views
-from flask import abort, request
+from flask import abort, request, jsonify
 from models import storage
 from models.state import State
 from models.city import City
-
-
-def get_object_by_id(cls, obj_id):
-    """ This function is used to retrive a specific object using its id
-    """
-    for _, obj in storage.all(cls).items():
-        if obj.id == obj_id:
-            return obj
-    return None
 
 
 @app_views.route(
@@ -26,10 +17,10 @@ def get_object_by_id(cls, obj_id):
 def retrive_cities_by_state(state_id):
     """ This function return list of all cities related to a state
     """
-    state = get_object_by_id(State, state_id)
+    state = storage.get(State, state_id)
     if not state:
         abort(404)
-    return [city.to_dict() for city in state.cities]
+    return jsonify([city.to_dict() for city in state.cities])
 
 
 @app_views.route(
@@ -40,10 +31,10 @@ def retrive_city(city_id):
     """ This function is used to retrive a specific city
         object using its id
     """
-    city = get_object_by_id(City, city_id)
+    city = storage.get(City, city_id)
     if not city:
         abort(404)
-    return city.to_dict()
+    return jsonify(city.to_dict())
 
 
 @app_views.route(
@@ -54,12 +45,12 @@ def delete_city(city_id):
     """ This function is used to delete an city object when
         the DELETE method is called
     """
-    city = get_object_by_id(City, city_id)
+    city = storage.get(City, city_id)
     if not city:
         abort(404)
     storage.delete(city)
     storage.save()
-    return {}, 200
+    return jsonify({}), 200
 
 
 @app_views.route(
@@ -69,7 +60,7 @@ def delete_city(city_id):
 def create_city(state_id):
     """ This function creates a new city object
     """
-    state = get_object_by_id(State, state_id)
+    state = storage.get(State, state_id)
     if state is None:
         abort(404)
     try:
@@ -83,7 +74,7 @@ def create_city(state_id):
     new_city.name = request_data['name']
     new_city.state_id = state_id
     new_city.save()
-    return new_city.to_dict(), 201
+    return jsonify(new_city.to_dict()), 201
 
 
 @app_views.route(
@@ -93,7 +84,7 @@ def create_city(state_id):
 def update_city(city_id):
     """ This function updates an existing city object
     """
-    city = get_object_by_id(City, city_id)
+    city = storage.get(City, city_id)
     if not city:
         abort(404)
     try:
@@ -106,4 +97,4 @@ def update_city(city_id):
             setattr(city, key, value)
 
     city.save()
-    return city.to_dict(), 200
+    return jsonify(city.to_dict()), 200

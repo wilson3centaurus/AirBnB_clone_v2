@@ -33,4 +33,4 @@ def number_of_objects():
     for key, obj in objects.items():
         result[key] = storage.count(obj)
 
-    return result
+    return jsonify(result)
