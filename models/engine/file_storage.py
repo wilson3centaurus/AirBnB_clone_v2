@@ -27,7 +27,7 @@ class FileStorage:
     keys: Class Names
     values: Class type (used for instantiation)
     """
-    __file_path = './dev/file.json'
+    __file_path = 'file.json'
     __objects = {}
 
     def all(self, cls=None):
