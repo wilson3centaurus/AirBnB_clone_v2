@@ -78,7 +78,7 @@ class DBStorage:
     def get(self, cls, id):
         """Retrives one object"""
         try:
-            return self.__session.query(cls).filter_by(id=id).one()
+            return self.__session.query(cls).filter_by(id=id).first()
         except NoResultFound:
             return None
 
@@ -87,6 +87,7 @@ class DBStorage:
         if cls:
             return self.__session.query(cls).count()
         else:
-            return sum(
-                    self.__session.query(cls).count()
-                    for cls in Base.__subclasses__())
+            count = 0
+            for cls in classes.values():
+                count += self.__session.query(cls).count()
+            return count
