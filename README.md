@@ -158,6 +158,6 @@ Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twit
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
 Siphephelo Khanyile - [Github](https://github.com/SiphepheloKhanyile) / [Twitter](https://twitter.com/SiphepheloKhany)
 
-Second part of Airbnb: Joann Vuong
+Second part of Airbnb: Siphephelo Khanyile
 ## License
 Public Domain. No copy write protection. 
