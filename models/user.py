@@ -40,12 +40,10 @@ class User(BaseModel, Base):
         @password.setter
         def password(self, value):
             """ Setter for password """
-            self.password = hashlib.md5(value.encode()).hexdigest()
 
     def __init__(self, *args, **kwargs):
         """initializes user"""
         super().__init__(*args, **kwargs)
-        self.password = hashlib.md5(kwargs['password'].encode()).hexdigest()
 
 
 def hash_password_before_insert_or_update(_, __, target):
