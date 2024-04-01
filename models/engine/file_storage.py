@@ -70,6 +70,7 @@ class FileStorage:
         self.reload()
 
     def get(self, cls, id):
+        """get functionality"""
         if cls in classes.values():
             key = f"{cls.__name__}.{id}"
             return self.__objects.get(key)
