@@ -11,7 +11,8 @@ app = Flask(__name__)
 app.register_blueprint(app_views)
 
 
-CORS(app, resources={r"/*":{"origins": "0.0.0.0"}})
+CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
+
 
 @app.errorhandler(404)
 def page_not_found(error):
