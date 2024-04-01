@@ -1,11 +1,9 @@
 #!/usr/bin/python3
 """ holds class User"""
-import models
-from models.base_model import BaseModel, Base
-from passlib.apps import custom_app_context as pwd_context
-from os import getenv
-import sqlalchemy
 from sqlalchemy import Column, String
+import hashlib
+from models.base_model import BaseModel, Base
+import models
 from sqlalchemy.orm import relationship
 
 
@@ -34,4 +32,4 @@ class User(BaseModel, Base):
     def __init__(self, *args, **kwargs):
         """initializes user"""
         super().__init__(*args, **kwargs)
-        self.password = pwd_context.encrypt(kwargs['password'])
+        self.password = hashlib.md5(kwargs['password'].encode()).hexdigest()
