@@ -150,13 +150,14 @@ EOF  all  create  destroy  help  quit  show  update
 (hbnb) quit
 ```
 
-## Bugs
-No known bugs at this time. 
-
 ## Authors
-Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
-Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+1. Alaa Eddine Elhannaoui
+   - Email: Alaaelhannaoui@proton.me
+   - GitHub: @ArgusGuardian
 
-Second part of Airbnb: Joann Vuong
+2. Ilyas Ouagag
+   - Email: ilyasouagag2011@gmail.com
+   - GitHub: @ilyasouagag
+
 ## License
 Public Domain. No copy write protection. 
