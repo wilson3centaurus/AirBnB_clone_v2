@@ -1,109 +1,62 @@
 #!/usr/bin/python3
-"""
-view for City objects that handles
-all default RESTFul API actions
-"""
+""" the view for the cities """
 from api.v1.views import app_views
-from flask import abort, request
+from flask import jsonify, abort, request
 from models import storage
 from models.state import State
 from models.city import City
 
 
-def get_object_by_id(cls, obj_id):
-    """ This function is used to retrive a specific object using its id
-    """
-    for _, obj in storage.all(cls).items():
-        if obj.id == obj_id:
-            return obj
-    return None
-
-
-@app_views.route(
-        "/states/<state_id>/cities",
-        methods=['GET'],
-        strict_slashes=False)
-def retrive_cities_by_state(state_id):
-    """ This function return list of all cities related to a state
-    """
-    state = get_object_by_id(State, state_id)
+@app_views.route('/states/<state_id>/cities', methods={'GET', 'POST'},
+                 strict_slashes=False)
+def cities(state_id):
+    """ Retrieves the list of all City objects of a State """
+    state = storage.get(State, state_id)
     if not state:
         abort(404)
-    return [city.to_dict() for city in state.cities]
+
+    if request.method == 'GET':
+        cities = [city.to_dict() for city in state.cities]
+        return jsonify(cities)
+    elif request.method == 'POST':
+        if request.content_type != "application/json":
+            abort(400, description="Not a JSON")
+
+        data = request.get_json()
+        if not data:            # ############# checker error might be here
+            abort(400, 'Not a JSON')
+        if 'name' not in data:
+            abort(400, 'Missing name')
+        data['state_id'] = state_id
+        new_city = City(**data)
+        new_city.save()
+        return new_city.to_dict(), 201
 
 
-@app_views.route(
-        "/cities/<city_id>",
-        methods=['GET'],
-        strict_slashes=False)
-def retrive_city(city_id):
-    """ This function is used to retrive a specific city
-        object using its id
-    """
-    city = get_object_by_id(City, city_id)
+@app_views.route('/cities/<city_id>', methods={'GET', 'DELETE', 'PUT'},
+                 strict_slashes=False)
+def city(city_id):
+    """ all handlers for http of city requests """
+    city = storage.get(City, city_id)
     if not city:
         abort(404)
-    return city.to_dict()
 
+    if request.method == 'GET':
+        return city.to_dict()
+    elif request.method == 'DELETE':
+        storage.delete(city)
+        storage.save()
+        return {}
+    elif request.method == 'PUT':
+        if request.content_type != "application/json":
+            abort(400, description="Not a JSON")
 
-@app_views.route(
-        "/cities/<city_id>",
-        methods=['DELETE'],
-        strict_slashes=False)
-def delete_city(city_id):
-    """ This function is used to delete an city object when
-        the DELETE method is called
-    """
-    city = get_object_by_id(City, city_id)
-    if not city:
-        abort(404)
-    storage.delete(city)
-    storage.save()
-    return {}, 200
+        data = request.get_json()
+        if not data:            # ############# checker error might be here
+            abort(400, 'Not a JSON')
 
-
-@app_views.route(
-        "/states/<state_id>/cities",
-        methods=['POST'],
-        strict_slashes=False)
-def create_city(state_id):
-    """ This function creates a new city object
-    """
-    state = get_object_by_id(State, state_id)
-    if state is None:
-        abort(404)
-    try:
-        request_data = request.get_json()
-    except Exception:
-        abort(400, description="Not a JSON")
-
-    if 'name' not in request_data:
-        abort(400, description="Missing name")
-    new_city = City()
-    new_city.name = request_data['name']
-    new_city.state_id = state_id
-    new_city.save()
-    return new_city.to_dict(), 201
-
-
-@app_views.route(
-        "/cities/<city_id>",
-        methods=['PUT'],
-        strict_slashes=False)
-def update_city(city_id):
-    """ This function updates an existing city object
-    """
-    city = get_object_by_id(City, city_id)
-    if not city:
-        abort(404)
-    try:
-        request_data = request.get_json()
-    except Exception:
-        abort(400, description="Not a JSON")
-
-    for key, value in request_data.items():
-        if key not in ('id', 'created_at', 'updated_at', 'state_id'):
-            setattr(city, key, value)
-
-    city.save()
-    return city.to_dict(), 200
+        for k, v in data.items():
+            if k not in ['id', 'state_id', 'created_at', 'updated_at']:
+                setattr(city, k, v)
+        city.save()
+        return city.to_dict()
