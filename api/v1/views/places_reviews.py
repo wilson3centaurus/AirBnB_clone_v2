@@ -14,7 +14,7 @@ def get_places_reviews(place_id):
     place = storage.get(Place, place_id)
     if not place:
         abort(404)
-    data = [review.to_dict() for review in places.reviews]
+    data = [review.to_dict() for review in place.reviews]
     return jsonify(data)
 
 
@@ -46,9 +46,9 @@ def create_review(place_id):
         abort(404)
     if "text" not in new_review_data:
         abort(400, "Missing text")
+    new_review_data["place_id"] = place_id
     new_review = Review(**new_review_data)
-    setattr(review, "place_id", place_id)
-    storage.new(new_review)
+    new_review.save()
     storage.save()
     return jsonify(new_review.to_dict()), 201
 
@@ -67,7 +67,7 @@ def update_review(review_id):
         if key not in ["id", "user_id", "place_id",
                        "created_at", "updated_at"]:
             setattr(review, key, value)
-    storage.save()
+    review.save()
     return jsonify(review.to_dict()), 200
 
 
@@ -77,7 +77,7 @@ def delete_review(review_id):
     """Deletes review object base on id"""
     review = storage.get(Review, review_id)
     if review:
-        storage.delete(review)
+        review.delete()
         storage.save()
         return jsonify({}), 200
     else:
