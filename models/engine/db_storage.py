@@ -77,7 +77,7 @@ class DBStorage:
 
     def get(self, cls, id):
         """method to retrieve one object"""
-        if cls is None or id is None:
+        if not cls or not id:
             return None
         cls = eval(cls) if type(cls) == str else cls
         key = cls.__name__ + "." + id
