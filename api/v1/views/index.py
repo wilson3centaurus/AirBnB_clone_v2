@@ -9,3 +9,26 @@ from flask import jsonify
 def get_status():
     """status"""
     return jsonify({"status": "OK"})
+
+
+@app_views.route('/stats', methods=['GET'])
+def get_stats():
+    """"
+    Endpoint that retrieves the number of each objects by type
+    """
+    from models import storage
+    from models.state import State
+    from models.city import City
+    from models.amenity import Amenity
+    from models.place import Place
+    from models.review import Review
+    from models.user import User
+
+    return jsonify({
+        "states": storage.count(State),
+        "cities": storage.count(City),
+        "amenities": storage.count(Amenity),
+        "places": storage.count(Place),
+        "reviews": storage.count(Review),
+        "users": storage.count(User)
+    })
