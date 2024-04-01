@@ -15,7 +15,7 @@ def get_place_by_city(city_id):
     state_objects = storage.get("City", city_id)
     if state_objects is None:
         abort(404)
-    for city in Place.places:
+    for city in state_objects.places:
         if place.city_id == city_id:
             places.append(place.to_json())
     return jsonify(places)
@@ -46,7 +46,7 @@ def post_place(city_id):
 @app_views.route("/places/<place_id>", methods=["GET"], strict_slashes=False)
 def get_place_by_id(place_id):
     """get place by id"""
-    place_object = storage.get("Place", str(place_id))
+    place_object = storage.get("Place", place_id)
     if place_object is None:
         abort(404)
     return jsonify(place_object.to_dict())
@@ -58,7 +58,7 @@ def put_place(place_id):
     place_update = request.get_json(silent=True)
     if place_update is None:
         abort(400, 'Not a JSON')
-    place_object = storage.get("Place", str(place_id))
+    place_object = storage.get("Place", place_id)
     if place_object is None:
         abort(404)
     for key, val in place_update.items():
@@ -72,7 +72,7 @@ def put_place(place_id):
                  strict_slashes=False)
 def place_delete_by_id(city_id):
     """delete place by id"""
-    place_object = storage.get("Place", str(place_id))
+    place_object = storage.get("Place", place_id)
     if place_object is None:
         abort(404)
     storage.delete(place_object)
