@@ -3,7 +3,7 @@
 import models
 from models.base_model import BaseModel, Base
 import hashlib
-from sqlalchemy import Column, String
+from sqlalchemy import Column, String, event
 import hashlib
 from models.base_model import BaseModel, Base
 import models
@@ -46,3 +46,13 @@ class User(BaseModel, Base):
         """initializes user"""
         super().__init__(*args, **kwargs)
         self.password = hashlib.md5(kwargs['password'].encode()).hexdigest()
+
+
+def hash_password_before_insert_or_update(_, __, target):
+    if target.password is not None:
+        # Hash the password using MD5
+        target.password = hashlib.md5(target.password.encode()).hexdigest()
+
+
+event.listen(User, 'before_insert', hash_password_before_insert_or_update)
+event.listen(User, 'before_update', hash_password_before_insert_or_update)
