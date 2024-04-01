@@ -9,7 +9,7 @@ from api.v1.views import app_views
 
 
 @app_views.route("/places/<place_id>/amenities", methods=["GET"],
-                strict_slashes=False)
+                 strict_slashes=False)
 def get_all_amenities(place_id):
     """List Place's amenities"""
     place = storage.get(Place, place_id)
@@ -17,13 +17,12 @@ def get_all_amenities(place_id):
         abort(404)
 
     place_amenities = [amenity.to_dict()
-                        for amenity in place.amenities]
+                       for amenity in place.amenities]
     return jsonify(place_amenities)
 
 
-
 @app_views.route("/places/<place_id>/amenities/<amenity_id>",
-                    methods=["DELETE"], strict_slashes=False)
+                 methods=["DELETE"], strict_slashes=False)
 def removing_amenity(place_id, amenity_id):
     """Delete Amenity for a Place"""
     place = storage.get(Place, place_id)
@@ -51,7 +50,7 @@ def link_amenity_to_place(place_id, amenity_id):
     if not place or not amenity:
         abort(404)
 
-    if storage_t == 'db':  
+    if storage_t == 'db':
         if amenity in place.amenities:
             return jsonify(amenity.to_dict()), 200
         place.amenities.append(amenity)
@@ -59,6 +58,6 @@ def link_amenity_to_place(place_id, amenity_id):
         if amenity.id in place.amenity_ids:
             return jsonify(amenity.to_dict()), 200
         place.amenity_ids.append(amenity.id)
-    
+
     storage.save()
     return jsonify(amenity.to_dict()), 201
