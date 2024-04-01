@@ -63,9 +63,7 @@ def create_user():
     """ This function creates a new user object
     """
     request_data = request.get_json(silent=True)
-    try:
-        request_data = request.get_json()
-    except Exception:
+    if not request_data:
         abort(400, "Not a JSON")
     if "email" not in request_data:
         abort(400, "Missing email")
@@ -87,9 +85,8 @@ def update_user(user_id):
     user = get_object_by_id(User, user_id)
     if not user:
         abort(404)
-    try:
-        request_data = request.get_json()
-    except Exception:
+    request_data = request.get_json(silent=True)
+    if not request_data:
         abort(400, "Not a JSON")
 
     for key, value in request_data.items():
