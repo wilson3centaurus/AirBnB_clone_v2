@@ -30,11 +30,10 @@ class User(BaseModel, Base):
         """initializes user"""
         super().__init__(*args, **kwargs)
 
-
     def __setattr__(self, __key, __value):
         """sets attributes for User obj"""
         if __key == "password":
-            pwd_hash = hashlib.md5(__value.encode('utf-8'))
-            super().__setattr__(__key, pwd_hash.hexdigest())
+            pwd_hash = hashlib.md5(__value.encode())
+            super().__setattr__(__key, pwd_hash.digest())
         else:
             super().__setattr__(__key, __value)
