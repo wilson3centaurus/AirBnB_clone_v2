@@ -4,7 +4,7 @@ View for City objects that handles
 all default RESTFul API actions
 """
 
-from flask import jsonify, abort, request
+from flask import jsonify, abort, request, make_response
 from models.state import State
 from models import storage
 from api.v1.views import app_views
@@ -44,7 +44,7 @@ def delete_city(city_id):
     # storage.delete(city)
     city.delete()
     storage.save()
-    return jsonify({}), 200
+    return make_response(jsonify({}), 200)
 
 
 @app_views.route("/states/<state_id>/cities", methods=["POST"],
@@ -68,7 +68,7 @@ def create_city(state_id):
     setattr(new_city, "state_id", state_id)
     storage.new(new_city)
     storage.save()
-    return jsonify(new_city.to_dict()), 201
+    return make_response(jsonify(new_city.to_dict()), 201)
 
 
 @app_views.route("/cities/<city_id>", methods=["PUT"],
@@ -85,4 +85,4 @@ def update_city(city_id):
         if key not in ["id", "created_at", "updated_at"]:
             setattr(city, key, value)
     storage.save()
-    return jsonify(city.to_dict()), 200
+    return make_response(jsonify(city.to_dict()), 200)
