@@ -189,12 +189,12 @@ class HBNBCommand(cmd.Cmd):
             error = self.__class_err(arg)
         if not error:
             file_storage_objs = storage.all(arg)
-            l = 0
+            num_obj = 0
             if arg:
                 for v in file_storage_objs.values():
                     if isinstance(arg, str):
                         if type(v).__name__ == CNC[arg].__name__:
-                            l += 1
+                            num_obj += 1
                     else:
                         if type(v).__name__ == CNC[arg[0]].__name__:
                             count += 1
@@ -203,16 +203,16 @@ class HBNBCommand(cmd.Cmd):
                     if isinstance(arg, str):
                         if type(v).__name__ == CNC[arg].__name__:
                             count += 1
-                            print(v, end=(', ' if count < l else ''))
+                            print(v, end=(', ' if count < num_obj else ''))
                     else:
                         if type(v).__name__ == CNC[arg[0]].__name__:
                             count += 1
-                            print(v, end=(', ' if count < l else ''))
+                            print(v, end=(', ' if count < num_obj else ''))
             else:
-                l = len(file_storage_objs)
+                num_obj = len(file_storage_objs)
                 count = 0
                 for v in file_storage_objs.values():
-                    print(v, end=(', ' if count < l else ''))
+                    print(v, end=(', ' if count < num_obj else ''))
             print()
 
     def do_destroy(self, arg):
@@ -231,17 +231,17 @@ class HBNBCommand(cmd.Cmd):
                     del file_storage_objs[k]
                     storage.save()
 
-    def __rreplace(self, s, l):
-        for count in l:
+    def __rreplace(self, s, num_obj):
+        for count in num_obj:
             s = s.replace(c, '')
         return s
 
     def __check_dict(self, arg):
         """checks if the arguments input has a dictionary"""
         if '{' and '}' in arg:
-            l = arg.split('{')[1]
-            l = l.split(', ')
-            l = list(s.split(':') for s in l)
+            num_obj = arg.split('{')[1]
+            num_obj = num_obj.split(', ')
+            num_obj = list(s.split(':') for s in num_obj)
             d = {}
             for subl in l:
                 k = subl[0].strip('"\' {}')
