@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+"""amenities"""
 from flask import jsonify, abort, request
 from api.v1.views import app_views
 from models import storage
@@ -6,6 +8,7 @@ from models.amenity import Amenity
 
 @app_views.route('/amenities', methods=['GET'], strict_slashes=False)
 def get_amenities():
+    """get all amenities"""
     amenities = storage.all(Amenity).values()
     return jsonify([amenity.to_dict() for amenity in amenities])
 
@@ -13,6 +16,7 @@ def get_amenities():
 @app_views.route('/amenities/<amenity_id>',
                  methods=['GET'], strict_slashes=False)
 def get_amenity(amenity_id):
+    """get single amenity"""
     amenity = storage.get(Amenity, amenity_id)
     if amenity is None:
         abort(404)
@@ -22,6 +26,7 @@ def get_amenity(amenity_id):
 @app_views.route('/amenities/<amenity_id>',
                  methods=['DELETE'], strict_slashes=False)
 def delete_amenity(amenity_id):
+    """delete single amenity"""
     amenity = storage.get(Amenity, amenity_id)
     if amenity is None:
         abort(404)
@@ -33,6 +38,7 @@ def delete_amenity(amenity_id):
 @app_views.route('/amenities',
                  methods=['POST'], strict_slashes=False)
 def create_amenity():
+    """create single amenity"""
     request_data = request.get_json()
     if not request_data:
         abort(400, "Not a JSON")
@@ -47,6 +53,7 @@ def create_amenity():
 @app_views.route('/amenities/<amenity_id>',
                  methods=['PUT'], strict_slashes=False)
 def update_amenity(amenity_id):
+    """update single amenity"""
     amenity = storage.get(Amenity, amenity_id)
     if amenity is None:
         abort(404)
