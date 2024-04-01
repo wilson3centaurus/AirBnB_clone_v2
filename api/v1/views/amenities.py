@@ -23,7 +23,7 @@ def get_or_post_amenities():
         js = request.get_json()
         obj = Amenity(**js)
         obj.save()
-        data = storage.get("Amenity", obj.id).to_dict()
+        data = storage.get(Amenity, obj.id).to_dict()
         return make_response(jsonify(data), 201)
 
 
@@ -39,7 +39,7 @@ def get_or_update_amenity(amenity_id):
         return make_response(jsonify(amenity.to_dict()), 200)
 
     elif request.method == 'PUT':
-        if not request.is_json or not request.get_json().get('name', None):
+        if not request.is_json:
             abort(400)
         for key, value in request.get_json().items():
             if key not in ['id', 'created_at', 'updated_at']:
@@ -48,6 +48,6 @@ def get_or_update_amenity(amenity_id):
         return jsonify(amenity.to_dict()), 200
 
     elif request.method == 'DELETE':
-        amenity.delete()
+        storage.delete(amenity)
         storage.save()
-        return jsonify({}), 200
+        return make_response(jsonify({}), 200)
