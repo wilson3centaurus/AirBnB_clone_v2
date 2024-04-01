@@ -4,12 +4,12 @@ view for the link between Place objects
 and Amenity objects that handles
 all default RESTFul API actions
 """
-from api.v1.views import app_views
-from models.amenity import Amenity
-from flask import jsonify, abort, request
-from models import storage
 from models.place import Place
+from models.amenity import Amenity
+from models import storage
+from api.v1.views import app_views
 from os import environ
+from flask import abort, jsonify, make_response
 
 
 @app_views.route(
@@ -19,7 +19,7 @@ from os import environ
 def list_amenities_from_place(place_id):
     """route handler to list ameinties data from place"""
     place = storage.get(Place, place_id)
-    if place is None:
+    if not place:
         abort(404)
     if environ.get('HBHB_TYPE_STORAGE') == 'DBStorage':
         amenities = [amenity.to_dict() for amenity in place.amenities]
@@ -36,21 +36,22 @@ def list_amenities_from_place(place_id):
 def delete_amenity_from_place(place_id, amenity_id):
     """route handler to delete an amenity from a place"""
     place = storage.get(Place, place_id)
-    amenity = storage.get(Amenity, amenity_id)
     if not place or not amenity:
         abort(404)
-
+    amenity = storage.get(Amenity, amenity_id)
+    if not amenity:
+        abort(404)
     if environ.get('HBHB_TYPE_STORAGE') == 'DBStorage':
         if amenity not in place.amenities:
             abort(404)
         place.amenities.remove(amenity)
         storage.save()
     else:
-        if amenity not in place.amenities:
+        if amenity not in place.amenity_ids:
             abort(404)
         place.amenity_ids.remove(amenity_id)
         storage.save()
-    return jsonify({}), 200
+    return make_response(jsonify({}), 200)
 
 
 @app_views.route(
@@ -60,8 +61,10 @@ def delete_amenity_from_place(place_id, amenity_id):
 def create_new_amenity(place_id, amenity_id):
     """route handler to post a new amenity"""
     place = storage.get(Place, place_id)
-    amenity = storage.get(Amenity, amenity_id)
     if not place or not amenity:
+        abort(404)
+    amenity = storage.get(Amenity, amenity_id)
+    if not amenity:
         abort(404)
 
     if environ.get('HBHB_TYPE_STORAGE') == 'DBStorage':
@@ -70,8 +73,8 @@ def create_new_amenity(place_id, amenity_id):
         place.amenities.append(amenity)
         storage.save()
     else:
-        if amenity not in place.amenities:
+        if amenity not in place.amenity_ids:
             return jsonify(amenity.to_dict()), 200
         place.amenity_ids.append(amenity_id)
         storage.save()
-    return jsonify(amenity.to_dict()), 201
+    return make_response(jsonify(amenity.to_dict()), 201)
