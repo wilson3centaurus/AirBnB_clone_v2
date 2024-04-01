@@ -8,7 +8,7 @@ from models import storage
 
 
 app = Flask(__name__)
-"""<----------------- view routes ----------------->"""
+"""<------ view routes ------>"""
 app.register_blueprint(app_views)
 CORS(app, origins='0.0.0.0')
 

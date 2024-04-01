@@ -20,7 +20,7 @@ def retrive_reviews_of_place(place_id):
     """
     place = storage.get(Place, place_id)
     if not place:
-        raise abort(404)
+        abort(404)
     return jsonify([review.to_dict() for review in place.reviews])
 
 
@@ -32,7 +32,7 @@ def retrive_review(review_id):
     """
     review = storage.get(Review, review_id)
     if not review:
-        raise abort(404)
+        abort(404)
     return jsonify(review.to_dict())
 
 
@@ -44,7 +44,7 @@ def delete_review(review_id):
     """
     review = storage.get(Review, review_id)
     if not review:
-        raise abort(404)
+        abort(404)
     storage.delete(review)
     storage.save()
     return jsonify({}), 200
@@ -57,21 +57,21 @@ def create_review(place_id):
     """
     place = storage.get(Place, place_id)
     if place is None:
-        raise abort(404)
+        abort(404)
     try:
         request_data = request.get_json()
     except Exception:
-        raise abort(400, "Not a JSON")
+        abort(400, "Not a JSON")
 
     if 'user_id' not in request_data:
-        raise abort(400, "Missing user_id")
+        abort(400, "Missing user_id")
 
     user = storage.get(User, request_data['user_id'])
     if user is None:
-        raise abort(404)
+        abort(404)
 
     if 'text' not in request_data:
-        raise abort(400, "Missing text")
+        abort(400, "Missing text")
 
     new_review = Review(**request_data)
     new_review.place_id = place_id
@@ -88,10 +88,10 @@ def update_review(review_id):
     """
     review = storage.get(Review, review_id)
     if not review:
-        raise abort(404)
+        abort(404)
     request_data = request.get_json(silent=True)
     if not request_data:
-        raise abort(400, "Not a JSON")
+        abort(400, "Not a JSON")
 
     for key, value in request_data.items():
         if key not in ('id', 'created_at', 'updated_at',
