@@ -1,5 +1,8 @@
 #!/usr/bin/python3
 """ holds class User"""
+import models
+from models.base_model import BaseModel, Base
+import hashlib
 from sqlalchemy import Column, String
 import hashlib
 from models.base_model import BaseModel, Base
