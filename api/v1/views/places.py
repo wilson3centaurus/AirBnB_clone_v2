@@ -4,6 +4,7 @@
 from flask import jsonify, abort, request
 from api.v1.views import app_views, storage
 from models.place import Place
+from models.city import City
 
 
 @app_views.route('/cities/<city_id>/places', methods=['GET'],
@@ -27,7 +28,7 @@ def post_place(city_id):
     new_place = request.get_json(silent=True)
     if new_place is None:  # check if json post request is valid
         abort(404, "Not a JSON")
-    if not storage.get("City", str(city_id)):  # check if state_id exists
+    if not storage.get("City", city_id):  # check if state_id exists
         abort(404)
     if 'user_id' not in new_place:
         abort(400, 'Missing user_id')
@@ -39,7 +40,7 @@ def post_place(city_id):
     place = Place(**new_place)
     setattr(place, 'city_id', city_id)
     place.save()
-    return jsonify(place.to_json()), 201
+    return jsonify(place.to_dict()), 201
 
 
 @app_views.route("/places/<place_id>", methods=["GET"], strict_slashes=False)
@@ -48,7 +49,7 @@ def get_place_by_id(place_id):
     place_object = storage.get("Place", str(place_id))
     if place_object is None:
         abort(404)
-    return jsonify(place_object.to_json())
+    return jsonify(place_object.to_dict())
 
 
 @app_views.route("places/<place_id>",  methods=["PUT"], strict_slashes=False)
@@ -64,7 +65,7 @@ def put_place(place_id):
         if key not in ["id", "user_id", "city_id", "created_at", "updated_at"]:
             setattr(place_object, key, val)
     place_object.save()
-    return jsonify(place_object.to_json())
+    return jsonify(place_object.to_dict())
 
 
 @app_views.route("/places/<place_id>",  methods=["DELETE"],
