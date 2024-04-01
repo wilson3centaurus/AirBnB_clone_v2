@@ -51,7 +51,7 @@ def delete_place(place_id):
         abort(404)
     storage.delete(place)
     storage.save()
-    return jsonify({}), 200
+    return {}, 200
 
 
 @app_views.route(
@@ -82,7 +82,7 @@ def create_place(city_id):
     new_place = Place(**request_data)
     new_place.city_id = city_id
     new_place.save()
-    return new_place.to_dict(), 201
+    return jsonify(new_place.to_dict()), 201
 
 
 @app_views.route(
