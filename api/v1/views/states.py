@@ -14,7 +14,8 @@ def all_states():
     return jsonify([state.to_dict() for state in states])
 
 
-@app_views.route("/states/<state_id>", methods=["GET"], strict_slashes=False)
+@app_views.route("/states/<state_id>", methods=["GET"],
+                 strict_slashes=False)
 def get_state(state_id):
     '''Retrieves a State obj'''
     state = storage.get(State, state_id)
@@ -24,7 +25,8 @@ def get_state(state_id):
     return jsonify(state)
 
 
-@app_views.route("/states/<state_id>", methods=["DELETE"], strict_slashes=False)
+@app_views.route("/states/<state_id>", methods=["DELETE"],
+                 strict_slashes=False)
 def del_state(state_id):
     '''Deletes a State obj'''
     emp_dict = {}
@@ -50,7 +52,8 @@ def post_state():
     return jsonify(state), 201
 
 
-@app_views.route('/states/<state_id>', methods=["PUT"], strict_slashes=False)
+@app_views.route('/states/<state_id>', methods=["PUT"],
+                 strict_slashes=False)
 def put_state(state_id):
     '''Updates a State obj'''
     state = storage.get(State, state_id)
@@ -64,4 +67,4 @@ def put_state(state_id):
         if key not in skeys:
             setattr(state, key, value)
     state.save()
-    return jsonify(state), 200
+    return jsonify(state.to_dict()), 200
