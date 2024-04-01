@@ -77,7 +77,7 @@ def put_place(place_id):
         abort(404)
     data = request.get_json()
     if data is None:
-        abort(404, "Not a JSON")
+        abort(400, "Not a JSON")
     for key, value in data.items():
         skeys = ["id", "user_id", "city_id", "created_at", "updated_at"]
         if key not in skeys:
