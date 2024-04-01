@@ -21,7 +21,7 @@ def retrive_places_by_city(city_id):
     city = storage.get(City, city_id)
     if not city:
         abort(404)
-    return jsonify([place.to_dict() for place in city.places])
+    return [place.to_dict() for place in city.places]
 
 
 @app_views.route(
@@ -35,7 +35,7 @@ def retrive_place(place_id):
     place = storage.get(Place, place_id)
     if not place:
         abort(404)
-    return place.to_dict()
+    return jsonify(place.to_dict())
 
 
 @app_views.route(
