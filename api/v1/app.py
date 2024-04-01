@@ -6,6 +6,7 @@ from os import getenv
 from models import storage
 from flask import Flask
 from api.v1.views import app_views
+from flask import jsonify
 
 app = Flask(__name__)
 
@@ -16,6 +17,13 @@ app.register_blueprint(app_views)
 def tear_down_db(exception):
     """performing a cleanup task"""
     storage.close()
+
+
+@app_views.errorhandler(404)
+def page_not_found(e):
+    """handling not found templates"""
+    error = {"error": "Not found"}
+    return jsonify(error)
 
 
 if __name__ == '__main__':
