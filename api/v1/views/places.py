@@ -68,17 +68,17 @@ def create_place(city_id):
     try:
         request_data = request.get_json()
     except Exception:
-        abort(400, description="Not a JSON")
+        abort(400, "Not a JSON")
 
     if 'user_id' not in request_data:
-        abort(400, description="Missing user_id")
+        abort(400, "Missing user_id")
 
     user = get_object_by_id(User, request_data['user_id'])
     if user is None:
         abort(404)
 
     if 'name' not in request_data:
-        abort(400, description="Missing name")
+        abort(400, "Missing name")
 
     new_place = Place(**request_data)
     new_place.city_id = city_id
@@ -97,7 +97,7 @@ def update_place(place_id):
     try:
         request_data = request.get_json()
     except Exception:
-        abort(400, description="Not a JSON")
+        abort(400, "Not a JSON")
 
     for key, value in request_data.items():
         if key not in ('id', 'created_at', 'updated_at', 'city_id', 'user_id'):
