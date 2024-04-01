@@ -92,11 +92,11 @@ class HBNBCommand(cmd.Cmd):
         """airbnb: airbnb
         SYNOPSIS: Command changes prompt string"""
         print("                      __ ___                        ")
-        print("    _     _  _ _||\ |/  \ | _  _  _|_|_     _  _ _| ")
-        print("|_||_)\)/(_|| (_|| \|\__/ || )(_)| |_| )\)/(_|| (_| ")
+        print("    _     _  _ _||\\ |/  \\ | _  _  _|_|_     _  _ _| ")
+        print("|_||_)\\)/(_|| (_|| \\|\\__/ || )(_)| |_| )\\)/(_|| (_| ")
         print("   |                                                ")
         if HBNBCommand.prompt == '(hbnb) ':
-            HBNBCommand.prompt = " /_ /_ _  /_\n/ //_// //_/ "
+            HBNBCommand.prompt = " /_ /_ _  /_\\n/ //_// //_/ "
         else:
             HBNBCommand.prompt = '(hbnb) '
         arg = arg.split()
@@ -133,12 +133,12 @@ class HBNBCommand(cmd.Cmd):
         if value.find('.') != -1:
             try:
                 value = float(value)
-            except:
+            except Exception:
                 pass
         else:
             try:
                 value = int(value)
-            except:
+            except Exception:
                 pass
         return value
 
@@ -189,30 +189,30 @@ class HBNBCommand(cmd.Cmd):
             error = self.__class_err(arg)
         if not error:
             file_storage_objs = storage.all(arg)
-            l = 0
+            num_objects = 0
             if arg:
                 for v in file_storage_objs.values():
                     if isinstance(arg, str):
                         if type(v).__name__ == CNC[arg].__name__:
-                            l += 1
+                            num_objects += 1
                     else:
                         if type(v).__name__ == CNC[arg[0]].__name__:
-                            l += 1
-                c = 0
+                            count += 1
+                count = 0
                 for v in file_storage_objs.values():
                     if isinstance(arg, str):
                         if type(v).__name__ == CNC[arg].__name__:
-                            c += 1
-                            print(v, end=(', ' if c < l else ''))
+                            count += 1
+                            print(v, end=(', ' if count < l else ''))
                     else:
                         if type(v).__name__ == CNC[arg[0]].__name__:
-                            c += 1
-                            print(v, end=(', ' if c < l else ''))
+                            count += 1
+                            print(v, end=(', ' if count < num_objects else ''))
             else:
-                l = len(file_storage_objs)
-                c = 0
+                num_objects = len(file_storage_objs)
+                count = 0
                 for v in file_storage_objs.values():
-                    print(v, end=(', ' if c < l else ''))
+                    print(v, end=(', ' if count < l else ''))
             print()
 
     def do_destroy(self, arg):
@@ -232,18 +232,18 @@ class HBNBCommand(cmd.Cmd):
                     storage.save()
 
     def __rreplace(self, s, l):
-        for c in l:
+        for count in num_objects:
             s = s.replace(c, '')
         return s
 
     def __check_dict(self, arg):
         """checks if the arguments input has a dictionary"""
         if '{' and '}' in arg:
-            l = arg.split('{')[1]
-            l = l.split(', ')
-            l = list(s.split(':') for s in l)
+            num_objects = arg.split('{')[1]
+            num_objects = num_objects.split(', ')
+            num_objects = list(s.split(':') for s in num_objects)
             d = {}
-            for subl in l:
+            for subl in num_objects:
                 k = subl[0].strip('"\' {}')
                 v = subl[1].strip('"\' {}')
                 d[k] = v
@@ -360,7 +360,7 @@ class HBNBCommand(cmd.Cmd):
                     v(new_arg)
                     return
         self.default(arg)
-        
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
