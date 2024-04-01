@@ -49,9 +49,11 @@ def create_state():
     if 'name' not in response:
         abort(404, 'Missing name')
     state = State(name=response['name'])
+    states = []
     storage.new(state)
     storage.save()
-    return jsonify(state.to_dict()), 201
+    states.append(state.to_dict())
+    return jsonify(states[0]), 201
 
 
 @app_views.route('/state/<state_id>', methods=['PUT'], strict_slashes=False)
