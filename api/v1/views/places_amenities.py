@@ -63,7 +63,7 @@ def create_new_amenity(place_id, amenity_id):
     amenity = storage.get(Amenity, amenity_id)
     if not place or not amenity:
         abort(404)
-    
+
     if environ.get('HBHB_TYPE_STORAGE') == 'DBStorage':
         if amenity not in place.amenities:
             return jsonify(amenity.to_dict()), 200
