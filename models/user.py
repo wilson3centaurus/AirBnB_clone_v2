@@ -2,11 +2,9 @@
 """ holds class User"""
 import models
 from models.base_model import BaseModel, Base
-import hashlib
+from os import getenv
+import sqlalchemy
 from sqlalchemy import Column, String
-import hashlib
-from models.base_model import BaseModel, Base
-import models
 from sqlalchemy.orm import relationship
 
 
@@ -18,31 +16,16 @@ class User(BaseModel, Base):
         password = Column(String(128), nullable=False)
         first_name = Column(String(128), nullable=True)
         last_name = Column(String(128), nullable=True)
-        places = relationship(
-                "Place",
-                backref="user",
-                cascade='all, delete, delete-orphan')
-        reviews = relationship(
-                "Review",
-                backref="user",
-                cascade='all, delete, delete-orphan')
+        places = relationship("Place", backref="user",
+                              cascade="all, delete, delete-orphan")
+        reviews = relationship("Review", backref="user",
+                                cascade="all, delete, delete-orphan")
     else:
         email = ""
         password = ""
         first_name = ""
         last_name = ""
 
-        @property
-        def password(self):
-            """ getter for password """
-            return self.password
-
-        @password.setter
-        def password(self, value):
-            """ Setter for password """
-            self.password = hashlib.md5(value.encode()).hexdigest()
-
     def __init__(self, *args, **kwargs):
         """initializes user"""
-        kwargs["password"] = hashlib.md5(kwargs['password'].encode()).hexdigest()
         super().__init__(*args, **kwargs)
