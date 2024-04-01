@@ -4,6 +4,7 @@
 from flask import jsonify, abort, request
 from api.v1.views import app_views, storage
 from models.city import City
+from models.state import State
 
 
 @app_views.route('/states/<state_id>/cities', methods=['GET'],
@@ -14,7 +15,7 @@ def get_city_by_state(state_id):
     state_objects = storage.get("State", state_id)
     if state_objects is None:
         abort(404)
-    for city in City.cities:
+    for city in state_objects.cities:
         if city.state_id == state_id:
             cities.append(city.to_dict())
     return jsonify(cities)
