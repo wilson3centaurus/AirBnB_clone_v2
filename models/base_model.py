@@ -11,7 +11,6 @@ import sqlalchemy
 from sqlalchemy import Column, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 import uuid
-import hashlib
 
 time = "%Y-%m-%dT%H:%M:%S.%f"
 
@@ -34,12 +33,6 @@ class BaseModel:
             for key, value in kwargs.items():
                 if key != "__class__":
                     setattr(self, key, value)
-                if key == "password":
-                    md5_hash = hashlib.md5()
-                    encoded_value = value.encode('utf-8')
-                    md5_hash.update(encoded_value)
-                    hashed_password = md5_hash.hexdigest()
-                    setattr(self, key, hashed_password)
             if kwargs.get("created_at", None) and type(self.created_at) is str:
                 self.created_at = datetime.strptime(kwargs["created_at"], time)
             else:
