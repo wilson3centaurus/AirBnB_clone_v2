@@ -67,6 +67,29 @@ test_db_storage.py'])
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
 
+    def test_get(self):
+        """Test for get method """
+        new_city = City(name="RABAT")
+        models.storage.new(new_city)
+        key = "City." + new_city.id
+        rs = models.storage.get("City", key)
+        self.assertIsInstance(rs, City)
+        self.assertTrue(rs.id, new_city.id)
+
+    def test_count(self):
+        '''
+            Test if count method returns expected number of objects
+        '''
+        models.storage.reload()
+        old_count = models.storage.count("State")
+        new_state1 = State(name="NewYork")
+        models.storage.new(new_state1)
+        new_state2 = State(name="Virginia")
+        models.storage.new(new_state2)
+        new_state3 = State(name="California")
+        models.storage.new(new_state3)
+        self.assertEqual(old_count + 3, models.storage.count("State"))
+
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
@@ -86,3 +109,26 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    def test_get(self):
+        """Test for get method """
+        new_city = City(name="RABAT")
+        models.storage.new(new_city)
+        key = "City." + str(new_city.id)
+        rs = models.storage.get("City", key)
+        self.assertIsInstance(rs, City)
+        self.assertTrue(rs.id, new_city.id)
+
+    def test_count(self):
+        '''
+            Test if count method returns expected number of objects
+        '''
+        models.storage.reload()
+        old_count = models.storage.count("State")
+        new_state1 = State(name="NewYork")
+        models.storage.new(new_state1)
+        new_state2 = State(name="Virginia")
+        models.storage.new(new_state2)
+        new_state3 = State(name="California")
+        models.storage.new(new_state3)
+        self.assertEqual(old_count + 3, models.storage.count("State"))
