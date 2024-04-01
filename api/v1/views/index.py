@@ -12,7 +12,7 @@ def status():
     '''returns a JSON object'''
     return jsonify({"status": "OK"})
 
-@app_views.route('/api/v1/stats', strict_slashes=False)
+@app_views.route('/stats', strict_slashes=False)
 def get_object():
     '''retrieves the number of ech objects by type'''
     return jsonify({"amenities": storage.count("Amenity"),
