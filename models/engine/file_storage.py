@@ -6,8 +6,8 @@ import json
 from models import base_model, amenity, city, place, review, state, user
 from datetime import datetime
 
-strptime = datetime.strptime
-to_json = base_model.BaseModel.to_json
+# strptime = datetime.strptime
+# to_json = base_model.BaseModel.to_dict()
 
 
 class FileStorage:
@@ -57,7 +57,7 @@ class FileStorage:
         fname = FileStorage.__file_path
         storage_d = {}
         for bm_id, bm_obj in FileStorage.__objects.items():
-            storage_d[bm_id] = bm_obj.to_json(saving_file_storage=True)
+            storage_d[bm_id] = bm_obj.to_dict()
         with open(fname, mode='w', encoding='utf-8') as f_io:
             json.dump(storage_d, f_io)
 
@@ -110,14 +110,14 @@ class FileStorage:
         """
             retrieves one object based on class name and id
         """
-        if cls and id:
-            fetch_obj = "{}.{}".format(cls, id)
-            all_obj = self.all(cls)
-            return all_obj.get(fetch_obj)
-        return None
-
+        obj_dict = self.all(cls)
+        for k, v in obj_dict.items():
+            matchstring = cls + '.' + id
+            if k == matchstring:
+                return v
     def count(self, cls=None):
         """
         count of all objects in storage
         """
-        return (len(self.all(cls)))
+        obj_dict = self.all(cls)
+        return len(obj_dict)

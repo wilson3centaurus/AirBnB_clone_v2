@@ -8,7 +8,7 @@ from sqlalchemy import create_engine, MetaData
 from sqlalchemy.orm import sessionmaker, scoped_session
 from models.base_model import Base
 from models import base_model, amenity, city, place, review, state, user
-
+import models
 
 class DBStorage:
     """
@@ -48,7 +48,7 @@ class DBStorage:
         """
         obj_dict = {}
         if cls is not None:
-            a_query = self.__session.query(DBStorage.CNC[cls])
+            a_query = self.__session.query(DBStorage.CNC[cls].values())
             for obj in a_query:
                 obj_ref = "{}.{}".format(type(obj).__name__, obj.id)
                 obj_dict[obj_ref] = obj
@@ -119,14 +119,17 @@ class DBStorage:
         """
             retrieves one object based on class name and id
         """
-        if cls and id:
-            fetch = "{}.{}".format(cls, id)
-            all_obj = self.all(cls)
-            return all_obj.get(fetch)
+        obj_dict = models.storage.all(cls)
+        for k, v in obj_dict.items():
+            matchstring = cls + '.' + id
+            if k == matchstring:
+                return v
+
         return None
 
     def count(self, cls=None):
         """
             returns the count of all objects in storage
         """
-        return (len(self.all(cls)))
+        obj_dict = models.storage.all(cls)
+        return len(obj_dict)
