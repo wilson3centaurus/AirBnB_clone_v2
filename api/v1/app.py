@@ -14,13 +14,13 @@ CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
 
 @app.teardown_appcontext
 def close_storage(exception):
-    """close storage"""
+    """close storage teardown"""
     storage.close()
 
 
 @app.errorhandler(404)
 def not_found(error):
-    """"not found"""
+    """"not found error"""
     return jsonify({"error": "Not found"}), 404
 
 
