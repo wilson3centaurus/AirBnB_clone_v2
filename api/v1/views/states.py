@@ -49,7 +49,6 @@ def create_state():
     if 'name' not in response:
         abort(404, description='Missing name')
     new_state = State(**response)
-    storage.new(new_state)
     storage.save()
     return make_response(jsonify(new_state.to_dict()), 201)
 

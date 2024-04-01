@@ -52,7 +52,6 @@ def create_city(state_id):
         abort(404, description='Missing name')
     new_city = City(**response)
     new_city.state_id = state_id
-    storage.new(new_city)
     storage.save()
     return make_response(jsonify(new_city.to_dict()), 201)
 
@@ -70,5 +69,5 @@ def update_city(city_id):
     for key, value in response.items():
         if key not in keys:
             setattr(city, key, value)
-    storage.save
+    storage.save()
     return make_response(jsonify(city.to_dict()), 200)
