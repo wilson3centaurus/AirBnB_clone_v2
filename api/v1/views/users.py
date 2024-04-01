@@ -36,7 +36,7 @@ def retrive_user(user_id):
     user = get_object_by_id(User, user_id)
     if not user:
         abort(404)
-    return user.to_dict()
+    return jsonify(user.to_dict())
 
 
 @app_views.route(
@@ -52,7 +52,7 @@ def delete_user(user_id):
         abort(404)
     storage.delete(user)
     storage.save()
-    return {}, 200
+    return jsonify({}), 200
 
 
 @app_views.route(
@@ -76,7 +76,7 @@ def create_user():
     new_user.email = request_data.get('email')
     new_user.password = request_data.get('password')
     new_user.save()
-    return new_user.to_dict(), 201
+    return jsonify(new_user.to_dict()), 201
 
 
 @app_views.route(
@@ -98,4 +98,4 @@ def update_user(user_id):
         if key not in ('id, email, created_at, updated_at'):
             setattr(user, key, value)
     user.save()
-    return user.to_dict(), 200
+    return jsonify(user.to_dict()), 200
