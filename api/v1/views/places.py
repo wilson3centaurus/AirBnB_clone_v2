@@ -36,6 +36,7 @@ def get_place(place_id):
 @app_views.route("/places/<place_id>", methods=["DELETE"],
                  strict_slashes=False)
 def del_place(place_id):
+    """Gets Place of an Obj"""
     emp_dict = {}
     place = storage.get(Place, place_id)
     if place is None:
@@ -82,6 +83,6 @@ def put_place(place_id):
         skeys = ["id", "user_id", "city_id", "created_at", "updated_at"]
         if key not in skeys:
             setattr(place, key, value)
-        place.save()
-        place = place.to_dict()
-        return jsonify(place), 200
+    place.save()
+    place = place.to_dict()
+    return jsonify(place), 200
