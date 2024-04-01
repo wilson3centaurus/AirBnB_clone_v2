@@ -73,10 +73,12 @@ class FileStorage:
         """
         retrive an object based on the class and its ID
         """
-        if cls.__name__ in self.objects and id in self.__objects[cls.__name__]:
-            return self.__objects[cls.__name__][id]
-        else:
-            return None
+        if cls in classes.values() and id and type(id) == str:
+            d_obj = self.all(cls)
+            for key, value in d_obj.items():
+                if key.split(".")[1] == id:
+                    return value
+        return None
 
     def count(self, cls=None):
         """this method counts the number """
