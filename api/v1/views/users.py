@@ -36,7 +36,7 @@ def retrive_user(user_id):
     user = get_object_by_id(User, user_id)
     if not user:
         abort(404)
-    return jsonify(user.to_dict())
+    return user.to_dict()
 
 
 @app_views.route(
@@ -65,12 +65,12 @@ def create_user():
     try:
         request_data = request.get_json()
     except Exception:
-        abort(400, description="Not a JSON")
+        abort(400, "Not a JSON")
 
-    if 'email' not in request_data:
-        abort(400, description="Missing email")
-    if 'password' not in request_data:
-        abort(400, description="Missing password")
+    if "email" not in request_data:
+        abort(400, "Missing email")
+    if "password" not in request_data:
+        abort(400, "Missing password")
 
     new_user = User()
     new_user.email = request_data.get('email')
@@ -92,10 +92,10 @@ def update_user(user_id):
     try:
         request_data = request.get_json()
     except Exception:
-        abort(400, description="Not a JSON")
+        abort(400, "Not a JSON")
 
     for key, value in request_data.items():
-        if key not in ('id', 'email', 'created_at', 'updated_at'):
+        if key not in ('id, email, created_at, updated_at'):
             setattr(user, key, value)
     user.save()
     return user.to_dict(), 200
