@@ -1,4 +1,4 @@
-#!usr/bin/python3
+#!/usr/bin/python3
 """ Amenities View """
 
 from models.amenity import Amenity
