@@ -39,7 +39,10 @@ def get_citybyId(city_id):
                  strict_slashes=False, methods=['POST'])
 def post_city(state_id):
     """post a city for a certain state id"""
-    data = request.get_json()
+    try:
+        data = request.get_json()
+    except:
+        return (abort(400, 'Not a JSON'))
     if not data:
         return (abort(400, 'Not a JSON'))
     elif 'name' not in data.keys():
