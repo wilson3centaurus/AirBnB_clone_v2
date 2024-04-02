@@ -42,7 +42,7 @@ def post_city(state_id):
     data = request.get_json()
     if not data:
         return (abort(400, 'Not a JSON'))
-    elif 'name' not in data:
+    elif 'name' not in data.keys():
         return (abort(400, 'Missing name'))
     elif not data['name']:
         return (abort(400, 'Missing name'))
