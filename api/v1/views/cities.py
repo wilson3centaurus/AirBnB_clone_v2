@@ -48,7 +48,8 @@ def post_city(state_id):
             storage.new(city)
             storage.save()
             return jsonify(city.to_dict()), 201
-        return (abort(404))
+        else:
+            abort(404)
 
 
 @app_views.route('/cities/<city_id>/', strict_slashes=False, methods=['PUT'])
