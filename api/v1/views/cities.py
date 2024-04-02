@@ -13,7 +13,8 @@ import models
 import re
 
 
-@app_views.route('/states/<state_id>/cities/', strict_slashes=False, methods=['GET'])
+@app_views.route('/states/<state_id>/cities/',
+                 strict_slashes=False, methods=['GET'])
 def get_all_cities(state_id):
     """get cities by state id"""
     states = storage.get(State, state_id)
@@ -23,7 +24,8 @@ def get_all_cities(state_id):
     return (abort(404))
 
 
-@app_views.route('/cities/<city_id>/', strict_slashes=False, methods=['GET'])
+@app_views.route('/cities/<city_id>/',
+                 strict_slashes=False, methods=['GET'])
 def get_citybyId(city_id):
     """retrieve city by city id"""
     cities = storage.all(City)
@@ -33,7 +35,8 @@ def get_citybyId(city_id):
     return (abort(404))
 
 
-@app_views.route('/states/<state_id>/cities/', strict_slashes=False, methods=['POST'])
+@app_views.route('/states/<state_id>/cities/',
+                 strict_slashes=False, methods=['POST'])
 def post_city(state_id):
     """post a city for a certain state id"""
     data = request.get_json()
@@ -45,6 +48,8 @@ def post_city(state_id):
         return (abort(400, 'Missing name'))
     elif data['name'] is None:
         return (abort(400, 'Missing name'))
+    elif data['name'] == '':
+        return (abort(400, 'Not a JSON'))
     else:
         if storage.get(State, state_id):
             city = City(**data)
@@ -56,7 +61,8 @@ def post_city(state_id):
             return (abort(404))
 
 
-@app_views.route('/cities/<city_id>/', strict_slashes=False, methods=['PUT'])
+@app_views.route('/cities/<city_id>/',
+                 strict_slashes=False, methods=['PUT'])
 def update_city(city_id):
     """update city in state"""
     data = request.get_json()
@@ -74,7 +80,8 @@ def update_city(city_id):
     return jsonify(city.to_dict()), 200
 
 
-@app_views.route('cities/<city_id>/', strict_slashes=False, methods=['DELETE'])
+@app_views.route('cities/<city_id>/',
+                 strict_slashes=False, methods=['DELETE'])
 def delete_city(city_id):
     """delete the city by its city id"""
     city = storage.get(City, city_id)
