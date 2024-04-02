@@ -15,7 +15,7 @@ from api.v1.views import app_views
 def get_all_users():
     """get all users"""
     users = storage.all(User)
-    return jsonify([us.to_dict for us in users])
+    return jsonify([us.to_dict for us in users.values()])
 
 
 @app_views.route('/users/<user_id>/',
@@ -41,8 +41,8 @@ def create_user():
         return (abort(400, 'Not a JSON'))
     elif 'email' not in data.keys():
         return (abort(400, 'Missing email'))
-    elif not data['email']:
-        return (abort(400, 'Missing email'))
+    elif 'password' not in data.keys():
+        return (abort(400, 'Missing password'))
     else:
         user = User(**data)
         storage.new(user)
