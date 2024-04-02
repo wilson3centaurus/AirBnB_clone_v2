@@ -12,7 +12,8 @@ from models.user import User
 from api.v1.views import app_views
 
 
-@app_views.route('/cities/<city_id>/places', methods=['GET'])
+@app_views.route('/cities/<city_id>/places',
+                 strict_slashes=False, methods=['GET'])
 def get_place_byCityId(city_id):
     """get that place with this city id"""
     city = storage.get(City, city_id)
@@ -22,7 +23,8 @@ def get_place_byCityId(city_id):
     return jsonify(places)
 
 
-@app_views.route('/places/<place_id>', methods=['GET'])
+@app_views.route('/places/<place_id>',
+                 strict_slashes=False, methods=['GET'])
 def get_place_byItsId(place_id):
     """retreive place by its id"""
     place = storage.get(Place, place_id)
@@ -31,7 +33,8 @@ def get_place_byItsId(place_id):
     return jsonify(place.to_dict())
 
 
-@app_views.route('/cities/<city_id>/places', methods=['POST'])
+@app_views.route('/cities/<city_id>/places',
+                 strict_slashes=False, methods=['POST'])
 def createaAPlace(city_id):
     """Create a place for a given city id"""
     try:
@@ -55,7 +58,8 @@ def createaAPlace(city_id):
     return jsonify(place.to_dict()), 201
 
 
-@app_views.route('places/<place_id>', methods=['PUT'])
+@app_views.route('places/<place_id>',
+                 strict_slashes=False, methods=['PUT'])
 def updatePlace(place_id):
     """update place"""
     place = storage.get(Place, place_id)
@@ -73,7 +77,8 @@ def updatePlace(place_id):
     return jsonify(place.to_dict()), 200
 
 
-@app_views.route('/places/<place_id>', methods=['DELETE'])
+@app_views.route('/places/<place_id>',
+                 strict_slashes=False, methods=['DELETE'])
 def delete_place(place_id):
     """delete that place"""
     place = storage.get(Place, place_id)
