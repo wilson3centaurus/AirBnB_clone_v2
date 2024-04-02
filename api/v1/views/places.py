@@ -75,7 +75,7 @@ def updatePlace(place_id):
     for k, v in data.items():
         if k not in ignore:
             setattr(place, k, v)
-    place.save()
+    storage.save()
     return jsonify(place.to_dict()), 200
 
 
