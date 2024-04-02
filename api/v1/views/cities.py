@@ -38,7 +38,7 @@ def get_citybyId(city_id):
 def post_city(state_id):
     """post a city for a certain state id"""
     state = storage.get(State, state_id)
-    if state is None:
+    if len(state) == 0:
         abort(404)
 
     data = request.get_json()
