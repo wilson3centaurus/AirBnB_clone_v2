@@ -71,7 +71,7 @@ test_db_storage.py'])
         """Test for get method """
         new_city = City(name="RABAT")
         models.storage.new(new_city)
-        key = "City." + new_city.id
+        key = new_city.id
         rs = models.storage.get("City", key)
         self.assertIsInstance(rs, City)
         self.assertTrue(rs.id, new_city.id)
@@ -114,7 +114,7 @@ class TestFileStorage(unittest.TestCase):
         """Test for get method """
         new_city = City(name="RABAT")
         models.storage.new(new_city)
-        key = "City." + str(new_city.id)
+        key = str(new_city.id)
         rs = models.storage.get("City", key)
         self.assertIsInstance(rs, City)
         self.assertTrue(rs.id, new_city.id)
