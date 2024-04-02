@@ -43,6 +43,8 @@ def post_city(state_id):
         return (abort(400, 'Not a JSON'))
     elif 'name' not in data:
         return (abort(400, 'Missing name'))
+    elif type(data['name']) is not str:
+        return (abort(400, 'Missing name'))
     else:
         if storage.get(State, state_id):
             city = City(**data)
@@ -51,7 +53,7 @@ def post_city(state_id):
             storage.save()
             return jsonify(city.to_dict()), 201
         else:
-            abort(404)
+            return (abort(404))
 
 
 @app_views.route('/cities/<city_id>/', strict_slashes=False, methods=['PUT'])
