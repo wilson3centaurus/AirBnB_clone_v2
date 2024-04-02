@@ -45,11 +45,14 @@ def post_city(state_id):
     state = storage.get(State, state_id)
     if state is None:
         abort(404)
+    if request.headers.get('Content-Type') != 'application/json':
+        abort(400, "Not a JSON")
     req = request.get_json()
     if req is None:
-        return "Not a JSON", 400
+        abort(400, "Not a JSON")
     if "name" not in req:
-        return "Missing name", 400
+        abort(400, "Missing name")
+
     new_city = City(**req)
     new_city.state_id = state_id
     new_city.save()
@@ -62,9 +65,11 @@ def put_city(city_id):
     city = storage.get(City, city_id)
     if city is None:
         abort(404)
+    if request.headers.get('Content-Type') != 'application/json':
+        abort(400, "Not a JSON")
     req = request.get_json()
     if req is None:
-        return "Not a JSON", 400
+        abort(400, "Not a JSON")
     ignore_keys = ['id', 'state_id', 'created_at', 'updated_at']
     for key, value in req.items():
         if key not in ignore_keys:
