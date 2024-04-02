@@ -106,7 +106,7 @@ def search_places():
 
     list_places = []
     if states:
-        list_states = [storage.get(State, state_id) for state_id in states]
+        list_states = [storage.get(State, st_id) for st_id in states]
         for state in list_states:
             if state:
                 for city in state.cities:
@@ -114,7 +114,7 @@ def search_places():
                         for place in city.places:
                             list_places.append(place)
     if cities:
-        list_cities = [storage.get(City, city_id) for city_id in cities]
+        list_cities = [storage.get(City, c_id) for c_id in cities]
         for city in list_cities:
             if city:
                 for place in city.places:
@@ -123,14 +123,14 @@ def search_places():
     if amenities:
         if not list_places:
             list_places = storage.all(Place).values()
-        list_amenities = [storage.get(Amenity, amenity_id)
-                          for amenity_id in amenities]
+        list_amenities = [storage.get(Amenity, am_id)
+                          for am_id in amenities]
         list_places = [place for place in list_places
-                       if all([amenity in amenities
+                       if all([amenity in place.amenities
                                for amenity in list_amenities])]
     places = []
     for place in list_places:
-        data = palce.to_dict()
+        data = place.to_dict()
         data.pop('amenities', None)
         places.append(data)
 
