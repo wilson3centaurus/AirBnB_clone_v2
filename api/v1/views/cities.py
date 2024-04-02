@@ -19,8 +19,7 @@ def get_all_cities(state_id):
     states = storage.get(State, state_id)
     if states:
         cities = [city.to_dict() for city in states.cities]
-        if len(cities) != 0:
-            return jsonify(cities)
+        return jsonify(cities)
     return (abort(404))
 
 
@@ -49,7 +48,7 @@ def post_city(state_id):
         storage.new(city)
         storage.save()
         return jsonify(city.to_dict()), 201
-    return abort(404)
+    return (abort(404))
 
 
 @app_views.route('/cities/<city_id>/', strict_slashes=False, methods=['PUT'])
