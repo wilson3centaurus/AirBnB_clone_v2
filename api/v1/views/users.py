@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 """Module for user-related API endpoints."""
-
 from flask import jsonify, abort, request
 from api.v1.views import app_views
 from models import storage
@@ -38,7 +37,8 @@ def delete_user(user_id):
         user_id (str): The ID of the user to delete.
 
     Returns:
-        An empty JSON response with a 200 status code, or a 404 error if not found.
+        An empty JSON response with a 200 status code,
+        or a 404 error if not found.
     """
     user = storage.get(User, user_id)
     if user is None:
@@ -55,7 +55,8 @@ def create_user():
     The request must contain a JSON object with 'email' and 'password' keys.
 
     Returns:
-        A JSON representation of the newly created user, with a 201 status code.
+        A JSON representation of the newly created user,
+        with a 201 status code.
     """
     request_data = request.get_json()
     if not request_data:
