@@ -44,7 +44,7 @@ def users_delete(user_id):
 @app_views.route('/users', methods=["POST"], strict_slashes=False)
 def user_post():
     """ creates a user """
-    data = request.get_json()
+    data = request.get_json(silent=True)
     if not data:
         abort(400, description="Not a JSON")
 
@@ -63,7 +63,7 @@ def user_post():
 def users_put(user_id):
     """ updates a user """
     user = storage.get(User, user_id)
-    data = request.get_json()
+    data = request.get_json(silent=True)
 
     if not user:
         abort(404)

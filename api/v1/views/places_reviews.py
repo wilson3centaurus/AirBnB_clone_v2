@@ -55,7 +55,7 @@ def reviews_delete(review_id):
 def review_post(place_id):
     """ creates a review """
     place = storage.get(Place, place_id)
-    data = request.get_json()
+    data = request.get_json(silent=True)
     user = storage.get(User, data['user_id'])
 
     if not place:
@@ -83,7 +83,7 @@ def review_post(place_id):
 def reviews_put(review_id):
     """ updates a review """
     review = storage.get(Review, review_id)
-    data = request.get_json()
+    data = request.get_json(silent=True)
 
     if not review:
         abort(404)

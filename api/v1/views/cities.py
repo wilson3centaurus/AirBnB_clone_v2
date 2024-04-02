@@ -54,7 +54,7 @@ def city_post(state_id):
     if not state:
         abort(404)
 
-    data = request.get_json()
+    data = request.get_json(silent=True)
     if not data:
         abort(400, description="Not a JSON")
 
@@ -71,7 +71,7 @@ def city_post(state_id):
 def city_put(city_id):
     """ updates a city """
     city = storage.get(City, city_id)
-    data = request.get_json()
+    data = request.get_json(silent=True)
 
     if not city:
         abort(404)

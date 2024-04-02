@@ -55,7 +55,7 @@ def place_delete(place_id):
 def place_post(city_id):
     """ creates a place """
     city = storage.get(City, city_id)
-    data = request.get_json()
+    data = request.get_json(silent=True)
     user = storage.get(User, data["user_id"])
     if not city:
         abort(404)
@@ -82,7 +82,7 @@ def place_post(city_id):
 def place_put(place_id):
     """ updates a place """
     place = storage.get(Place, place_id)
-    data = request.get_json()
+    data = request.get_json(silent=True)
 
     if not place:
         abort(404)
@@ -102,10 +102,10 @@ def place_put(place_id):
 @app_views.route('/places_search', methods=['POST'], strict_slashes=False)
 def places_search():
     """ search places """
-    if request.get_json() is None:
+    if request.get_json(silent=True) is None:
         abort(400, description="Not a JSON")
 
-    data = request.get_json()
+    data = request.get_json(silent=True)
 
     if data and len(data):
         states = data.get('states', None)
