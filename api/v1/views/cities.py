@@ -37,6 +37,10 @@ def get_citybyId(city_id):
 @app_views.route('/states/<state_id>/cities', methods=['POST'])
 def post_city(state_id):
     """post a city for a certain state id"""
+    state = storage.get(State, state_id)
+    if state is None:
+        abort(404)
+
     data = request.get_json()
     if not data:
         abort(400, 'Not a JSON')
