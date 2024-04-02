@@ -56,15 +56,25 @@ class BaseModel:
         models.storage.new(self)
         models.storage.save()
 
-    def to_dict(self):
-        """Return dictionary representation of BaseModel class."""
-        cp_dct = dict(self.__dict__)
-        cp_dct['__class__'] = self.__class__.__name__
-        cp_dct['updated_at'] = self.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%f")
-        cp_dct['created_at'] = self.created_at.strftime("%Y-%m-%dT%H:%M:%S.%f")
-        if hasattr(self, "_sa_instance_state"):
-            del cp_dct["_sa_instance_state"]
-        return (cp_dct)
+    def to_dict(self, save_to_disk=False):
+        """returns a dictionary containing all keys/values of the instance"""
+        new_dict = self.__dict__.copy()
+        if "created_at" in new_dict:
+            new_dict["created_at"] = new_dict["created_at"].isoformat()
+        if "updated_at" in new_dict:
+            new_dict["updated_at"] = new_dict["updated_at"].isoformat()
+        if '_password' in new_dict:
+            new_dict['password'] = new_dict['_password']
+            new_dict.pop('_password', None)
+        if 'amenities' in new_dict:
+            new_dict.pop('amenities', None)
+        if 'reviews' in new_dict:
+            new_dict.pop('reviews', None)
+        new_dict["__class__"] = self.__class__.__name__
+        new_dict.pop('_sa_instance_state', None)
+        if not save_to_disk:
+            new_dict.pop('password', None)
+        return new_dict
 
     def delete(self):
         """delete the current instance from the storage"""
