@@ -3,10 +3,10 @@
 from api.v1.views import app_views
 from datetime import datetime
 from flask import abort, jsonify, request
-import uuid
 from models import storage
 from models.city import City
 from models.place import Place
+import uuid
 
 
 @app_views.route('/cities/<city_id>/places', methods=['GET'])
