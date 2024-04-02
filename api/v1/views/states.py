@@ -61,12 +61,7 @@ def updates_state(state_id):
     all_states = storage.all("State").values()
     stat_object = [obj.to_dict() for obj in all_states if obj.id == state_id]
     if stat_object == []:
-        states = []
-        new_state = State(name=request.json['name'])
-        storage.new(new_state)
-        storage.save()
-        states.append(new_state.to_dict())
-        return jsonify(states[0]), 201
+        abort(404)
     if not request.get_json():
         abort(400, 'Not a JSON')
     stat_object[0]['name'] = request.json['name']
