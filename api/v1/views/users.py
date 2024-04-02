@@ -15,7 +15,8 @@ from api.v1.views import app_views
 def get_all_users():
     """get all users"""
     users = storage.all(User)
-    return jsonify([us.to_dict for us in users.values()])
+    all_list = [user.to_dict() for user in users.values()]
+    return jsonify(all_list)
 
 
 @app_views.route('/users/<user_id>/',
