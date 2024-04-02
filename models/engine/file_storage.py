@@ -79,7 +79,7 @@ class FileStorage:
         return None
 
     def count(self, cls=None):
-        """ 
+        """
             gets an object
             Args:
                 cls: The class of the object.
