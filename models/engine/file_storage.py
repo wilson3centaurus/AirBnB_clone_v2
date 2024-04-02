@@ -80,9 +80,13 @@ class FileStorage:
 
     def count(self, cls=None):
         """Returns the number of objects in storage matching the given class"""
+        all_class = classes.values()
+
         if not cls:
-            return len(self.all())
-        if cls in classes.values():
-            return len(self.all(cls))
+            count = 0
+            for clas in all_class:
+                count += len(models.storage.all(clas).values())
         else:
-            return
+            count = len(models.storage.all(cls).values())
+
+        return count
