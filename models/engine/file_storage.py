@@ -67,7 +67,11 @@ class FileStorage:
         self.reload()
 
     def get(self, cls, id):
-        """ retrieves one object """
+        """ retrieves one object A
+        documentation is not a simple word, it
+        a real sentence explaining what’s the
+        purpose of the module, class or method
+        (the length of it will be verified)"""
         obj_dict = self.all(cls)
         for k, v in obj_dict.items():
             strr = str(id)
