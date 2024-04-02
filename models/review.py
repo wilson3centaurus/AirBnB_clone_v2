@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/preview.pyython
 """ holds class Review"""
 import models
 from models.base_model import BaseModel, Base
