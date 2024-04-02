@@ -25,7 +25,7 @@ class User(BaseModel, Base):
         first_name = ""
         last_name = ""
 
-     def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
         """instantiates user object"""
         if kwargs:
             pwd = kwargs.pop('password', None)
