@@ -18,9 +18,9 @@ def get_all_amenities():
     return jsonify([i.to_dict for i in amenities])
 
 
-@app_views.route('/amenities/<amenity_id>/',
+@app_views.route('/amenities/<amenity_id>',
                  strict_slashes=False, methods=['GET'])
-def get_citybyId(amenity_id):
+def get_amenityebyId(amenity_id):
     """retrieve amenity by its id"""
     amenities = storage.all(Amenity)
     for k, v in amenities.items():
@@ -31,7 +31,7 @@ def get_citybyId(amenity_id):
 
 @app_views.route('/amenities/',
                  strict_slashes=False, methods=['POST'])
-def post_city():
+def post_amenity():
     """create a an amenity"""
     try:
         data = request.get_json()
@@ -52,7 +52,7 @@ def post_city():
 
 @app_views.route('/amenities/<amenity_id>/',
                  strict_slashes=False, methods=['PUT'])
-def update_city(amenity_id):
+def update_amenity(amenity_id):
     """update city in state"""
     try:
         data = request.get_json()
@@ -75,7 +75,7 @@ def update_city(amenity_id):
 
 @app_views.route('/amenities/<amenity_id>/',
                  strict_slashes=False, methods=['DELETE'])
-def delete_city(amenity_id):
+def delete_amenity(amenity_id):
     """delete the amenity by its id"""
     amenity = storage.get(Amenity, amenity_id)
     if not amenity:
