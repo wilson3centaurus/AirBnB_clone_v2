@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """Create Flask app and register the blueprint app_views"""
-from flask import Flask
+from flask import Flask, jsonify
 from models import storage
 from os import getenv
 from api.v1.views import app_views
@@ -14,6 +14,12 @@ app.register_blueprint(app_views)
 def close_db(error):
     """ Close Storage """
     storage.close()
+
+@app.errorhandler(404)
+def not_found(error):
+    """handling 404 error"""
+    response = { "error": "Not found"}
+    return jsonify(response), 404
 
 
 if __name__ == "__main__":
