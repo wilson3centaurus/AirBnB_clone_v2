@@ -15,10 +15,11 @@ def close_db(error):
     """ Close Storage """
     storage.close()
 
+
 @app.errorhandler(404)
 def not_found(error):
     """handling 404 error"""
-    response = { "error": "Not found"}
+    response = {"error": "Not found"}
     return jsonify(response), 404
 
 
