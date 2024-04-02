@@ -6,7 +6,7 @@ Contains the class DBStorage
 from os import getenv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
-from models.base_model import Base
+from models.base_model import BaseModel, Base
 import models
 
 classes = {
@@ -54,13 +54,13 @@ class DBStorage:
     def new(self, obj):
         """Add the object to the current database session"""
         self.__session.add(obj)
-   
-   def reload(self):
+
+    def reload(self):
         """Reloads data from the database"""
         Base.metadata.create_all(self.__engine)
         sess_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(sess_factory)
-        self.__session = Session
+        self.__session = Session()
 
     def close(self):
         """Call remove() method on the private session attribute"""
@@ -86,7 +86,7 @@ class DBStorage:
         Returns:
             The object if found, otherwise None.
         """
-        if cls is not None and issubclass(cls, Base):
+        if cls is not None and issubclass(cls, BaseModel):
             return self.__session.query(cls).get(id)
         return None
 

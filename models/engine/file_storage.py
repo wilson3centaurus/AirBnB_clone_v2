@@ -2,7 +2,6 @@
 """
 Contains the FileStorage class
 """
-
 import json
 from models.amenity import Amenity
 from models.base_model import BaseModel
@@ -43,10 +42,12 @@ class FileStorage:
                 json_objects = json.load(f)
             for key, value in json_objects.items():
                 class_name = value["__class__"]
-                class_instance = getattr(models, class_name)(**value)
+                class_instance = classes[class_name](**value)
                 self.__objects[key] = class_instance
         except FileNotFoundError:
             pass
+        except Exception as e:
+            print(f"An error occurred during file reload: {e}")
 
     def delete(self, obj=None):
         if obj is not None:
@@ -68,13 +69,10 @@ class FileStorage:
         Returns:
             The object if found, otherwise None.
         """
-        objects = self.all(cls)
-        for obj in objects.values():
-            if obj.id == id:
-                return obj
-        return None
+        key = f"{cls.__name__}.{id}"
+        return self.__objects.get(key)
 
-     def count(self, cls=None):
+    def count(self, cls=None):
         """
         Counts the number of objects in storage matching the given class.
 
@@ -87,5 +85,5 @@ class FileStorage:
         """
         if cls is None:
             return len(self.__objects)
-        return sum(1 for obj in self.__objects.values() if isinstance(obj, cls))
+        return sum(1 for key in self.__objects.keys() if key.split('.')[0] == cls.__name__)
 
