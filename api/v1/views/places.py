@@ -16,12 +16,11 @@ from api.v1.views import app_views
                  strict_slashes=False, methods=['GET'])
 def get_place_byCityId(city_id):
     """get that place with this city id"""
-    city = storage.all(City)
-    for c in city:
-        if city[c].id == city_id:
-            cit_place = [place.to_dict() for place in city[c].places]
-            return jsonify(cit_place)
-    return (abort(404))
+    city = storage.get(City, city_id)
+    if city is None:
+        return (abort(404))
+    places = [p for p in city.places]
+    return jsonify(places)
 
 
 @app_views.route('/places/<place_id>',
@@ -74,7 +73,7 @@ def updatePlace(place_id):
     for k, v in data.items():
         if k not in ignore:
             setattr(place, k, v)
-    storage.save()
+    place.save()
     return jsonify(place.to_dict()), 200
 
 
