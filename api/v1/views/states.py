@@ -30,11 +30,14 @@ def state_by_id(state_id):
 @app_views.route('/states/', methods=['POST'])
 def post_state():
     """creating a new State"""
-    data = request.get_json()
+    try:
+        data = request.get_json()
+    except:
+        return (abort(400, 'Not a JSON'))
     if not data:
-        abort(400, 'Not a JSON')
-    if 'name' not in data:
-        abort(400, 'Missing name')
+        return (abort(400, 'Not a JSON'))
+    if 'name' not in data.keys():
+        return (abort(400, 'Missing name'))
     state = State(**data)
     storage.new(state)
     storage.save()
@@ -44,18 +47,23 @@ def post_state():
 @app_views.route('/states/<state_id>', methods=['PUT'])
 def update_state(state_id):
     """update state by id"""
-    data = request.get_json()
+    try:
+        data = request.get_json()
+    except:
+        return (abort(400, 'Not a JSON'))
     if not data:
-        abort(400, 'Not a JSON')
-    if 'name' not in data:
-        abort(400, 'Missing name')
+        return (abort(400, 'Not a JSON'))
+    if 'name' not in data.keys():
+        return (abort(400, 'Missing name'))
     states = storage.all(State)
     all_dict = {}
     for k, v in states.items():
         if v.to_dict().get('id') == state_id:
             state = v
+    ignore_keys = ['id', 'state_id', 'created_at', 'updated_at']
     for j, m in data.items():
-        setattr(state, j, m)
+        if j not in ignore_keys:
+            setattr(state, j, m)
     storage.save()
     return jsonify(state.to_dict()), 200
 
@@ -65,7 +73,7 @@ def delete_state(state_id):
     """deleting a state by its id"""
     state = storage.get(State, state_id)
     if state is None:
-        abort(404)  # State not found
+        abort(404)
 
     storage.delete(state)
     storage.save()
