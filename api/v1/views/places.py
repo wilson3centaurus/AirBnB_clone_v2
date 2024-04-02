@@ -17,12 +17,10 @@ from api.v1.views import app_views
 def get_place_byCityId(city_id):
     """get that place with this city id"""
     city = storage.get(City, city_id)
-    if not city:
+    if city is None:
         return (abort(404))
     places = [p.to_dict() for p in city.places]
-    if len(places) != 0:
-        return jsonify(places)
-    return (abort(404))
+    return jsonify(places)
 
 
 @app_views.route('/places/<place_id>',
