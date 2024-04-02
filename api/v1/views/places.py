@@ -19,7 +19,7 @@ def get_place_byCityId(city_id):
     city = storage.get(City, city_id)
     if city is None:
         return (abort(404))
-    places = [p for p in city.places]
+    places = [p.to_dict() for p in city.places]
     return jsonify(places)
 
 
