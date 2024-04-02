@@ -72,22 +72,23 @@ class FileStorage:
         a real sentence explaining what’s the
         purpose of the module, class or method
         (the length of it will be verified)"""
-        obj_dict = self.all(cls)
-        for k, v in obj_dict.items():
-            strr = str(id)
-            if k == strr:
-                return v
-        return None
+        if cls is not None and type(cls) is str and id is not None and\
+           type(id) is str and cls in classes:
+            key = cls + '.' + id
+            obj = self.__objects.get(key, None)
+            return obj
+        else:
+            return None
 
     def count(self, cls=None):
-        """
-            gets an object
-            Args:
-                cls: The class of the object.
-                id: The ID of the object.
-
-            Returns:
-                The object with the specified ID, if found; otherwise, None.
-        """
-        edc = self.all(cls)
-        return len(edc)
+        """ retrieves one object A
+        documentation is not a simple word, it
+        a real sentence explaining what’s the
+        purpose of the module, class or method
+        (the length of it will be verified)"""
+        total = 0
+        if type(cls) == str and cls in classes:
+            total = len(self.all(cls))
+        elif cls is None:
+            total = len(self.__objects)
+        return total
