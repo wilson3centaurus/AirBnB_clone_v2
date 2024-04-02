@@ -60,8 +60,6 @@ def update_amenity(amenity_id):
         return (abort(400, 'Not a JSON'))
     if not data:
         abort(400, 'Not a JSON')
-    if 'name' not in data:
-        abort(400, 'Missing name')
     amenity = storage.get(Amenity, amenity_id)
     if amenity is None:
         return (abort(404))
