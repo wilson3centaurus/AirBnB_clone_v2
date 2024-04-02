@@ -67,6 +67,8 @@ def update_city(city_id):
     if 'name' not in data:
         abort(400, 'Missing name')
     city = storage.get(City, city_id)
+    if city is None:
+        return (abort(404))
     ignore_keys = ['id', 'state_id', 'created_at', 'updated_at']
     for k, v in data.items():
         if k not in ignore_keys:
