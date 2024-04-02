@@ -79,12 +79,10 @@ class DBStorage:
         a real sentence explaining what’s the
         purpose of the module, class or method
         (the length of it will be verified)"""
-        obj_dict = models.storage.all(cls)
-        for k, v in obj_dict.items():
-            matchstring = cls + '.' + id
-            if k == matchstring:
-                return v
-
+        if cls and id:
+            fetch = "{}.{}".format(cls, id)
+            all_obj = self.all(cls)
+            return all_obj.get(fetch)
         return None
 
     def count(self, cls=None):
@@ -93,6 +91,4 @@ class DBStorage:
         a real sentence explaining what’s the
         purpose of the module, class or method
         (the length of it will be verified)"""
-        total = 0
-        obj_dict = models.storage.all(cls)
-        return len(obj_dict)
+        return (len(self.all(cls)))
