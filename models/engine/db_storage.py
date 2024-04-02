@@ -45,6 +45,8 @@ class DBStorage:
     def all(self, cls=None):
         """
            returns a dictionary of all objects
+           
+           TODO: review this function
         """
         obj_dict = {}
         if cls is not None:
