@@ -17,7 +17,7 @@ from models.review import Review
 @app_views.route('/status', methods=['GET'])
 def isItOk():
     """return its JSON data"""
-    return "{\n  \"status\": \"OK\"\n}\n"
+    return jsonify({"status": "OK"})
 
 
 @app_views.route('/stats', methods=['GET'])
