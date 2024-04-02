@@ -20,7 +20,9 @@ def get_place_byCityId(city_id):
     if not city:
         return (abort(404))
     places = [p.to_dict() for p in city.places]
-    return jsonify(places)
+    if len(places) != 0:
+        return jsonify(places)
+    return (abort(404))
 
 
 @app_views.route('/places/<place_id>',
