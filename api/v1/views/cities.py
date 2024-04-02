@@ -39,9 +39,9 @@ def post_city(state_id):
 
     data = request.get_json()
     if not data:
-        return abort(400, 'Not a JSON')
+        return (abort(400, 'Not a JSON'))
     if 'name' not in data:
-        return abort(400, 'Missing name')
+        return abort((400, 'Missing name'))
     if storage.get(State, state_id):
         city = City(**data)
         city.state_id = state_id
