@@ -29,4 +29,5 @@ def count():
                     "cities": "City", "amenities": "Amenity",
                     "reviews": "Review"}
     for class_ in list_classes:
-        obj_dicts[class_] = storage.c
+        obj_dicts[class_] = storage.count(list_classes[class_])
+    return jsonify(obj_dicts)

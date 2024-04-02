@@ -124,11 +124,15 @@ class HBNBCommand(cmd.Cmd):
 
     def do_test(self, arg):
         """ test """
-        new_city = City(name="RABAT")
-        models.storage.new(new_city)
-        key = "City." + str(new_city.id)
-        rs = models.storage.get("City", key)
-        print(rs)
+        models.storage.reload()
+        old_count = models.storage.count("State")
+        new_state1 = State(name="NewYork")
+        models.storage.new(new_state1)
+        new_state2 = State(name="Virginia")
+        models.storage.new(new_state2)
+        new_state3 = State(name="California")
+        models.storage.new(new_state3)
+        print(models.storage.count("State"))
 
     def do_update(self, arg):
         """Update an instance based on the class name, id, attribute & value"""
