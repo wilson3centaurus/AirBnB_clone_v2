@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 """
-Place view module
+view for Place objects that handles all default RestFul API actions
 
-Add 3 potential optional keys for 16(Advanced):
+Potentially add 3 optional keys for 16(Advanced):
 states: list of State ids
 cities: list of City ids
 amenities: list of Amenity ids

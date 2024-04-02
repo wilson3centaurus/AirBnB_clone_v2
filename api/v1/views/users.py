@@ -1,11 +1,11 @@
 #!/usr/bin/python3
 """
-User view module
+view for User objects that handles all default RestFul API actions
 """
 from flask import jsonify, abort, request
 from models import storage
-from models.user import User
 from api.v1.views import app_views
+from models.user import User
 
 
 @app_views.route('/users', methods=['GET', 'POST'], strict_slashes=False)
