@@ -155,6 +155,7 @@ No known bugs at this time.
 
 ## Authors
  Amarachi Nnanta
+ Paschal Ugwu
 
 Second part of Airbnb: Joann Vuong
 ## License
