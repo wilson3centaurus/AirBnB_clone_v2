@@ -78,13 +78,14 @@ class DBStorage:
         a real sentence explaining what’s the
         purpose of the module, class or method
         (the length of it will be verified)"""
-        if cls is not None and type(cls) is str and id is not None and\
-           type(id) is str and cls in classes:
-            key = cls + '.' + id
-            obj = self.__objects.get(key, None)
+        obj_dict = {}
+        obj = None
+        if cls:
+            obj_dict = self.__objects.values()
+            for item in obj_dict:
+                if item.id == id:
+                    obj = item
             return obj
-        else:
-            return None
 
     def count(self, cls=None):
         """ retrieves one object A
@@ -93,8 +94,19 @@ class DBStorage:
         purpose of the module, class or method
         (the length of it will be verified)"""
         total = 0
-        if type(cls) == str and cls in classes:
-            total = len(self.all(cls))
-        elif cls is None:
-            total = len(self.__objects)
-        return total
+        if cls:
+            obj_list = []
+            obj_dict = self.__objects.values()
+            for item in obj_dict:
+                if type(item).__name__ == cls:
+                    obj_list.append(item)
+            return len(obj_list)
+        else:
+            obj_list = []
+            for class_name in self.CNC:
+                if class_name == 'BaseModel':
+                    continue
+                obj_class = self.__objects
+                for item in obj_class:
+                    obj_list.append(item)
+            return len(obj_list)
