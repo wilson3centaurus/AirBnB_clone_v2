@@ -13,7 +13,7 @@ import models
 import re
 
 
-@app_views.route('/states/<state_id>/cities/', methods=['GET'])
+@app_views.route('/states/<state_id>/cities', methods=['GET'])
 def get_all_cities(state_id):
     """get cities by state id"""
     states = storage.all(State)
