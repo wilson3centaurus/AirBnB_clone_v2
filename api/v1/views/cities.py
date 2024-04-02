@@ -66,13 +66,12 @@ def update_city(city_id):
         abort(400, 'Not a JSON')
     if 'name' not in data:
         abort(400, 'Missing name')
-    cities = storage.all(City)
-    for k, v in cities.items():
-        if v.to_dict().get('id') == city_id:
-            city = v
-    for j, m in data.items():
-        setattr(city, j, m)
-    storage.save()
+    city = storage.get(City, city_id)
+    ignore_keys = ['id', 'state_id', 'created_at', 'updated_at']
+    for k, v in data.items():
+        if k not in ignore_keys:
+            setattr(city, k, v)
+    city.save()
     return jsonify(city.to_dict()), 200
 
 
