@@ -26,7 +26,7 @@ def count():
     # return jsonify(count_dict)
     obj_dicts = {}
     list_classes = {"users": "User", "places": "Place", "states": "State",
-           "cities": "City", "amenities": "Amenity",
-           "reviews": "Review"}
+                    "cities": "City", "amenities": "Amenity",
+                    "reviews": "Review"}
     for class_ in list_classes:
         obj_dicts[class_] = storage.c
