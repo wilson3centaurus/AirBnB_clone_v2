@@ -44,6 +44,8 @@ def createaAPlace(city_id):
     city = storage.get(City, city_id)
     if not city:
         return (abort(404))
+    if not data:
+        return (abort(400, 'Not a JSON'))
     if 'user_id' not in data.keys():
         return (abort(400, 'Missing user_id'))
     if 'name' not in data.keys():
@@ -68,6 +70,8 @@ def updatePlace(place_id):
     try:
         data = request.get_json()
     except:
+        return (abort(400, 'Not a JSON'))
+    if not data:
         return (abort(400, 'Not a JSON'))
     ignore = ['id', 'user_id', 'city_id', 'created_at', 'updated_at']
     for k, v in data.items():
