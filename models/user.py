@@ -34,6 +34,6 @@ class User(BaseModel, Base):
         """sets attributes for User obj"""
         if name == "password":
             super(User, self).__setattr__(name,
-                                          md5(value.encode()).hexdigest())
+                                          md5(value.encode()))
         else:
             super(User, self).__setattr__(name, value)
