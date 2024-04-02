@@ -73,7 +73,7 @@ def create_review(place_id):
     if 'text' not in request_data:
         abort(400, "Missing text")
 
-    new_review = Review(place_id = place_id, **request_data)
+    new_review = Review(place_id=place_id, **request_data)
     new_review.save()
     return jsonify(new_review.to_dict()), 201
 
