@@ -64,7 +64,10 @@ def post_city(state_id):
                  strict_slashes=False, methods=['PUT'])
 def update_city(city_id):
     """update city in state"""
-    data = request.get_json()
+    try:
+        data = request.get_json()
+    except:
+        return (abort(400, 'Not a JSON'))
     if not data:
         abort(400, 'Not a JSON')
     if 'name' not in data:
