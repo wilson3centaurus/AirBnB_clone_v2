@@ -54,7 +54,7 @@ def createaAPlace(city_id):
     user = storage.get(User, user_id)
     if not user:
         return (abort(404))
-    place = Place(user_id=user_id, city_id=city_id, **data)
+    place = Place(city_id=city_id, **data)
     storage.new(place)
     storage.save()
     return jsonify(place.to_dict()), 201
