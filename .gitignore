@@ -1,3 +1,2 @@
 *.json
-__pycahce__/*
-*/__pycahce__/*
+__pycache__/
