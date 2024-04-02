@@ -152,7 +152,7 @@ class TestFileStorage(unittest.TestCase):
         storage.new(city_instance)
 
         storage.save()
-     
+
         state_occurrence = storage.count(State)
         self.assertEqual(state_occurrence, len(storage.all(State)))
 
