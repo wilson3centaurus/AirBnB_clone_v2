@@ -44,7 +44,8 @@ def post_city(state_id):
     if 'name' not in data:
         abort(400, 'Missing name')
     if storage.get(State, state_id):
-        city = City(**data)
+        city = City()
+        city.name = data["name"]
         city.state_id = state_id
         storage.new(city)
         storage.save()
