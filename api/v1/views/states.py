@@ -55,16 +55,14 @@ def update_state(state_id):
         return (abort(400, 'Not a JSON'))
     if 'name' not in data.keys():
         return (abort(400, 'Missing name'))
-    states = storage.all(State)
-    all_dict = {}
-    for k, v in states.items():
-        if v.to_dict().get('id') == state_id:
-            state = v
+    state = storage.get(State, state_id)
+    if not state:
+        return (abort(404))
     ignore_keys = ['id', 'state_id', 'created_at', 'updated_at']
     for j, m in data.items():
         if j not in ignore_keys:
             setattr(state, j, m)
-    storage.save()
+    state.save()
     return jsonify(state.to_dict()), 200
 
 
