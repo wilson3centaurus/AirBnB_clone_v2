@@ -10,14 +10,16 @@ from flask import request
 from flask import abort
 
 
-@app_views.route('/states/', methods=['GET'])
+@app_views.route('/states/',
+                 strict_slashes=False, methods=['GET'])
 def all_states():
     """listing all states in storage"""
     states = storage.all(State).values()
     return jsonify([state.to_dict() for state in states])
 
 
-@app_views.route('/states/<state_id>', methods=['GET'])
+@app_views.route('/states/<state_id>',
+                 strict_slashes=False, methods=['GET'])
 def state_by_id(state_id):
     """retreiving state by id"""
     state = storage.all()
@@ -27,7 +29,8 @@ def state_by_id(state_id):
     return (abort(404))
 
 
-@app_views.route('/states/', methods=['POST'])
+@app_views.route('/states/',
+                 strict_slashes=False, methods=['POST'])
 def post_state():
     """creating a new State"""
     try:
@@ -44,7 +47,8 @@ def post_state():
     return jsonify(state.to_dict()), 201
 
 
-@app_views.route('/states/<state_id>', methods=['PUT'])
+@app_views.route('/states/<state_id>',
+                 strict_slashes=False, methods=['PUT'])
 def update_state(state_id):
     """update state by id"""
     try:
@@ -66,7 +70,8 @@ def update_state(state_id):
     return jsonify(state.to_dict()), 200
 
 
-@app_views.route('/states/<state_id>', methods=['DELETE'])
+@app_views.route('/states/<state_id>',
+                 strict_slashes=False, methods=['DELETE'])
 def delete_state(state_id):
     """deleting a state by its id"""
     state = storage.get(State, state_id)
