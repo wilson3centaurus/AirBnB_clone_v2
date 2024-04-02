@@ -61,14 +61,12 @@ def update_user(user_id):
         return (abort(400, 'Not a JSON'))
     if not data:
         abort(400, 'Not a JSON')
-    if 'name' not in data:
-        abort(400, 'Missing name')
     user = storage.get(User, user_id)
     if user is None:
         return (abort(404))
-    ignore_keys = ['id', 'state_id', 'created_at', 'updated_at']
+    ignore = ['id', 'email', 'state_id', 'created_at', 'updated_at']
     for k, v in data.items():
-        if k not in ignore_keys:
+        if k not in ignore:
             setattr(user, k, v)
     user.save()
     return jsonify(user.to_dict()), 200
