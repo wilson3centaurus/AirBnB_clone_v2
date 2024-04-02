@@ -9,6 +9,7 @@ from models import storage
 from models.city import City
 from models.place import Place
 from models.user import User
+from models.state import State
 
 
 @app_views.route("/cities/<city_id>/places", methods=['GET'],
@@ -97,3 +98,45 @@ def update_place(place_id):
 
     storage.save()
     return jsonify(place.to_dict()), 200
+
+
+@app_views.route("/places_search", methods=['POST'],
+                 strict_slashes=False)
+def search_places():
+    """ This function hadles route to places_search """
+    cities = []
+    places_list = []
+    request_data = request.get_json(silent=True)
+    if request_data is None:
+        abort(400, "Not a JSON")
+
+    if not request_data or all(not li for li in request_data.values()):
+        return jsonify([place for place in storage.all(Place).values()])
+
+    if "states" in request_data:
+        for state in request_data["states"]:
+            for city in storage.get(State, state).cities:
+                cities.append(city.id)
+
+    if "cities" in request_data:
+        for city_id in request_data["cities"]:
+            if city_id not in cities:
+                cities.append(city_id)
+
+    for city_id in cities:
+        city = storage.get(City, city_id)
+        if not city:
+            continue
+        places = city.places
+        for place in places:
+            places_list.append(place)
+
+    if "amenities" in request_data:
+        aminities_list = request_data["amenities"]
+        for place in places_list:
+            for amenitie in place.amenities:
+                if amenitie not in aminities_list:
+                    places_list.remove(place)
+                    break
+
+    return jsonify([place.to_dict() for place in places_list])
