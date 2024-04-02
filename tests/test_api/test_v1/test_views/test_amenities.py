@@ -62,7 +62,7 @@ class TestAmenities(unittest.TestCase):
         storage.new(self.amenity)
         storage.save()
 
-        response = self.client.get(f'/api/v1/amenities/{self.amenity.id}')
+        response = self.client.get('/api/v1/amenities/{}'.format(self.amenity.id))
         self.assertEqual(response.status_code, 200)
         data = response.json
         self.assertEqual(data['name'], "TV")
