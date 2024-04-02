@@ -10,7 +10,7 @@ from models import storage
 from api.v1.views import app_views
 
 
-@app_views.route('/amenities',
+@app_views.route('/amenities/',
                  strict_slashes=False, methods=['GET'])
 def get_all_amenities():
     """Retreive all Amenities"""
@@ -18,7 +18,7 @@ def get_all_amenities():
     return jsonify([i.to_dict for i in amenities])
 
 
-@app_views.route('/amenities/<amenity_id>',
+@app_views.route('/amenities/<amenity_id>/',
                  strict_slashes=False, methods=['GET'])
 def get_citybyId(amenity_id):
     """retrieve amenity by its id"""
@@ -29,7 +29,7 @@ def get_citybyId(amenity_id):
     return (abort(404))
 
 
-@app_views.route('/amenities',
+@app_views.route('/amenities/',
                  strict_slashes=False, methods=['POST'])
 def post_city():
     """create a an amenity"""
@@ -50,7 +50,7 @@ def post_city():
         return jsonify(amenity.to_dict()), 201
 
 
-@app_views.route('/amenities/<amenity_id>',
+@app_views.route('/amenities/<amenity_id>/',
                  strict_slashes=False, methods=['PUT'])
 def update_city(amenity_id):
     """update city in state"""
