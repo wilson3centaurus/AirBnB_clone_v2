@@ -2,9 +2,9 @@
 """amenities"""
 from api.v1.views import app_views
 from datetime import datetime
-from flask import jsonify, abort, request
-from models.amenity import Amenity
+from flask import abort, jsonify, request
 from models import storage
+from models.amenity import Amenity
 import uuid
 
 
