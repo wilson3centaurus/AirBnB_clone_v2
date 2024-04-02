@@ -12,11 +12,11 @@ from api.v1.views import app_views
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 def get_all_states():
     """ Retrieves list of all states """
-    states = storage.all('State').values()
-    list_state = []
+    states = storage.all(State).values()
+    list_states = []
     for state in states:
-        list_state.append(state.to_dict())
-    return (jsonify(list_state))
+        list_states.append(state.to_dict())
+    return (jsonify(list_states))
 
 
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
