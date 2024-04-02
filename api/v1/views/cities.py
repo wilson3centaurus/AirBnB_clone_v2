@@ -42,15 +42,11 @@ def post_city(state_id):
         abort(400, 'Not a JSON')
     if 'name' not in data:
         abort(400, 'Missing name')
-    cities = storage.all(State)
-    for k, v in cities.items():
-        if v.to_dict().get('id') == state_id:
-            state = {"state_id": state_id}
-            city = City(**data)
-            city.state_id = state_id
-            storage.new(city)
-            storage.save()
-    return jsonify(city.to_dict()), 201
+    city = City(**data)
+    city.state_id = state_id
+    storage.new(city)
+    storage.save()
+    return jsonify(city.to_dict())
 
 
 @app_views.route('/cities/<city_id>', methods=['PUT'])
