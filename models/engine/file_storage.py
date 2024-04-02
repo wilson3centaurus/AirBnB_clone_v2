@@ -70,14 +70,7 @@ class FileStorage:
         self.reload()
 
     def get(self, cls, id):
-        """ gets an object
-            Args:
-                cls: The class of the object.
-                id: The ID of the object.
-
-            Returns:
-                The object with the specified ID, if found; otherwise, None.
-        """
+        """ retrieves one object """
         obj_dict = self.all(cls)
         for k, v in obj_dict.items():
             strr = str(id)
