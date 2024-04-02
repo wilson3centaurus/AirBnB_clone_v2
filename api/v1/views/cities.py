@@ -16,14 +16,11 @@ import re
 @app_views.route('/states/<state_id>/cities', methods=['GET'])
 def get_all_cities(state_id):
     """get cities by state id"""
-    states = storage.all(State)
-    for i in states.keys():
-        if state_id == str(i).split('.')[1][:-1][:-1]:
-            link = storage.get(State, state_id)
-            cities = [city.to_dict() for city in link.cities]
-            return jsonify(cities)
-
-    return (abort(404))
+    states = storage.get(State, state_id)
+    if not states:
+        abort(404)
+    cities = [city.to_dict() for city in states.cities]
+    return jsonify(cities)
 
 
 @app_views.route('/cities/<city_id>', methods=['GET'])
