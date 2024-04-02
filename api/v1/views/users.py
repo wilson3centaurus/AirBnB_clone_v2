@@ -7,7 +7,7 @@ from models.user import User
 from api.v1.views import app_views
 
 
-@app_views.route('/users', methods=['GET'], strict_Slashes=False)
+@app_views.route('/users', methods=['GET'], strict_slashes=False)
 def get_all_users():
     """ Retrieves all users """
     users = storage.all(User).values()
@@ -37,8 +37,8 @@ def delete_user(user_id):
     return make_response(jsonify({}), 200)
 
 
-@app_views.route('/users', method=['POST'], strict_slashes=False)
-def creste_user():
+@app_views.route('/users', methods=['POST'], strict_slashes=False)
+def create_user():
     """ Create s new user """
     response = request.get_json()
     if response is None:
