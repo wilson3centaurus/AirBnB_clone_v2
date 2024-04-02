@@ -41,7 +41,7 @@ def post_state():
     state = State(**data)
     storage.new(state)
     storage.save()
-    return jsonify(state.to_dict())
+    return jsonify(state.to_dict()), 201
 
 
 @app_views.route('/states/<state_id>', methods=['PUT'])
