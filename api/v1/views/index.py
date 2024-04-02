@@ -9,26 +9,29 @@ from api.v1.views import app_views
 from models import storage
 
 
-@app_views.route("/status")
+@app_views.route("/status", methods=['GET'], strict_slashes=False)
 def status():
     """
     status route
     :return: response with json
     """
-    response = {
-        'status': "OK"
+    data = {
+        "status": "OK"
     }
 
-    return jsonify(response)
+    resp = jsonify(data)
+    resp.status_code = 200
+
+    return resp
 
 
-@app_views.route('/stats')
+@app_views.route("/stats", methods=['GET'], strict_slashes=False)
 def stats():
     """
     stats of all objs route
     :return: json of all objs
     """
-    stats = {
+    data = {
         "amenities": storage.count("Amenity"),
         "cities": storage.count("City"),
         "places": storage.count("Place"),
@@ -37,4 +40,7 @@ def stats():
         "users": storage.count("User"),
     }
 
-    return jsonify(stats)
+    resp = jsonify(data)
+    resp.status_code = 200
+
+    return resp

@@ -65,14 +65,13 @@ class DBStorage:
         :param id: id of object as string
         :return: found object or None
         """
-        if cls and id:
-            if cls in classes.values() and isinstance(id, str):
-                all_obj = self.all(cls)
-                for key, value in all_obj.items():
-                    if key.split('.')[1] == id:
-                        return value
-                    else:
-                        return None
+        all_class = self.all(cls)
+
+        for obj in all_class.values():
+            if id == str(obj.id):
+                return obj
+
+        return None
 
     def count(self, cls=None):
         """
@@ -80,15 +79,7 @@ class DBStorage:
         :param cls: class name
         :return: count of instances of a class
         """
-        if not cls:
-            inst_of_cls = self.all()
-            return len(inst_of_cls)
-        for clas, value in classes.items():
-            if cls == clas or cls == value:
-                all_cls = self.all()
-                return len(all_cls)
-        if cls not in classes.values():
-            return None
+        return len(self.all(cls))
 
     def save(self):
         """ commits all changes of current database session """
