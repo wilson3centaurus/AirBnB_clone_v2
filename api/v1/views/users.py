@@ -39,14 +39,14 @@ def delete_user(user_id):
 
 @app_views.route('/users', methods=['POST'], strict_slashes=False)
 def create_user():
-    """ Create s new user """
+    """ Creates new user """
     response = request.get_json()
     if response is None:
         abort(400, 'Not a JSON')
     if 'email' not in response:
-        abort(404, 'Missing email')
+        abort(400, 'Missing email')
     if 'password' not in response:
-        abort(404, 'Missing password')
+        abort(400, 'Missing password')
     new_user = User(**response)
     new_user.save()
     return make_response(jsonify(new_user.to_dict()), 201)
