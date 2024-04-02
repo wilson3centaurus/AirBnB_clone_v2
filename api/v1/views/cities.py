@@ -36,11 +36,10 @@ def get_citybyId(city_id):
 @app_views.route('/states/<state_id>/cities/', strict_slashes=False, methods=['POST'])
 def post_city(state_id):
     """post a city for a certain state id"""
-
     data = request.get_json()
     if not data:
         return (abort(400, 'Not a JSON'))
-    if 'name' not in data:
+    elif 'name' not in data:
         return (abort(400, 'Missing name'))
     else:
         if storage.get(State, state_id):
