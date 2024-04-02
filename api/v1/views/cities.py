@@ -38,7 +38,7 @@ def post_city(state_id):
     """post a city for a certain state id"""
 
     data = request.get_json()
-    if data is None:
+    if not data:
         return jsonify("Not a JSON"), 400
     if 'name' not in data:
         return jsonfiy("Missing name"), 400
