@@ -68,18 +68,7 @@ class DBStorage:
             all_obj = self.all(cls)
             for key, val in all_obj.items():
                 if val.id == id:
-                    one_obj = {
-                        'name': val.name,
-                        'id': val.id,
-                        'created_at': val.created_at,
-                        'updated_at': val.updated_at,
-                        '_sa_instance_state': val._sa_instance_state
-                    }
-                    return ("[{}] ({}) {}".format(
-                                             cls.__name__,
-                                             val.id, one_obj
-                                           ))
-
+                    return val
         return None
 
     def count(self, cls=None):
