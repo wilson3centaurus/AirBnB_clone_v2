@@ -72,15 +72,11 @@ class FileStorage:
         a real sentence explaining what’s the
         purpose of the module, class or method
         (the length of it will be verified)"""
-        obj_dict = {}
-        obj = None
         if cls and id:
             key = cls + '.' + id
             obj_dict = self.__objects.get(key, None)
-            for item in obj_dict:
-                if item.id == id:
-                    obj = item
-            return obj
+            return obj_dict
+        return None
 
     def count(self, cls=None):
         """ retrieves one object A
