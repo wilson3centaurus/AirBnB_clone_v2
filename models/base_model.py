@@ -70,6 +70,12 @@ class BaseModel:
             del new_dict["_sa_instance_state"]
         return new_dict
 
+    def bm_update(self, name, value):
+        """
+            updates the basemodel and sets the correct attributes
+        """
+        setattr(self, name, value)
+
     def delete(self):
         """delete the current instance from the storage"""
         models.storage.delete(self)

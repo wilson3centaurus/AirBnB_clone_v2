@@ -2,7 +2,6 @@
 """
 Contains the class DBStorage
 """
-
 import models
 from models.amenity import Amenity
 from models.base_model import BaseModel, Base
@@ -12,7 +11,6 @@ from models.review import Review
 from models.state import State
 from models.user import User
 from os import getenv
-import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
@@ -74,3 +72,23 @@ class DBStorage:
     def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
+
+    def get(self, cls, id):
+        """ retrieves one object A
+        documentation is not a simple word, it
+        a real sentence explaining what’s the
+        purpose of the module, class or method
+        (the length of it will be verified)"""
+        if cls and id and cls in classes:
+            fetch = "{}.{}".format(cls, id)
+            all_obj = self.__session.query(classes[cls]).filter(cls.id == id).first()
+            return all_obj
+        return None
+
+    def count(self, cls=None):
+        """ retrieves one object A
+        documentation is not a simple word, it
+        a real sentence explaining what’s the
+        purpose of the module, class or method
+        (the length of it will be verified)"""
+        return (len(self.all(cls)))

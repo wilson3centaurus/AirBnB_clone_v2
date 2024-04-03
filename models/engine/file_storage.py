@@ -18,10 +18,7 @@ classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
 
 class FileStorage:
     """serializes instances to a JSON file & deserializes back to instances"""
-
-    # string - path to the JSON file
     __file_path = "file.json"
-    # dictionary - empty but will store all objects by <class name>.id
     __objects = {}
 
     def all(self, cls=None):
@@ -55,7 +52,7 @@ class FileStorage:
                 jo = json.load(f)
             for key in jo:
                 self.__objects[key] = classes[jo[key]["__class__"]](**jo[key])
-        except:
+        except Exception as e:
             pass
 
     def delete(self, obj=None):
@@ -68,3 +65,39 @@ class FileStorage:
     def close(self):
         """call reload() method for deserializing the JSON file to objects"""
         self.reload()
+
+    def get(self, cls, id):
+        """ retrieves one object A
+        documentation is not a simple word, it
+        a real sentence explaining what’s the
+        purpose of the module, class or method
+        (the length of it will be verified)"""
+        if cls and id:
+            key = cls + '.' + id
+            obj_dict = self.__objects.get(key, None)
+            return obj_dict
+        return None
+
+    def count(self, cls=None):
+        """ retrieves one object A
+        documentation is not a simple word, it
+        a real sentence explaining what’s the
+        purpose of the module, class or method
+        (the length of it will be verified)"""
+        total = 0
+        if cls:
+            obj_list = []
+            obj_dict = self.__objects.values()
+            for item in obj_dict:
+                if type(item).__name__ == cls:
+                    obj_list.append(item)
+            return len(obj_list)
+        else:
+            obj_list = []
+            for class_name in self.CNC:
+                if class_name == 'BaseModel':
+                    continue
+                obj_class = self.__objects
+                for item in obj_class:
+                    obj_list.append(item)
+            return len(obj_list)
