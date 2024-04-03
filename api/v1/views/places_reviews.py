@@ -21,6 +21,7 @@ def listOfReview(place_id):
     rev = [rv.to_dict() for rv in places.reviews]
     return jsonify(rev)
 
+
 @app_views.route('/reviews/<review_id>',
                  strict_slashes=False, methods=['GET'])
 def getRevById(review_id):
@@ -29,6 +30,7 @@ def getRevById(review_id):
     if rev is None:
         return abort(404)
     return jsonify(rev.to_dict())
+
 
 @app_views.route('/places/<place_id>/reviews',
                  strict_slashes=False, methods=['POST'])
@@ -56,6 +58,7 @@ def createRev(place_id):
     storage.save()
     return jsonify(rev.to_dict()), 201
 
+
 @app_views.route('/reviews/<review_id>',
                  strict_slashes=False, methods=['PUT'])
 def UpdateReview(review_id):
@@ -75,6 +78,7 @@ def UpdateReview(review_id):
             setattr(rev, k, v)
     rev.save()
     return jsonify(rev.to_dict()), 200
+
 
 @app_views.route('/reviews/<review_id>',
                  strict_slashes=False, methods=['DELETE'])
