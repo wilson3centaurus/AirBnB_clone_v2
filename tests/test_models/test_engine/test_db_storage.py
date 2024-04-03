@@ -129,7 +129,7 @@ class TestDBStorage(unittest.TestCase):
 
         storage.reload()
 
-        state_data = {"name": "Mombasa"}
+        state_data = {"name": "Nairobi"}
 
         state_instance = State(**state_data)
         storage.new(state_instance)
@@ -147,7 +147,7 @@ class TestDBStorage(unittest.TestCase):
         """Tests method for retrieving an instance db storage."""
         storage = models.storage
         storage.reload()
-        state_data = {"name": "Accra"}
+        state_data = {"name": "Sudan"}
         state_instance = State(**state_data)
         storage.new(state_instance)
 
