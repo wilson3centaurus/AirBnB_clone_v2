@@ -54,9 +54,8 @@ class FileStorage:
             with open(self.__file_path, 'r') as f:
                 jo = json.load(f)
             for key in jo:
-                self.__objects[key] = classes[jo[key]["__class__"]](
-                        **jo[key])
-        except FileNotFoundError:
+                self.__objects[key] = classes[jo[key]["__class__"]](**jo[key])
+        except Exception:
             pass
 
     def delete(self, obj=None):
@@ -71,17 +70,20 @@ class FileStorage:
         self.reload()
 
     def get(self, cls, id):
-        '''get:
-        retrieve an object from the file storage by class and id.
-        '''
-
-        if cls and id:
-            takeObj = '{}.{}'.format(cls, id)
-            everyObj = self.all(cls)
-            return everyObj.get(takeObj)
-        else:
-            return None
+        """Method to return the object based on the class and its ID"""
+        if cls:
+            for value in self.__objects.values():
+                if cls == value.__class__ or cls == value.__class__.__name__:
+                    if id == value.id:
+                        return value
+        return None
 
     def count(self, cls=None):
-        '''class that is (optional)'''
-        return (len(self.all(cls)))
+        """Returns the number of objects
+        in storage matching the given class."""
+        if cls:
+            all_objs_dict = self.all(cls)
+            count = len(all_objs_dict)
+        else:
+            count = len(self.all())
+        return count

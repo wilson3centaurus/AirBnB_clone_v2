@@ -1,15 +1,17 @@
 #!/usr/bin/python3
 """ Test .get() and .count() methods
 """
+import pytest
 from models import storage
 from models.state import State
 
-print("All objects: {}".format(storage.count()))
-print("State objects: {}".format(storage.count(State)))
+def test_state_all():
+    assert isinstance(storage.count(), int)
+    assert isinstance(storage.count(State), int)
 
-state_objects = list(storage.all(State).values())
-if state_objects:
-    first_state_id = state_objects[0].id
-    print("First state: {}".format(storage.get(State, first_state_id)))
-else:
-    print("No state objects found.")
+    first_state_id = list(storage.all(State).values())[0].id
+    first_state = storage.get(State, first_state_id)
+    assert isinstance(first_state, State)
+
+if __name__ == "__main__":
+    pytest.main([__file__])

@@ -32,12 +32,11 @@ class DBStorage:
         HBNB_MYSQL_HOST = getenv('HBNB_MYSQL_HOST')
         HBNB_MYSQL_DB = getenv('HBNB_MYSQL_DB')
         HBNB_ENV = getenv('HBNB_ENV')
-        self.__engine = create_engine('mysql+mysqlconnector://{}:{}@{}/{}'.
+        self.__engine = create_engine('mysql+pymysql://{}:{}@{}/{}'.
                                       format(HBNB_MYSQL_USER,
                                              HBNB_MYSQL_PWD,
                                              HBNB_MYSQL_HOST,
                                              HBNB_MYSQL_DB))
-
         if HBNB_ENV == "test":
             Base.metadata.drop_all(self.__engine)
 
@@ -77,18 +76,17 @@ class DBStorage:
         self.__session.remove()
 
     def get(self, cls, id):
-        '''get:
-        retrieve an object from the file storage by class and id
-        '''
-        if cls and id:
-            tempo = cls, __name__ + "." + id
-            count = self.all(cls)
-            for key in count:
-                if key == tempo:
-                    return count[key]
-        else:
-            return None
+        """query on the current database session"""
+        if cls:
+            obj = self.__session.query(cls).get(id)
+            return obj
+        return None
 
     def count(self, cls=None):
-        '''class (optional)'''
-        return (len(self.all(cls)))
+        """Returns the number of objects in storage matching the given class"""
+        if cls:
+            all_objs_dict = self.all(cls)
+            count = len(all_objs_dict)
+        else:
+            count = len(self.all())
+        return count
