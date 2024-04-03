@@ -74,8 +74,9 @@ class FileStorage:
         (the length of it will be verified)"""
         obj_dict = {}
         obj = None
-        if cls:
-            obj_dict = self.__objects.values()
+        if cls and id:
+            key = cls + '.' + id
+            obj_dict = self.__objects.get(key, None)
             for item in obj_dict:
                 if item.id == id:
                     obj = item

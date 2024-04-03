@@ -79,10 +79,10 @@ class DBStorage:
         a real sentence explaining what’s the
         purpose of the module, class or method
         (the length of it will be verified)"""
-        if cls and id:
+        if cls and id and cls in classes:
             fetch = "{}.{}".format(cls, id)
-            all_obj = self.all(cls)
-            return all_obj.get(fetch)
+            all_obj = self.__session.query(classes[cls]).filter(cls.id == id).first()
+            return all_obj
         return None
 
     def count(self, cls=None):
