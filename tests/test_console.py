@@ -116,20 +116,26 @@ class test_console(unittest.TestCase):
         self.assertEqual("** no instance found **\n", x)
 
     def test_create(self):
-        """ Test that create works"""
+        '''
+            Test that create works
+        '''
         console = self.create()
         console.onecmd("create User email=adriel@hbnb.com password=abc")
         self.assertTrue(isinstance(self.capt_out.getvalue(), str))
 
     def test_class_name(self):
-        """ Testing the error messages for class name missing. """
+        '''
+            Testing the error messages for class name missing.
+        '''
         console = self.create()
         console.onecmd("create")
         x = (self.capt_out.getvalue())
         self.assertEqual("** class name missing **\n", x)
 
     def test_class_name_doest_exist(self):
-            """Test error messages for class name missing."""
+        '''
+            Testing the error messages for class name missing.
+        '''
         console = self.create()
         console.onecmd("create Binita")
         x = (self.capt_out.getvalue())
@@ -137,7 +143,6 @@ class test_console(unittest.TestCase):
 
     @unittest.skipIf(db != 'db', "Testing DBstorage only")
     def test_create_db(self):
-        """ Test creating an object in the database storage."""
         console = self.create()
         console.onecmd("create State name=California")
         result = storage.all("State")
