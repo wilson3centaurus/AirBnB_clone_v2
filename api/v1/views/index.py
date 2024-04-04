@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-starts a Flask Web Application
+index
 """
 
 from flask import jsonify
