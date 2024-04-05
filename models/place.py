@@ -3,7 +3,7 @@
 Place Class from Models Module
 """
 import os
-from models.base_model import BaseModel, Base
+from models.base_model import BaseModel
 from sqlalchemy.orm import relationship
 from sqlalchemy import Column, Integer, String, Float, ForeignKey,\
     MetaData, Table, ForeignKey
@@ -23,7 +23,7 @@ if os.getenv("HBNB_TYPE_STORAGE") == "db":
                                             ondelete="CASCADE")))
 
 
-class Place(BaseModel, Base):
+class Place(BaseModel):
     """Place class handles all application places"""
     if storage_type == "db":
         __tablename__ = 'places'

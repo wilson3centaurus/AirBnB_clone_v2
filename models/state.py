@@ -3,27 +3,29 @@
 State Class from Models Module
 """
 import os
-from models.base_model import BaseModel, Base
+from models.base_model import BaseModel
 from sqlalchemy.orm import relationship
 from sqlalchemy import Column, Integer, String, Float
 import models
+
 storage_type = os.environ.get('HBNB_TYPE_STORAGE')
 
-
-class State(BaseModel, Base):
+class State(BaseModel):
     """State class handles all application states"""
     if storage_type == "db":
         __tablename__ = 'states'
         name = Column(String(128), nullable=False)
         cities = relationship('City', backref='state', cascade='delete')
     else:
-        name = ''
+        def __init__(self, *args, **kwargs):
+            """Instantiation of new State class."""
+            super().__init__(*args, **kwargs)
+            self.name = ''
 
-    if storage_type != 'db':
         @property
         def cities(self):
             """
-            getter method, returns list of City objs from storage
+            Getter method, returns list of City objects from storage
             linked to the current State
             """
             city_list = []

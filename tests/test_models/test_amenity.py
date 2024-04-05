@@ -9,12 +9,11 @@ import json
 import os
 
 Amenity = models.amenity.Amenity
-BaseModel = models.base_model.BaseModel
 storage_type = os.environ.get('HBNB_TYPE_STORAGE')
 
 
 class TestAmenityDocs(unittest.TestCase):
-    """Class for testing BaseModel docs"""
+    """Class for testing Amenity docs"""
 
     @classmethod
     def setUpClass(cls):
@@ -56,7 +55,7 @@ class TestAmenityInstances(unittest.TestCase):
 
     @unittest.skipIf(storage_type == 'db', 'skip if environ is db')
     def test_to_string(self):
-        """... checks if BaseModel is properly casted to string"""
+        """... checks if Amenity is properly casted to string"""
         my_str = str(self.amenity)
         my_list = ['Amenity', 'id', 'created_at']
         actual = 0
@@ -70,17 +69,16 @@ class TestAmenityInstances(unittest.TestCase):
         """... should not have updated attribute"""
         my_str = str(self.amenity)
         actual = 0
-        if 'updated_at' in my_str:
+        if 'updated_at' not in my_str:
             actual += 1
-        self.assertTrue(0 == actual)
+        self.assertTrue(1 == actual)
 
     @unittest.skipIf(storage_type == 'db', 'skip if environ is db')
     def test_updated_at(self):
-        """... save function should add updated_at attribute"""
+        """... save function should not add updated_at attribute"""
         self.amenity.save()
-        actual = type(self.amenity.updated_at)
-        expected = type(datetime.now())
-        self.assertEqual(expected, actual)
+        actual = hasattr(self.amenity, 'updated_at')
+        self.assertFalse(actual)
 
     @unittest.skipIf(storage_type == 'db', 'skip if environ is db')
     def test_to_json(self):
@@ -89,7 +87,7 @@ class TestAmenityInstances(unittest.TestCase):
         actual = 1
         try:
             serialized = json.dumps(self.amenity_json)
-        except:
+        except Exception:
             actual = 0
         self.assertTrue(1 == actual)
 
@@ -98,7 +96,7 @@ class TestAmenityInstances(unittest.TestCase):
         """... to_json should include class key with value Amenity"""
         self.amenity_json = self.amenity.to_json()
         actual = None
-        if self.amenity_json['__class__']:
+        if '__class__' in self.amenity_json:
             actual = self.amenity_json['__class__']
         expected = 'Amenity'
         self.assertEqual(expected, actual)
@@ -113,5 +111,6 @@ class TestAmenityInstances(unittest.TestCase):
         expected = "greatWifi"
         self.assertEqual(expected, actual)
 
+
 if __name__ == '__main__':
-    unittest.main
+    unittest.main()

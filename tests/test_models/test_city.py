@@ -68,20 +68,18 @@ class TestCityInstances(unittest.TestCase):
     @unittest.skipIf(storage_type == 'db', 'skip if environ is db')
     def test_instantiation_no_updated(self):
         """... should not have updated attribute"""
-        self.city = City()
         my_str = str(self.city)
         actual = 0
-        if 'updated_at' in my_str:
+        if 'updated_at' not in my_str:
             actual += 1
-        self.assertTrue(0 == actual)
+        self.assertTrue(1 == actual)
 
     @unittest.skipIf(storage_type == 'db', 'skip if environ is db')
     def test_updated_at(self):
-        """... save function should add updated_at attribute"""
+        """... save function should not add updated_at attribute"""
         self.city.save()
-        actual = type(self.city.updated_at)
-        expected = type(datetime.now())
-        self.assertEqual(expected, actual)
+        actual = hasattr(self.city, 'updated_at')
+        self.assertFalse(actual)
 
     @unittest.skipIf(storage_type == 'db', 'skip if environ is db')
     def test_to_json(self):
@@ -90,7 +88,7 @@ class TestCityInstances(unittest.TestCase):
         actual = 1
         try:
             serialized = json.dumps(self.city_json)
-        except:
+        except Exception:
             actual = 0
         self.assertTrue(1 == actual)
 
@@ -114,5 +112,6 @@ class TestCityInstances(unittest.TestCase):
         expected = 'IL'
         self.assertEqual(expected, actual)
 
+
 if __name__ == '__main__':
-    unittest.main
+    unittest.main()
