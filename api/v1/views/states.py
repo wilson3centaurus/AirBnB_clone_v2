@@ -7,7 +7,7 @@ from flask import abort, jsonify, make_response, request
 
 
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
-def find_all():
+def list_states():
     """
     Returns all the states from the storage
     """
@@ -19,7 +19,7 @@ def find_all():
 
 
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
-def find_one(state_id):
+def find_state(state_id):
     """ Returns a state based on the ID """
     state = storage.get(State, state_id)
     if not state:
@@ -30,7 +30,7 @@ def find_one(state_id):
 
 @app_views.route('/states/<state_id>', methods=['DELETE'],
                  strict_slashes=False)
-def delete_one(state_id):
+def delete_state(state_id):
     """
     Removes a state from the storage based on the ID
     """
@@ -46,7 +46,7 @@ def delete_one(state_id):
 
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
-def create():
+def create_state():
     """
     Creates a new state into the storage
     """
@@ -63,7 +63,7 @@ def create():
 
 
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
-def update(state_id):
+def update_state(state_id):
     """
     Updates a state into the storage
     """
