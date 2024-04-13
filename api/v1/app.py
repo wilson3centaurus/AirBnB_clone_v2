@@ -2,6 +2,7 @@
 """ Flask App """
 
 from api.v1.views import app_views
+from flask_cors import CORS
 from flask import Flask, jsonify, make_response
 from models import storage
 from os import getenv
@@ -9,6 +10,7 @@ from os import getenv
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
+CORS(app, origins='0.0.0.0', resources='/*')
 
 
 @app.teardown_appcontext
