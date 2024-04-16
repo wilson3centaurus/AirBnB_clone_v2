@@ -113,3 +113,36 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get_method_returns_object(self):
+        """Test if get method returns object"""
+        storage = FileStorage()
+        new_state = State(name="California")
+        new_state.save()
+        retrieved_state = storage.get(State, new_state.id)
+        self.assertEqual(retrieved_state, new_state)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get_method_returns_none_if_not_found(self):
+        """Test if get method returns None if object not found"""
+        storage = FileStorage()
+        non_existent_state = storage.get(State, "non_existent_id")
+        self.assertIsNone(non_existent_state)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count_method_returns_correct_count(self):
+        """Test if count method returns correct count"""
+        storage = FileStorage()
+        initial_count = storage.count(State)
+        new_state = State(name="New York")
+        new_state.save()
+        updated_count = storage.count(State)
+        self.assertEqual(updated_count, initial_count + 1)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count_method_returns_zero_if_no_objects(self):
+        """Test if count method returns 0 if no objects of the given class"""
+        storage = FileStorage()
+        empty_count = storage.count(Review)
+        self.assertEqual(empty_count, 0)
