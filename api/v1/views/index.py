@@ -1,6 +1,5 @@
 #!/usr/bin/python
 """Start your API"""
-
 from flask import jsonify
 from api.v1.views import app_views
 from models import storage
@@ -13,7 +12,7 @@ from models.user import User
 
 
 @app_views.route("/status", strict_slashes=False)
-def status():
+def display_status():
     """returns a JSON"""
     return jsonify({"status": "OK"})
 
