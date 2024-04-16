@@ -185,7 +185,7 @@ Second part of Airbnb: Joann Vuong
 
 ##
 
-Jonathan Perez - [Github](https://github.com/prodjohnper)
+Jonathan Perez - [Github](https://github.com/prodjohnper)  
 Livan Hernandez - [Github](https://github.com/Livanhernandez)
 
 ## License
