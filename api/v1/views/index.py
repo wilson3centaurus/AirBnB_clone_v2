@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 """Start your API"""
 from flask import jsonify
 from api.v1.views import app_views
