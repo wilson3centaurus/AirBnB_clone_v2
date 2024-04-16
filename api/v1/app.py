@@ -2,7 +2,8 @@
 """
 This module provides flask app routing certain view pages.
 """
-from flask import Flask
+from flask import Flask, jsonify
+
 from models import storage
 from api.v1.views import app_views
 
@@ -14,6 +15,11 @@ def teardown_appcontext(exception):
     """Closes the storage."""
     storage.close()
 
+
+@app.errorhandler(404)
+def page_not_found(error):
+    # Return a JSON response indicating that the endpoint was not found
+    return jsonify({"error": "Not found"}), 404
 
 if __name__ == "__main__":
     app.register_blueprint(app_views)

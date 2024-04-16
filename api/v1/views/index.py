@@ -1,9 +1,9 @@
 """
 This module handles all routes with the blueprint app_views
 """
+from flask import jsonify
 
 from api.v1.views import app_views
-from flask import jsonify
 from models import storage
 from models.engine.db_storage import classes
 
