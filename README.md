@@ -183,7 +183,7 @@ Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://tw
 
 Second part of Airbnb: Joann Vuong
 
-<hr>
+##
 
 Jonathan Perez - [Github](https://github.com/prodjohnper)
 Livan Hernandez - [Github](https://github.com/Livanhernandez)
