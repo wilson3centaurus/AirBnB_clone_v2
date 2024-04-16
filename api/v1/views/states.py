@@ -49,7 +49,7 @@ def create_state():
     state = State(name=name)
     storage.new(state)
     storage.save()
-    return jsonify(state.to_dict())
+    return jsonify(state.to_dict()), 201
 
 
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)

@@ -18,9 +18,13 @@ def teardown_appcontext(exception):
 
 @app.errorhandler(404)
 def page_not_found(error):
-    # Return a JSON response indicating that the endpoint was not found
+    """
+    Return a JSON response indicating that
+    the endpoint was not found
+    """
     return jsonify({"error": "Not found"}), 404
+
 
 if __name__ == "__main__":
     app.register_blueprint(app_views)
-    app.run(host='0.0.0.0', port=5000, threaded=False)
+    app.run(host='0.0.0.0', port=5000, threaded=True)
