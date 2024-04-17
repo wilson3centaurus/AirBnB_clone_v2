@@ -44,13 +44,12 @@ def states_obj_id(state_id):
                  methods=["DELETE"], strict_slashes=False)
 def states_delete(state_id):
     """Delete an object by an ID"""
-    empty_dict = {}
     obj_state = storage.get(State, state_id)
     if obj_state is None:
         abort(404)
     storage.delete(obj_state)
     storage.save()
-    return jsonify(empty_dict), 200
+    return jsonify({}), 200
 
 
 @app_views.route("/states", methods=["POST"], strict_slashes=False)
