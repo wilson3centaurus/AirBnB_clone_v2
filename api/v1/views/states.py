@@ -7,14 +7,6 @@ from api.v1.views import app_views
 from flask import jsonify, abort, request
 
 
-def validate_data(data):
-    """Validation of data"""
-    if data is None:
-        abort(400, error="Not a JSON")
-    if "name" not in data:
-        abort(400, error="Missing name")
-
-
 @app_views.route("/states", methods=["GET"], strict_slashes=False)
 def states_obj():
     """Retrieve an object into a valid JSON"""
@@ -56,7 +48,12 @@ def states_delete(state_id):
 def states_post():
     """Create a new obj"""
     data = request.get_json()
-    validate_data(data)
+
+    if data is None:
+        abort(400, error="Not a JSON")
+    if "name" not in data:
+        abort(400, error="Missing name")
+
     new_state = State(**data)
     new_state.save()
 
@@ -72,7 +69,10 @@ def states_put(state_id):
         abort(404)
 
     data = request.get_json()
-    validate_data(data)
+    if data is None:
+        abort(400, error="Not a JSON")
+    if "name" not in data:
+        abort(400, error="Missing name")
 
     for key, value in data.items():
         if key not in ["id", "created_at", "updated_at"]:
