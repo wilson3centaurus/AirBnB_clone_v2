@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-This module handles all routes with the blueprint app_views
+This module handles city routes with the blueprint app_views
 """
 from flask import jsonify, abort, request
 
@@ -25,16 +25,6 @@ def get_all_cities_by_state(state_id):
     abort(404)
 
 
-@app_views.route('/cities', methods=['GET'], strict_slashes=False)
-def get_all_cities():
-    """
-    Retrieve all cities
-    """
-    cities_list = [
-        city.to_dict() for city in storage.all(City).values()]
-    return jsonify(cities_list)
-
-
 @app_views.route('/cities/<city_id>', methods=['GET'], strict_slashes=False)
 def get_city_by_id(city_id):
     """
@@ -53,7 +43,6 @@ def delete_city(city_id):
     Delete city
     """
     city = storage.get(City, city_id)
-    print("DELETE: ", city)
     if city:
         storage.delete(city)
         storage.save()
