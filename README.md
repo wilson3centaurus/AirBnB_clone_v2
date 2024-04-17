@@ -154,7 +154,7 @@ EOF  all  create  destroy  help  quit  show  update
 ## Bugs
 No known bugs at this time.
 
-## AirBnB clone - RESTful API
+# AirBnB clone - RESTful API
 
 <details>
 <summary>AirBnB clone - RESTful API</summary>
@@ -175,8 +175,8 @@ No known bugs at this time.
 * [➤ Resources](https://github.com/lucieruin/holbertonschool-AirBnB_clone_v3#-resources)
 * [➤ General](https://github.com/lucieruin/holbertonschool-AirBnB_clone_v3#-general)
 * [➤ Requirements](https://github.com/lucieruin/holbertonschool-AirBnB_clone_v3#-requirements)
-* [➤ Install Flask](https://github.com/lucieruin/holbertonschool-AirBnB_clone_v3#-install flask)
-* [➤ Tasks](https://github.com/lucieruin/holbertonschool-AirBnB_clone_v3#-install flask)
+* [➤ Install Flask](https://github.com/lucieruin/holbertonschool-AirBnB_clone_v3#install-flask)
+* [➤ Tasks](https://github.com/lucieruin/holbertonschool-AirBnB_clone_v3#install-flask)
 
 ----------
 
@@ -191,7 +191,7 @@ For this project, we expect you to look at these concepts:
 
 ## ➤ Resources:
 
-Read or watch:https://github.com/lucieruin/holbertonschool-AirBnB_clone_v3#-install flask
+Read or watch:
 
 * REST API concept page
 * [Learn REST: A RESTful Tutorial](https://intranet.hbtn.io/rltoken/fMhTwyQ49kBXlRwtZcTj_A)
@@ -253,7 +253,7 @@ Read or watch:https://github.com/lucieruin/holbertonschool-AirBnB_clone_v3#-inst
 
 ----------
 
-![image](https://s3.eu-west-3.amazonaws.com/hbtn.intranet/uploads/medias/2020/9/02078cd7f0573885c85a225c7436584a5afea1f9.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MYA5JM5DUTZGMZG%2F20240417%2Feu-west-3%2Fs3%2Faws4_request&X-Amz-Date=20240417T122511Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=850f9226d30994c60451723244c987f7e30c45069dcbb71f20446e526fac37c6)
+![shema project](https://github.com/lucieruin/holbertonschool-AirBnB_clone_v3/blob/master/images/AirBnB_clone_RESTful_API_shema.png)
 
 ----------
 
@@ -937,7 +937,7 @@ Updates a Place object: PUT /api/v1/places/<place_id>
 * Ignore keys: id, user_id, city_id, created_at and updated_at
 * Returns the Place object with the status code 200
 
-Repo:
+Repo:https://github.com/lucieruin/holbertonschool-AirBnB_clone_v3/blob/master/images/Examples_of_good_reviews-3.jpg
 
 * GitHub repository: holbertonschool-AirBnB_clone_v3
 * File: api/v1/views/places.py, api/v1/views/__init__.py
