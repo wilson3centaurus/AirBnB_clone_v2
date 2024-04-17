@@ -18,7 +18,6 @@ def states_obj():
     for obj_s in obj_state:
         dict_state = obj_s.to_dict()
         state_all.append(dict_state)
-        print(dict_state)
     return jsonify(state_all)
 
 
