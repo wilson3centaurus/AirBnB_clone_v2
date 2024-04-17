@@ -13,7 +13,7 @@ app = Flask(__name__)
 app.register_blueprint(app_views)
 
 @app.teardown_appcontext
-def teardown():
+def teardown(exception):
     """Teardown method to close the storage"""
     storage.close()
 
