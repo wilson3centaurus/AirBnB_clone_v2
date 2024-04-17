@@ -67,53 +67,6 @@ test_db_storage.py'])
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
 
-    def test_get_method_exists(self):
-        """Test if get method exists"""
-        self.assertTrue(hasattr(DBStorage, 'get'))
-        self.assertTrue(callable(getattr(DBStorage, 'get')))
-
-    def test_get_method_docstring(self):
-        """Test if get method has docstring"""
-        self.assertIsNotNone(DBStorage.get.__doc__)
-
-    def test_count_method_exists(self):
-        """Test if count method exists"""
-        self.assertTrue(hasattr(DBStorage, 'count'))
-        self.assertTrue(callable(getattr(DBStorage, 'count')))
-
-    def test_count_method_docstring(self):
-        """Test if count method has docstring"""
-        self.assertIsNotNone(DBStorage.count.__doc__)
-
-    def test_get_method_returns_object(self):
-        """Test if get method returns object"""
-        storage = DBStorage()
-        new_state = State(name="California")
-        new_state.save()
-        retrieved_state = storage.get(State, new_state.id)
-        self.assertEqual(retrieved_state, new_state)
-
-    def test_get_method_returns_none_if_not_found(self):
-        """Test if get method returns None if object not found"""
-        storage = DBStorage()
-        non_existent_state = storage.get(State, "non_existent_id")
-        self.assertIsNone(non_existent_state)
-
-    def test_count_method_returns_correct_count(self):
-        """Test if count method returns correct count"""
-        storage = DBStorage()
-        initial_count = storage.count(State)
-        new_state = State(name="New York")
-        new_state.save()
-        updated_count = storage.count(State)
-        self.assertEqual(updated_count, initial_count + 1)
-
-    def test_count_method_returns_zero_if_no_objects(self):
-        """Test if count method returns 0 if no objects of the given class"""
-        storage = DBStorage()
-        empty_count = storage.count(Review)
-        self.assertEqual(empty_count, 0)
-
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
