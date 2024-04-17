@@ -35,28 +35,32 @@ class FileStorage:
         return self.__objects
 
     def get(self, cls, id):
-        """returns the object based on the class and its ID, or None if not found"""
+        """
+        returns the object based on the class and its ID,
+        or None if not found
+        """
         # Search in the objects in storage for object with cls, id
         key = cls.__name__ + "." + id
-        try:    
+        try:
             return self.__objects[key]
         except (Exception):
             return None
 
     def count(self, cls=None):
         """returns the number of objects"""
-        # Count the number of objects in storage 
+        # Count the number of objects in storage
         count = 0
         try:
             if cls is not None:
                 for key, value in self.__objects.items():
-                    if value.__class__ == cls or value.__class__.__name__ == cls:
+                    if (value.__class__ == cls
+                            or value.__class__.__name__ == cls):
                         count += 1
                 return count
             for obj in self.__objects:
                 count += 1
             return count
-        except(Exception):
+        except (Exception):
             pass
 
     def new(self, obj):
