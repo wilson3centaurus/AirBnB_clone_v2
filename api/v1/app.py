@@ -2,6 +2,9 @@
 """
     Flask Application more comments more comments.
     It takes care of some routes.
+    more comments commetns testting ccommnets
+    more commentss cccccccccccccccccccc
+    comments
 """
 
 from models import storage
@@ -19,6 +22,8 @@ def close_db(error):
     """
         Close will take care of cleanup for the class
         more comments here later
+        comments comennts comments
+        cmments cccccccccccccccccccccccccc
     """
     storage.close()
 
@@ -38,6 +43,7 @@ if __name__ == "__main__":
     """
         Main Function to start the main code
         more comments more comments
+        comments comments comments
     """
 
     host = environ.get('HBNB_API_HOST')
