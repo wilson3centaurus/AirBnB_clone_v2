@@ -6,6 +6,7 @@ from models.state import State
 from api.v1.views import app_views
 from flask import jsonify, abort, request
 
+
 @app_views.route("/states", methods=["GET"], strict_slashes=False)
 def states_obj():
     """Retrieve an object into a valid JSON"""
@@ -14,8 +15,9 @@ def states_obj():
     for obj_s in obj_state:
         dict_state = obj_s.to_dict()
         state_all.append(dict_state)
-        print (dict_state)
+        print(dict_state)
     return jsonify(state_all)
+
 
 @app_views.route("/states/<state_id>",
                  methods=["GET"], strict_slashes=False)
