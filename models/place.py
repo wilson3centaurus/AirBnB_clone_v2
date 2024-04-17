@@ -26,7 +26,7 @@ class Place(BaseModel, Base):
     amenities = relationship(
         "Amenity", secondary="place_amenity", viewonly=False)
 
-    place_amenity = Table("place_amenity", Base,
+    place_amenity = Table("place_amenity", Base.metadata,
                           Column(
                               "place_id", String(60), ForeignKey("places.id"),
                               primary_key=True, nullable=False),
