@@ -1,5 +1,8 @@
 #!/usr/bin/python3
-""" Flask Application """
+"""
+    Flask Application
+"""
+
 from models import storage
 from api.v1.views import app_views
 from os import environ
@@ -12,7 +15,9 @@ app.register_blueprint(app_views)
 
 @app.teardown_appcontext
 def close_db(error):
-    """ Close Storage """
+    """
+        Close Storage
+    """
     storage.close()
 
 
