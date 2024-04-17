@@ -49,14 +49,18 @@ class FileStorage:
             json.dump(json_objects, f)
 
     def reload(self):
-        """deserializes the JSON file to __objects"""
+        """Deserializes the JSON file to __objects"""
         try:
             with open(self.__file_path, 'r') as f:
                 jo = json.load(f)
             for key in jo:
                 self.__objects[key] = classes[jo[key]["__class__"]](**jo[key])
-        except:
-            pass
+        except FileNotFoundError:
+            # Handle file not found error
+            print("File not found.")
+        except json.JSONDecodeError:
+            # Handle JSON decoding error
+            print("Error decoding JSON file.")
 
     def delete(self, obj=None):
         """delete obj from __objects if it’s inside"""
@@ -68,7 +72,7 @@ class FileStorage:
     def get(self, cls, id):
         '''
             A method to retrieve one object
-            Returns the object based on the class and its ID, or None if not found
+            Return object based on the class and its ID, or None if not found
         '''
         if cls in classes.values() and id:
             key = str(cls.__name__) + "." + id

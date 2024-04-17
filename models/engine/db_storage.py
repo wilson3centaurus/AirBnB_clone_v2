@@ -72,7 +72,7 @@ class DBStorage:
     def get(self, cls, id):
         '''
             A method to retrieve one object
-            Returns the object based on the class and its ID, or None if not found
+            Return object based on the class and its ID, or None if not found
         '''
         if cls in classes.values() and id:
             obj = self.__session.query(cls).filter_by(id=id).first()
@@ -90,7 +90,7 @@ class DBStorage:
             total_objects = 0
             for cls in classes.values():
                 objs = self.__session.query(cls).all()
-                total_objects+= len(objs)
+                total_objects += len(objs)
             return total_objects
 
         else:
