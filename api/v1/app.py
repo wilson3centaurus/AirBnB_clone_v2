@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """
-    Flask Application
+    Flask Application more comments more comments.
+    It takes care of some routes.
 """
 
 from models import storage
@@ -16,7 +17,8 @@ app.register_blueprint(app_views)
 @app.teardown_appcontext
 def close_db(error):
     """
-        Close Storage
+        Close will take care of cleanup for the class
+        more comments here later
     """
     storage.close()
 
@@ -33,7 +35,10 @@ def not_found(error):
 
 
 if __name__ == "__main__":
-    """ Main Function """
+    """
+        Main Function to start the main code
+        more comments more comments
+    """
 
     host = environ.get('HBNB_API_HOST')
     port = environ.get('HBNB_API_PORT')
