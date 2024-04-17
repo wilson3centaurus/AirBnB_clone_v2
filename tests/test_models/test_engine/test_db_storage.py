@@ -96,7 +96,7 @@ class TestFileStorage(unittest.TestCase):
         '''Testing Get method'''
         new = State(name="Alabama")
         new.save()
-        state = models.storage.get("State", str(state.id))
+        state = models.storage.get("State", str(new.id))
         self.assertEqual(state.name, "Alabama")
 
     def test_dbstorage_count(self):

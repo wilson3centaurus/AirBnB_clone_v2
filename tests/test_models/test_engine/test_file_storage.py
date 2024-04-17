@@ -127,7 +127,7 @@ class TestFileStorage(unittest.TestCase):
         filestor.new(new)
         new_id = new.id
         filestor.save()
-        state = filestor.get("State", new_id)
+        state = filestor.get(State, new_id)
         self.assertEqual(state.name, "Alabama")
 
     def test_filestorage_count(self):
