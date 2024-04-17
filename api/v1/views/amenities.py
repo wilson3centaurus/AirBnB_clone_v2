@@ -9,7 +9,6 @@ from models import storage
 from models.engine.db_storage import classes
 
 Amenity = classes["Amenity"]
-State = classes["State"]
 
 
 @app_views.route('/amenities', methods=['GET'], strict_slashes=False)
