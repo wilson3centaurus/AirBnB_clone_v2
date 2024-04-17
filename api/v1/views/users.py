@@ -54,7 +54,7 @@ def user_post():
     new_user = User(**data)
     new_user.save()
 
-    return jsonify(new_user.to_dict())
+    return jsonify(new_user.to_dict()), 201
 
 
 @app_views.route("/users/<user_id>", methods=["PUT"], strict_slashes=False)
@@ -72,4 +72,4 @@ def user_put(user_id):
         if key not in ["id", "email", "created_at", "updated_at"]:
             setattr(obj_users, key, value)
     storage.save()
-    return jsonify(obj_users.to_dict())
+    return jsonify(obj_users.to_dict()), 200
