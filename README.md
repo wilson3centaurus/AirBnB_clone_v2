@@ -15,6 +15,7 @@ The console is the first segment of the AirBnB project at Holberton School that 
 * [Usage](#usage)
 * [Examples of use](#examples-of-use)
 * [Bugs](#bugs)
+* [AirBnB clone - RESTful API]()
 * [Authors](#authors)
 * [License](#license)
 
@@ -153,13 +154,13 @@ EOF  all  create  destroy  help  quit  show  update
 ## Bugs
 No known bugs at this time.
 
+## AirBnB clone - RESTful API
+
 <details>
 <summary>AirBnB clone - RESTful API</summary>
 
-
-
 <p align="center">
-    <img [AirBnB clone - RESTful API] src="">
+    <img [AirBnB clone - RESTful API] src="https://github.com/lucieruin/holbertonschool-AirBnB_clone_v3/blob/master/images/AirBnB_clone_RESTful_API.png">
 </p>
 
 ----------
@@ -170,12 +171,12 @@ No known bugs at this time.
 
 ## ➤ Menu:
 
-* [➤ Description](https://github.com/amandinekemp/holbertonschool-back-end/tree/main/api#-description)
-* [➤ Resources](https://github.com/amandinekemp/holbertonschool-back-end/tree/main/api#-resources)
-* [➤ General](https://github.com/amandinekemp/holbertonschool-back-end/tree/main/api#-general)
-* [➤ Requirements](https://github.com/amandinekemp/holbertonschool-back-end/tree/main/api#-requirements)
-* [➤ Tasks](https://github.com/amandinekemp/holbertonschool-back-end/tree/main/api#author-)
-* [➤ Author](https://github.com/amandinekemp/holbertonschool-back-end/tree/main/api#author-)
+* [➤ Concepts](https://github.com/lucieruin/holbertonschool-AirBnB_clone_v3#-concepts)
+* [➤ Resources](https://github.com/lucieruin/holbertonschool-AirBnB_clone_v3#-resources)
+* [➤ General](https://github.com/lucieruin/holbertonschool-AirBnB_clone_v3#-general)
+* [➤ Requirements](https://github.com/lucieruin/holbertonschool-AirBnB_clone_v3#-requirements)
+* [➤ Install Flask](https://github.com/lucieruin/holbertonschool-AirBnB_clone_v3#-install flask)
+* [➤ Tasks](https://github.com/lucieruin/holbertonschool-AirBnB_clone_v3#-install flask)
 
 ----------
 
@@ -190,7 +191,7 @@ For this project, we expect you to look at these concepts:
 
 ## ➤ Resources:
 
-Read or watch:
+Read or watch:https://github.com/lucieruin/holbertonschool-AirBnB_clone_v3#-install flask
 
 * REST API concept page
 * [Learn REST: A RESTful Tutorial](https://intranet.hbtn.io/rltoken/fMhTwyQ49kBXlRwtZcTj_A)
@@ -256,7 +257,7 @@ Read or watch:
 
 ----------
 
-**Install Flask**
+### Install Flask
 
 ```
 $ pip3 install Flask
@@ -309,17 +310,7 @@ guillaume@ubuntu:~/AirBnB_v3$
 ```
 
 Repo:
-
-* GitHub repository: holbertonschool-AirBnB_clone_v3
-  
-### 2. Code review
-
-Like “tests”, code review is the base of all software development.
-
-All companies are using this “feature” to improve the codebase, but also the group dynamic. For example, at Zenly, the iOS team does a code review everyday at 5pm with the entire team.
-
-What is a code review?
-
+https://github.com/lucieruin/holbertonschool-AirBnB_clone_v3#-install flask
 Code review helps developers learn the code base, as well as help them learn new technologies and techniques that grow their skill sets.
 
 When a developer is finished working on an issue, another developer looks over the code and considers questions like:
@@ -360,14 +351,14 @@ We are all human, we all make mistakes, typos, etc… another developer will alw
 
 Examples of bad reviews
 
-![Examples of bad reviews]()
+![Examples of bad reviews](https://github.com/lucieruin/holbertonschool-AirBnB_clone_v3/blob/master/images/Examples_of_bad_reviews.jpg)
 
 Examples of good reviews
 
-![Examples of good reviews]()
-![Examples of good reviews-1]()
-![Examples of good reviews-2]()
-![Examples of good reviews-3]()
+![Examples of good reviews](https://github.com/lucieruin/holbertonschool-AirBnB_clone_v3/blob/master/images/Examples_of_good_reviews.jpg)
+![Examples of good reviews-1](https://github.com/lucieruin/holbertonschool-AirBnB_clone_v3/blob/master/images/Examples_of_good_reviews-1.jpg)
+![Examples of good reviews-2](https://github.com/lucieruin/holbertonschool-AirBnB_clone_v3/blob/master/images/Examples_of_good_reviews-2.jpg)
+![Examples of good reviews-3](https://github.com/lucieruin/holbertonschool-AirBnB_clone_v3/blob/master/images/Examples_of_good_reviews-3.jpg)
 
 
 Repo:
