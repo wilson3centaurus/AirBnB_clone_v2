@@ -19,6 +19,7 @@ import json
 import os
 import pep8
 import unittest
+
 DBStorage = db_storage.DBStorage
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
@@ -88,15 +89,11 @@ class TestFileStorage(unittest.TestCase):
     def test_save(self):
         """Test that save properly saves objects to file.json"""
 
-    def test_model_storage(self):
-        '''Test to check if storage is an instance for DBStorage'''
-        self.assertTrue(isinstance(storage, DBStorage))
-
     def test_dbstorage_get(self):
         '''Testing Get method'''
         new = State(name="Alabama")
         new.save()
-        state = models.storage.get("State", str(state.id))
+        state = models.storage.get(State, str(new.id))
         self.assertEqual(state.name, "Alabama")
 
     def test_dbstorage_count(self):

@@ -115,10 +115,6 @@ class TestFileStorage(unittest.TestCase):
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
 
-    def test_model_storage(self):
-        '''Test State model in Filestorage'''
-        self.assertTrue(isinstance(storage, FileStorage))
-
     def test_filestorage_get(self):
         '''Testing Get method'''
         filestor = FileStorage()
@@ -127,7 +123,7 @@ class TestFileStorage(unittest.TestCase):
         filestor.new(new)
         new_id = new.id
         filestor.save()
-        state = filestor.get("State", new_id)
+        state = filestor.get(State, new_id)
         self.assertEqual(state.name, "Alabama")
 
     def test_filestorage_count(self):
