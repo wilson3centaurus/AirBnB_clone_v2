@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 """
 This module handles all routes with the blueprint app_views
 """

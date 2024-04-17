@@ -79,7 +79,8 @@ class DBStorage:
         """ retrieve one object based on class and id """
         all_obj = self.all(cls)
         if all_obj:
-            filtered_list = [value for value in all_obj.values() if value.id == id]
+            filtered_list = [
+                value for value in all_obj.values() if value.id == id]
             return filtered_list[0] if len(filtered_list) else None
 
     def count(self, cls=None):
