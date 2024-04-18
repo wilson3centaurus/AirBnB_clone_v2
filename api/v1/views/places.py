@@ -65,20 +65,18 @@ def create_place(city_id):
     city = storage.get(City, city_id)
     if not city:
         abort(404)
-    if 'user_id' not in data:
-        abort(400, 'Missing user_id')
     if 'name' not in data:
         abort(400, 'Missing name')
-    
-    user = storage.get(User, city_id)
+    if 'user_id' not in data:
+        abort(400, 'Missing user_id')
+
+    user = storage(User, data['user_id'])
     if not user:
         abort(404)
     place = Place(name=data['name'], city_id=city_id, user_id=user.id)
     storage.new(place)
     storage.save()
     return jsonify(place.to_dict()), 201
-
-
 
 
 @app_views.route('/places/<place_id>', methods=['PUT'], strict_slashes=False)
