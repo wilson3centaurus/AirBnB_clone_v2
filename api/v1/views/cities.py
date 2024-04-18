@@ -11,7 +11,8 @@ from flask import abort, jsonify, make_response, request
 all default RESTFul API actions:"""
 
 
-@app_views.route("/states/<state_id>/cities", methods=["GET"], strict_slashes=False)
+@app_views.route("/states/<state_id>/cities", methods=["GET"],
+                 strict_slashes=False)
 def get_cities(state_id):
     """Retrieves the list of all City objects of a State"""
     state = storage.get(State, state_id)
@@ -51,7 +52,8 @@ def delete_city(city_id):
 """Deletes a City object: DELETE /api/v1/cities/<city_id>"""
 
 
-@app_views.route("/states/<state_id>/cities", methods=["POST"], strict_slashes=False)
+@app_views.route("/states/<state_id>/cities", methods=["POST"],
+                 strict_slashes=False)
 def create_city(state_id):
     """creates a City object"""
     state = storage.get(State, state_id)
