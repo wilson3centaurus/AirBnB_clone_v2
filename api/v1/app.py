@@ -14,9 +14,15 @@ cors = CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
 
 
 @app.teardown_appcontext
-def teardown_storage(exception):
+def teardown_storage(self):
     """Closes the current session"""
     storage.close()
+
+
+@app.errorhandler(404)
+def not_found(error):
+    """404 error handler"""
+    return jsonify({"error": "Not found"}), 404
 
 
 if __name__ == "__main__":
