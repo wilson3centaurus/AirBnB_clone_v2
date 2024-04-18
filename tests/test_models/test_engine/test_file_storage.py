@@ -113,3 +113,33 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    def test_get_existing_object(self):
+        """Test retrieving an existing object"""
+        storage = FileStorage()
+        obj = BaseModel()
+        obj_key = obj.__class__.__name__ + "." + obj.id
+        storage._FileStorage__objects[obj_key] = obj
+        retrieved_obj = storage.get(BaseModel, obj.id)
+        self.assertEqual(retrieved_obj, obj)
+
+    def test_get_nonexistent_object(self):
+        """Test retrieving a nonexistent object"""
+        storage = FileStorage()
+        obj = BaseModel()
+        retrieved_obj = storage.get(BaseModel, obj.id)
+        self.assertIsNone(retrieved_obj)
+
+    def test_get_invalid_class(self):
+        """Test retrieving an object with an invalid class"""
+        storage = FileStorage()
+        obj = BaseModel()
+        retrieved_obj = storage.get(None, obj.id)
+        self.assertIsNone(retrieved_obj)
+
+    def test_get_invalid_id(self):
+        """Test retrieving an object with an invalid id"""
+        storage = FileStorage()
+        obj = BaseModel()
+        retrieved_obj = storage.get(BaseModel, None)
+        self.assertIsNone(retrieved_obj)
