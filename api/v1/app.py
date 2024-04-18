@@ -20,16 +20,22 @@ def close_db(error):
 
 @app.errorhandler(404)
 def not_found(error):
-    """
-    404 Error
+    """ 404 Error
     ---
-    summary: Resource Not Found
     responses:
       404:
-        description: A resource was not found
+        description: a resource was not found
     """
     return make_response(jsonify({'error': "Not found"}), 404)
 
+
+app.config['SWAGGER'] = {
+    'title': 'AirBnB clone Restful API',
+    'uiversion': 3
+}
+
+
+Swagger(app)
 
 if __name__ == "__main__":
     """ Main Function """
