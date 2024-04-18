@@ -5,12 +5,9 @@ from models import storage
 from api.v1.views import app_views
 from os import environ
 from flask import Flask, make_response, jsonify
-from flasgger import Swagger
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
-swagger = Swagger(app)
-
 
 @app.teardown_appcontext
 def close_db(error):
@@ -28,14 +25,6 @@ def not_found(error):
     """
     return make_response(jsonify({'error': "Not found"}), 404)
 
-
-app.config['SWAGGER'] = {
-    'title': 'AirBnB clone Restful API',
-    'uiversion': 3
-}
-
-
-Swagger(app)
 
 if __name__ == "__main__":
     """ Main Function """
