@@ -36,13 +36,16 @@ class DBStorage:
         db = getenv('HBNB_MYSQL_DB')
         env = getenv('HBNB_ENV')
 
+        # Use the charset 'utf8mb4' for supporting a wider range of Unicode characters
         self.__engine = create_engine(
-            f'mysql+mysqldb://{user}:{pwd}@{host}/{db}')
+            f'mysql+mysqldb://{user}:{pwd}@{host}/{db}?charset=utf8mb4', pool_pre_ping=True)
+
+        # Drop all tables if environment is set to 'test'
         if env == 'test':
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
-        """Query current session."""
+        """Query all objects of a class from the current database session."""
         queried_data = {}
         for entity in entity_classes:
             if cls is None or cls in {entity_classes[entity], entity}:
@@ -52,21 +55,21 @@ class DBStorage:
         return queried_data
 
     def new(self, obj):
-        """Add object to session."""
+        """Add new object to the current database session."""
         if obj:
             self.__session.add(obj)
 
     def save(self):
-        """Commit session changes."""
+        """Commit all changes of the current database session."""
         self.__session.commit()
 
     def delete(self, obj=None):
-        """Delete object from session."""
+        """Delete object from the current database session."""
         if obj:
             self.__session.delete(obj)
 
     def reload(self):
-        """Reload session data."""
+        """Create all tables in the database (feature from SQLAlchemy) and start a new session."""
         Base.metadata.create_all(self.__engine)
         session_factory = sessionmaker(
             bind=self.__engine, expire_on_commit=False)
@@ -74,5 +77,5 @@ class DBStorage:
         self.__session = ScopedSession()
 
     def close(self):
-        """Close session."""
+        """Remove session and close all connections."""
         self.__session.remove()

@@ -4,6 +4,7 @@
 import unittest
 import inspect
 from models import city
+import models
 from models.base_model import BaseModel
 import pycodestyle
 
@@ -34,7 +35,7 @@ class TestCityDocs(unittest.TestCase):
         """Ensure all public methods have docstrings."""
         for func_name, func in self.funcs:
             self.assertTrue(len(func.__doc__) >= 1, f"{
-                            func_name} missing docstring.")
+                            func.__name__} is missing a docstring")
 
 
 class TestCity(unittest.TestCase):
