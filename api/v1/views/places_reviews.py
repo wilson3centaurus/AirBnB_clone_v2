@@ -61,11 +61,11 @@ def create_review(place_id):
     req = request.get_json()
 
     if req is None:
-        abort(400, 'Not a JSON')
+        return jsonify({"error": "Not a JSON"}), 400
     if 'user_id' not in req:
-        abort(400, 'Missing user_id')
+        return jsonify({"error": "Missing user_id"}), 400
     if 'text' not in req:
-        abort(400, 'Missing text')
+        return jsonify({"error": 'Missing text'}), 400
 
     text = req['text']
     user_id = req['user_id']
@@ -91,7 +91,7 @@ def update_review(review_id):
     req = request.get_json()
 
     if req is None:
-        abort(400, 'Not a JSON')
+        return jsonify({"error": "Not a JSON"}), 400
 
     for key, value in req.items():
         if key not in ['id', 'user_id', 'place_id', 'created_at',

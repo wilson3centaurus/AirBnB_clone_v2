@@ -48,9 +48,9 @@ def amenity_post():
     data = request.get_json()
 
     if data is None:
-        abort(400, error="Not a JSON")
+        return jsonify({"error": "Not a JSON"}), 400
     if "name" not in data:
-        abort(400, error="Missing name")
+        return jsonify({"error": "Missing name"}), 400
 
     new_amenity = Amenity(**data)
     new_amenity.save()
@@ -68,7 +68,7 @@ def amenity_put(amenity_id):
 
     data = request.get_json()
     if data is None:
-        abort(400, error="Not a JSON")
+        return jsonify({"error": "Not a JSON"}), 400
 
     for key, value in data.items():
         if key not in ["id", "created_at", "updated_at"]:

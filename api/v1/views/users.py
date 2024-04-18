@@ -46,11 +46,11 @@ def user_post():
     data = request.get_json()
 
     if data is None:
-        abort(400, error="Not a JSON")
+        return jsonify({"error": "Not a JSON"}), 400
     if "email" not in data:
-        abort(400, error="Missing email")
+        return jsonify({"error": "Missing email"}), 400
     if "password" not in data:
-        abort(400, error="Missing password")
+        return jsonify({"error": "Missing password"}), 400
     new_user = User(**data)
     new_user.save()
 
@@ -66,7 +66,7 @@ def user_put(user_id):
 
     data = request.get_json()
     if data is None:
-        abort(400, error="Not a JSON")
+        return jsonify({"error": "Not a JSON"}), 400
 
     for key, value in data.items():
         if key not in ["id", "email", "created_at", "updated_at"]:
