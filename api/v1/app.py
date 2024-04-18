@@ -14,13 +14,6 @@ from flasgger import Swagger
 app = Flask(__name__)
 app.register_blueprint(app_views)
 
-app.config['SWAGGER'] = {
-    'title': 'AirBnB clone Restful API',
-    'uiversion': 3
-}
-
-swagger = Swagger(app)
-
 
 @app.teardown_appcontext
 def close_db(error):
@@ -37,6 +30,16 @@ def not_found(error):
         JSON-formatted 404 status code response
     '''
     return make_response(jsonify({'error': "Not found"}), 404)
+
+
+# Set the swagger configuration
+app.config['SWAGGER'] = {
+    'title': 'AirBnB clone Restful API',
+    'uiversion': 3
+}
+
+# Initialize the swagger
+swagger = Swagger(app)
 
 
 if __name__ == "__main__":
