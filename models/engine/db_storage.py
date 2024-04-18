@@ -123,14 +123,16 @@ class DBStorage:
         '''
         self.__session.remove()
 
-# def get(self, cls, id)
-    """gets obj based on class and id"""
     def get(self, cls, id):
+        '''
+            get object by id
+        '''
         return self.__session.query(cls).get(id)
 
-# def coutn(self, cls=None)
-    """counts number of obj in storage"""
     def count(self, cls=None):
+        '''
+            count objects
+        '''
         if cls:
             return self.__session.query(cls).count()
         else:
