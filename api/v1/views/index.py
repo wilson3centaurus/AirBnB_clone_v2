@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" Index for API  routes v1"""
+"""Index for API routes v1"""
 
 from models import storage
 from api.v1.views import app_views
@@ -14,13 +14,13 @@ from models.review import Review
 
 @app_views.route('/status', methods=['GET'], strict_slashes=False)
 def status():
-    """ Status of API """
+    """Status of API"""
     return jsonify({"status": "OK"})
 
 
 @app_views.route('/stats', methods=['GET'], strict_slashes=False)
 def stats():
-    """ stats of API"""
+    """stats of API"""
     object_count = {
         "amenities": storage.count(Amenity),
         "cities": storage.count(City),
