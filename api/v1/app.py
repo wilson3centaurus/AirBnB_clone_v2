@@ -9,6 +9,7 @@ from flask import Flask, make_response, jsonify
 app = Flask(__name__)
 app.register_blueprint(app_views)
 
+
 @app.teardown_appcontext
 def close_db(error):
     """ Close Storage """
@@ -27,7 +28,7 @@ def not_found(error):
 
 
 if __name__ == "__main__":
-    """ Main Function """
+    # Main function
     host = environ.get('HBNB_API_HOST') or '0.0.0.0'
     port = environ.get('HBNB_API_PORT') or '5000'
     app.run(host=host, port=port, threaded=True)
