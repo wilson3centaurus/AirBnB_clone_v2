@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 '''
     Entry point of the API
+
+    This module creates the Flask app and registers the blueprint
 '''
 from models import storage
 from api.v1.views import app_views
