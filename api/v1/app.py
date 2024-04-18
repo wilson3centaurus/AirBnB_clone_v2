@@ -1,30 +1,22 @@
 #!/usr/bin/python3
-"""
-    Flask Application more comments more comments.
-    It takes care of some routes.
-    more comments commetns testting ccommnets
-    more commentss cccccccccccccccccccc
-    comments
-"""
-
+""" Flask Application """
 from models import storage
 from api.v1.views import app_views
 from os import environ
 from flask import Flask, make_response, jsonify
+from flask_cors import CORS
+from flasgger import Swagger
 
 
 app = Flask(__name__)
+app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 app.register_blueprint(app_views)
+cors = CORS(app, resources={r"/api/v1/*": {"origins": "*"}})
 
 
 @app.teardown_appcontext
 def close_db(error):
-    """
-        Close will take care of cleanup for the class
-        more comments here later
-        comments comennts comments
-        cmments cccccccccccccccccccccccccc
-    """
+    """ Close Storage """
     storage.close()
 
 
@@ -39,13 +31,16 @@ def not_found(error):
     return make_response(jsonify({'error': "Not found"}), 404)
 
 
-if __name__ == "__main__":
-    """
-        Main Function to start the main code
-        more comments more comments
-        comments comments comments
-    """
+app.config['SWAGGER'] = {
+    'title': 'AirBnB clone Restful API',
+    'uiversion': 3
+}
 
+Swagger(app)
+
+
+if __name__ == "__main__":
+    """ Main Function """
     host = environ.get('HBNB_API_HOST')
     port = environ.get('HBNB_API_PORT')
     if not host:

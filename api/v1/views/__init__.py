@@ -1,9 +1,5 @@
 #!/usr/bin/python3
-'''
-    BluePrints for Api cccccccccccc
-    more commentsssss more comments
-    mmore test comments cccccccccc cccccc ccccccc
-'''
+""" Blueprint for API """
 from flask import Blueprint
 
 app_views = Blueprint('app_views', __name__, url_prefix='/api/v1')
