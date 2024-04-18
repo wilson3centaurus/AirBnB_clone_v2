@@ -13,6 +13,12 @@ from flasgger import Swagger
 # Create the Flask app
 app = Flask(__name__)
 app.register_blueprint(app_views)
+
+app.config['SWAGGER'] = {
+    'title': 'AirBnB clone Restful API',
+    'uiversion': 3
+}
+
 swagger = Swagger(app)
 
 
