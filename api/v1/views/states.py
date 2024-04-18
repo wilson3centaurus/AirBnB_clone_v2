@@ -6,10 +6,13 @@ from flask import jsonify, abort, request
 from .index import app_views
 from models.state import State
 from models import storage
+from flasgger.utils import swag_from
 
 
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
+@swag_from('documentation/state/get_state.yml', methods=['GET'])
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
+@swag_from('documentation/state/get_id_state.yml', methods=['GET'])
 def get_states(state_id=None):
     """
         Retrieve all State objects or a single State
@@ -34,6 +37,7 @@ def get_states(state_id=None):
         methods=['DELETE'],
         strict_slashes=False
         )
+@swag_from('documentation/state/delete_state.yml', methods=['DELETE'])
 def delete_state(state_id):
     """
     Delete a State object by ID.
@@ -57,6 +61,7 @@ def delete_state(state_id):
 
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
+@swag_from('documentation/state/post_state.yml', methods=['POST'])
 def create_state():
     """
     Create a State object based on the body from the request
@@ -81,6 +86,7 @@ def create_state():
 
 
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
+@swag_from('documentation/state/put_state.yml', methods=['PUT'])
 def put_state(state_id):
     """
     Update a State object.
