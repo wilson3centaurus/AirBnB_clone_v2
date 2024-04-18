@@ -122,3 +122,21 @@ class DBStorage:
             A method to close the session
         '''
         self.__session.remove()
+
+    def get(self, cls, id):
+        '''
+            get object by id
+        '''
+        return self.__session.query(cls).get(id)
+
+    def count(self, cls=None):
+        '''
+            count objects
+        '''
+        if cls:
+            return self.__session.query(cls).count()
+        else:
+            total_count = 0
+            for clss in classes.values():
+                total_count += self.__session.query(clss).count()
+            return total_count
