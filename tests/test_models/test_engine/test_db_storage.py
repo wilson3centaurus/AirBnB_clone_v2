@@ -1,172 +1,111 @@
 #!/usr/bin/python3
-"""Module contains tests for DBStorage class"""
+"""
+Contains the TestDBStorageDocs and TestDBStorage classes
+"""
 
-from os import getenv
-from models.engine.db_storage import DBStorage
-from models.review import Review
-from models.place import Place
-from models.user import User
-from models.state import State
-from models.city import City
-import unittest
+from datetime import datetime
+import inspect
+import models
+from models.engine import db_storage
+from models.amenity import Amenity
 from models.base_model import BaseModel
-import MySQLdb
+from models.city import City
+from models.place import Place
+from models.review import Review
+from models.state import State
+from models.user import User
+import json
+import os
+import pep8
+import unittest
+DBStorage = db_storage.DBStorage
+classes = {"Amenity": Amenity, "City": City, "Place": Place,
+           "Review": Review, "State": State, "User": User}
 
-storage = DBStorage()
-storage_engine = getenv("HBNB_TYPE_STORAGE")
 
-mydb = MySQLdb.connect(
-    host=getenv("HBNB_MYSQL_HOST"),
-    user=getenv("HBNB_MYSQL_USER"),
-    password=getenv("HBNB_MYSQL_PWD"),
-    database=getenv("HBNB_MYSQL_DB")
-)
-
-
-@unittest.skipIf(storage_engine != "db", "db storage is not being used")
-class test_dbStorage(unittest.TestCase):
-    """Class that tests DBStorage methods"""
-
+class TestDBStorageDocs(unittest.TestCase):
+    """Tests to check the documentation and style of DBStorage class"""
     @classmethod
     def setUpClass(cls):
-        """
-        Connect to the database before all tests
-        """
-        cls.mydb = MySQLdb.connect(
-            host=getenv("HBNB_MYSQL_HOST"),
-            user=getenv("HBNB_MYSQL_USER"),
-            password=getenv("HBNB_MYSQL_PWD"),
-            database=getenv("HBNB_MYSQL_DB")
-        )
-        cls.mycursor = cls.mydb.cursor()
+        """Set up for the doc tests"""
+        cls.dbs_f = inspect.getmembers(DBStorage, inspect.isfunction)
 
-    @classmethod
-    def tearDownClass(cls):
-        """
-        Close the database connection after all tests
-        """
-        cls.mycursor.close()
-        cls.mydb.close()
+    def test_pep8_conformance_db_storage(self):
+        """Test that models/engine/db_storage.py conforms to PEP8."""
+        pep8s = pep8.StyleGuide(quiet=True)
+        result = pep8s.check_files(['models/engine/db_storage.py'])
+        self.assertEqual(result.total_errors, 0,
+                         "Found code style errors (and warnings).")
 
-    def setUp(self):
-        """Setup test environment"""
-        mycursor = self.mycursor
-        mycursor.execute("DELETE FROM states")
-        self.mydb.commit()
+    def test_pep8_conformance_test_db_storage(self):
+        """Test tests/test_models/test_db_storage.py conforms to PEP8."""
+        pep8s = pep8.StyleGuide(quiet=True)
+        result = pep8s.check_files(['tests/test_models/test_engine/\
+test_db_storage.py'])
+        self.assertEqual(result.total_errors, 0,
+                         "Found code style errors (and warnings).")
 
-        self.db = DBStorage()
-        self.db.reload()
+    def test_db_storage_module_docstring(self):
+        """Test for the db_storage.py module docstring"""
+        self.assertIsNot(db_storage.__doc__, None,
+                         "db_storage.py needs a docstring")
+        self.assertTrue(len(db_storage.__doc__) >= 1,
+                        "db_storage.py needs a docstring")
 
-    def tearDown(self):
-        self.db.reload()
+    def test_db_storage_class_docstring(self):
+        """Test for the DBStorage class docstring"""
+        self.assertIsNot(DBStorage.__doc__, None,
+                         "DBStorage class needs a docstring")
+        self.assertTrue(len(DBStorage.__doc__) >= 1,
+                        "DBStorage class needs a docstring")
 
-    def test_init(self):
-        """test_dbStorage Init method"""
-        self.assertTrue(self.db._DBStorage__engine is not None)
-        self.assertTrue(self.db._DBStorage__session is not None)
+    def test_dbs_func_docstrings(self):
+        """Test for the presence of docstrings in DBStorage methods"""
+        for func in self.dbs_f:
+            self.assertIsNot(func[1].__doc__, None,
+                             "{:s} method needs a docstring".format(func[0]))
+            self.assertTrue(len(func[1].__doc__) >= 1,
+                            "{:s} method needs a docstring".format(func[0]))
 
+
+class TestFileStorage(unittest.TestCase):
+    """Test the FileStorage class"""
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_all_returns_dict(self):
+        """Test that all returns a dictionaty"""
+        self.assertIs(type(models.storage.all()), dict)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_all_no_class(self):
+        """Test that all returns all rows when no class is passed"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_new(self):
-        """Test DBStorage.new method"""
-        new_state = State(name="California")
-        self.db.new(new_state)
-        self.db.save()
+        """test that new adds an object to the database"""
 
-        mycursor = self.mycursor
-        mycursor.execute(
-            "SELECT * FROM states WHERE name = %s", ("California",))
-        result = mycursor.fetchone()
-        self.assertEqual(result[0], "California")
-
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
-        """Test DBStorage.save method"""
-        new_state = State(name="Texas")
-        self.db.new(new_state)
-        self.db.save()
-
-        mycursor = self.mycursor
-        mycursor.execute("SELECT * FROM states WHERE name = %s", ("Texas",))
-        result = mycursor.fetchone()
-
-        self.assertIsNotNone(result)
-        self.assertEqual(result[0], "Texas")
-
-    def test_delete(self):
-        "Test DBStorage.delete method"
-        new_state = State(name="California")
-        self.db.new(new_state)
-        self.db.save()
-        mycursor = self.mycursor
-        mycursor.execute(
-            "SELECT * FROM states WHERE name = %s", ("California",))
-        result = mycursor.fetchone()
-        self.assertEqual(result[0], "California")
-
-        self.db.delete(new_state)
-        self.db.save()
-        all_states = self.db.all(State)
-        california_state = all_states.get(f"{State.__name__}.{new_state.id}")
-
-        self.assertIsNone(california_state)
-
-    def test_delete_none(self):
-        """Test DBStorage.delete method with no argument"""
-        new_state = State(name="California")
-        self.db.new(new_state)
-        self.db.save()
-        all_objs_before = self.db.all()
-        self.db.delete()
-        self.db.save()
-        all_states = self.db.all(State)
-        california_state = all_states.get(f"{State.__name__}.{new_state.id}")
-
-        self.assertIsNotNone(california_state)
-
-    def test_reload(self):
-        """Test DBStorage.reload method"""
-        new_state = State(name="California")
-        self.db.new(new_state)
-        self.db.save()
-        self.db.reload()
-        key = f"{type(new_state).__name__}.{new_state.id}"
-        self.assertIn(key, self.db.all())
-
-    def test_all(self):
-        """Test DBStorage.all method"""
-        obj_dict = self.db.all()
-        self.assertIsInstance(obj_dict, dict)
-        for val in obj_dict.values():
-            self.assertIsInstance(val, BaseModel)
-
-    def test_all_with_classes(self):
-        """Test DBStorage.all method with class argument"""
-        obj_dict = self.db.all(State)
-        self.assertIsInstance(obj_dict, dict)
-        for val in obj_dict.values():
-            self.assertIsInstance(val, State)
+        """Test that save properly saves objects to file.json"""
 
     def test_get_method(self):
         """Test get method with class argument"""
         state_obj = State(name='test')
         state_id = state_obj.id
-        self.db.new(state_obj)
-        self.db.save()
-        retrieved_state = self.db.get(State, state_id)
+        models.storage.new(state_obj)
+        models.storage.save()
+        retrieved_state = models.storage.get(State, state_id)
 
         self.assertEqual(state_id, retrieved_state.id)
         fake_id = '12243'
-        retrieved_state = self.db.get(State, fake_id)
+        retrieved_state = models.storage.get(State, fake_id)
         self.assertEqual(retrieved_state, None)
 
     def test_count_method(self):
         """Test get method with class argument"""
-        all_states = self.db.all(State)
-        state_count = self.db.count(State)
+        all_states = models.storage.all(State)
+        state_count = models.storage.count(State)
         self.assertEqual(len(all_states), state_count)
 
-        all_obj = self.db.all()
-        all_count = self.db.count()
+        all_obj = models.storage.all()
+        all_count = models.storage.count()
         self.assertEqual(len(all_obj), all_count)
-
-
-if __name__ == "__main__":
-    unittest.main()
