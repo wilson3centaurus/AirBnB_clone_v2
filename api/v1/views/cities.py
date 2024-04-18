@@ -58,7 +58,7 @@ def create_city(state_id):
     """
     state = storage.get(State, state_id)
     if not state:
-        abort(400)
+        abort(404)
     if not request.is_json:
         abort(400, 'Not a JSON')
 
