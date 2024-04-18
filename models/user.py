@@ -8,6 +8,9 @@ from os import getenv
 
 
 class User(BaseModel, Base):
+    '''
+        User Class, users from the app
+    '''
     __tablename__ = 'users'
 
     # Columns
