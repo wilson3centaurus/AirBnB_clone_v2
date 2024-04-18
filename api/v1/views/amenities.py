@@ -42,11 +42,10 @@ def delete_amenity(amenity_id):
 def create_amenity():
     """Creates an Amenity"""
     if not request.json:
-        abort(400, 'Not a JSON')
-    data = request.get_json()
-    if 'name' not in data:
-        abort(400, 'Missing name')
-    new_amenity = Amenity(**data)
+        return jsonify({"error": "Not a JSON"}), 400
+    if 'name' not in request.json:
+        return jsonify({"error": "Missing name"}), 400
+    new_amenity = Amenity(**request.get_json())
     new_amenity.save()
     return jsonify(new_amenity.to_dict()), 201
 
@@ -59,10 +58,9 @@ def update_amenity(amenity_id):
     if amenity is None:
         abort(404)
     if not request.json:
-        abort(400, 'Not a JSON')
-    data = request.get_json()
-    for key, value in data.items():
+        return jsonify({"error": "Not a JSON"}), 400
+    for key, value in request.get_json().items():
         if key not in ['id', 'created_at', 'updated_at']:
             setattr(amenity, key, value)
     amenity.save()
-    return jsonify(amenity.to_dict()), 200
+    return jsonify(amenity.to_dict())
