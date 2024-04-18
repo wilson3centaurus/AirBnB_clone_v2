@@ -9,45 +9,46 @@ from flask import abort, jsonify, request
 from models.user import User
 
 
-@app_views.route('/users', methods=['GET'], strict_slashes=False)
-def get_users():
-    return jsonify([user.to_dict() for user in storage.all(User).values()])
+@app_views.route('/users', methods=['GET', 'POST'])
+def users():
+    """
+        Flask route at /users.
+    """
+    if request.method == 'POST':
+        kwargs = request.get_json()
+        if not kwargs:
+            return {"error": "Not a JSON"}, 400
+        if "email" not in kwargs:
+            return {"error": "Missing email"}, 400
+        if "password" not in kwargs:
+            return {"error": "Missing password"}, 400
+        new_user = User(**kwargs)
+        new_user.save()
+        return new_user.to_dict(), 201
 
-@app_views.route('/users/<user_id>', methods=['GET'], strict_slashes=False)
-def get_user(user_id):
-    user = storage.get(User, user_id)
-    if not user:
-        abort(404)
-    return jsonify(user.to_dict())
+    elif request.method == 'GET':
+        return jsonify([u.to_dict() for u in storage.all("User").values()])
 
-@app_views.route('/users/<user_id>', methods=['DELETE'], strict_slashes=False)
-def delete_user(user_id):
-    user = storage.get(User, user_id)
-    if not user:
-        abort(404)
-    storage.delete(user)
-    storage.save()
-    return jsonify({}), 200
 
-@app_views.route('/users', methods=['POST'], strict_slashes=False)
-def create_user():
-    data = request.get_json()
-    if not data or 'email' not in data or 'password' not in data:
-        abort(400, 'Missing email' if not data else 'Not a JSON')
-    new_user = User(**data)
-    new_user.save()
-    return jsonify(new_user.to_dict()), 201
+@app_views.route('/users/<id>', methods=['GET', 'DELETE', 'PUT'])
+def users_id(id):
+    """
+        Flask route at /users/<id>.
+    """
+    user = storage.get(User, id)
+    if (user):
+        if request.method == 'DELETE':
+            user.delete()
+            storage.save()
+            return {}, 200
 
-@app_views.route('/users/<user_id>', methods=['PUT'], strict_slashes=False)
-def update_user(user_id):
-    user = storage.get(User, user_id)
-    if not user:
-        abort(404)
-    data = request.get_json()
-    if not data:
-        abort(400, 'Not a JSON')
-    for key, value in data.items():
-        if key not in ['id', 'email', 'created_at', 'updated_at', 'password']:
-            setattr(user, key, value)
-    user.save()
-    return jsonify(user.to_dict()), 200
+        elif request.method == 'PUT':
+            kwargs = request.get_json()
+            if not kwargs:
+                return {"error": "Not a JSON"}, 400
+            for k, v in kwargs.items():
+                if k not in ["id", "email", "created_at", "updated_at"]:
+                    setattr(user, k, v)
+            user.save()
+        return user.to_dict()
+    abort(404)
