@@ -1,17 +1,16 @@
 #!/usr/bin/python3
-"""
-initialize the models package
-"""
-
-from os import getenv
+"""BACKUP VERSIOON"""
 
 
-storage_t = getenv("HBNB_TYPE_STORAGE")
+from models.engine.file_storage import FileStorage
+import os
 
-if storage_t == "db":
+storage = os.getenv("HBNB_TYPE_STORAGE")
+
+if storage == "db":
     from models.engine.db_storage import DBStorage
     storage = DBStorage()
 else:
-    from models.engine.file_storage import FileStorage
     storage = FileStorage()
+
 storage.reload()

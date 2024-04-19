@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-'''
-    Module for Place class
-'''
+""" Place Module for HBNB project """
 from os import getenv
 from models.base_model import BaseModel, Base
 from models.amenity import Amenity
@@ -12,48 +10,21 @@ import models
 
 
 class Place(BaseModel, Base):
-    '''
-        Class Place that inherits from BaseModel and Base
-    '''
+    """ A place to stay """
     __tablename__ = 'places'
-
-    # Class attributes
-    city_id = Column(String(60), ForeignKey('cities.id'),
-                     nullable=False)
-
-    user_id = Column(String(60), ForeignKey('users.id'),
-                     nullable=False)
-
-    name = Column(String(128),
-                  nullable=False)
-
-    description = Column(String(1024),
-                         nullable=True)
-
-    number_rooms = Column(Integer,
-                          nullable=False, default=0)
-
-    number_bathrooms = Column(Integer,
-                              nullable=False, default=0)
-
-    max_guest = Column(Integer,
-                       nullable=False, default=0)
-
-    price_by_night = Column(Integer,
-                            nullable=False, default=0)
-
-    latitude = Column(Float,
-                      nullable=True)
-
-    longitude = Column(Float,
-                       nullable=True)
-
-    reviews = relationship("Review",
-                           backref="place", cascade="delete")
-
-    amenities = relationship("Amenity",
-                             secondary="place_amenity",
-                             viewonly=False)
+    city_id = Column(String(60), ForeignKey('cities.id'), nullable=False)
+    user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
+    name = Column(String(128), nullable=False)
+    description = Column(String(1024), nullable=True)
+    number_rooms = Column(Integer, nullable=False, default=0)
+    number_bathrooms = Column(Integer, nullable=False, default=0)
+    max_guest = Column(Integer, nullable=False, default=0)
+    price_by_night = Column(Integer, nullable=False, default=0)
+    latitude = Column(Float, nullable=True)
+    longitude = Column(Float, nullable=True)
+    reviews = relationship("Review", backref="place", cascade="delete")
+    amenities = relationship(
+        "Amenity", secondary="place_amenity", viewonly=False)
 
     place_amenity = Table("place_amenity", Base.metadata,
                           Column(
@@ -65,13 +36,10 @@ class Place(BaseModel, Base):
 
     amenity_ids = []
 
-    # Getter and setter attributes
     if getenv("HBNB_TYPE_STORAGE", None) != "db":
         @property
         def reviews(self):
-            '''
-                Getter attribute reviews
-            '''
+            """get a list of linked reviews"""
             review_list = []
             for review in list(models.storage.all(Review).values()):
                 if review.place_id == self.id:
@@ -80,21 +48,16 @@ class Place(BaseModel, Base):
 
         @property
         def amenities(self):
-            '''
-                Getter attribute amenities
-            '''
+            """get amenities"""
             amenity_list = []
             for amenity in list(models.storage.all(Amenity).values()):
                 if amenity.id in self.amenity_ids:
                     amenity_list.append(amenity)
-
             return amenity_list
 
         @amenities.setter
         def amenities(self, obj):
-            '''
-                Setter attribute amenities
-            '''
+            """Setter attribute amenities"""
             from models.amenity import Amenity
             if isinstance(obj, Amenity):
                 self.amenity_ids.append(obj.id)

@@ -1,35 +1,38 @@
 #!/usr/bin/python3
-'''
-    Module for BaseModel class
-'''
+""" BACKUP VERSIONN"""
+import uuid
 from datetime import datetime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, String, DateTime
-import uuid
 
 
 Base = declarative_base()
 
 
 class BaseModel:
-    '''
-        BaseModel class
-    '''
-    # Class attributes
-    id = Column(String(60), primary_key=True,
-                nullable=False)
+    """A base class for all hbnb models"""
 
-    created_at = Column(DateTime, nullable=False,
-                        default=datetime.utcnow)
+    id = Column(
+        String(60),
+        primary_key=True,
+        nullable=False
+    )
 
-    updated_at = Column(DateTime, nullable=False,
-                        default=datetime.utcnow,
-                        onupdate=datetime.utcnow)
+    created_at = Column(
+        DateTime,
+        nullable=False,
+        default=datetime.utcnow
+    )
+
+    updated_at = Column(
+        DateTime,
+        nullable=False,
+        default=datetime.utcnow,
+        onupdate=datetime.utcnow
+    )
 
     def __init__(self, *args, **kwargs):
-        '''
-            Constructor for BaseModel class
-        '''
+        """Instantiates a new model"""
         if not kwargs:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.utcnow()
@@ -49,40 +52,27 @@ class BaseModel:
             self.__dict__.update(kwargs)
 
     def __str__(self):
-        '''
-            String representation of BaseModel class
-        '''
+        """Returns a string representation of the instance"""
         cls_name = type(self).__name__
-
-        return '[{}] ({}) {}'.format(cls_name,
-                                     self.id, self.__dict__)
+        return '[{}] ({}) {}'.format(cls_name, self.id, self.__dict__)
 
     def save(self):
-        '''
-            Save instance to __objects from storage
-        '''
+        """Updates updated_at with current time when instance is changed"""
         from models import storage
-
         self.updated_at = datetime.utcnow()
         storage.new(self)
         storage.save()
 
     def delete(self):
-        '''
-            Delete instance from __objects from storage
-        '''
+        """Delete instance from __objects from storage"""
         from models import storage
-
         storage.delete(self)
 
     def to_dict(self):
-        '''
-            Return dictionary representation of BaseModel instance
-        '''
+        """Convert instance into dict format"""
         dictionary = self.__dict__.copy()
         dictionary['__class__'] = type(self).__name__
         dictionary['created_at'] = self.created_at.isoformat()
         dictionary['updated_at'] = self.updated_at.isoformat()
         dictionary.pop('_sa_instance_state', None)
-
         return dictionary
