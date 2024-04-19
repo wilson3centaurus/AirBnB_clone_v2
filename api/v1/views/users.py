@@ -48,7 +48,11 @@ def create_user():
 @app_views.route('/users/<user_id>', methods=['PUT'], strict_slashes=False)
 def update_user(user_id):
 	"""Updates a User object"""
+<<<<<<< Updated upstream
 	user = storage.get(User, user_id)
+=======
+	user = storage.get(User, user_id)Add user management to REST API
+>>>>>>> Stashed changes
 	if not user:
 		abort(404)
 	if not request.get_json():
