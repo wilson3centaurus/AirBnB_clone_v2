@@ -1,13 +1,7 @@
-#!/usr/bin/python3
-"""
-Contains the TestFileStorageDocs classes
-"""
-
 import unittest
 from models.engine.file_storage import FileStorage
 from models.state import State
 from datetime import datetime
-import inspect
 import models
 import json
 import os
@@ -53,6 +47,50 @@ class TestFileStorageDocs(unittest.TestCase):
         storage.save()
         updated_count = storage.count(State)
         self.assertEqual(updated_count, initial_count + 2)
+
+    def test_file_storage_all_method(self):
+        """Test all method in FileStorage"""
+        storage = FileStorage()
+        new_state = State(name="Florida")
+        storage.new(new_state)
+        storage.save()
+        all_objects = storage.all()
+        self.assertIn(
+            type(new_state).__name__ + '.' + new_state.id, all_objects)
+
+    def test_file_storage_new_method(self):
+        """Test new method in FileStorage"""
+        storage = FileStorage()
+        new_state = State(name="Arizona")
+        storage.new(new_state)
+        self.assertIn(
+            type(new_state).__name__ + '.' + new_state.id, storage.all())
+
+    def test_file_storage_save_reload_integration(self):
+        """Test save and reload methods in FileStorage"""
+        storage = FileStorage()
+        new_state = State(name="Oregon")
+        storage.new(new_state)
+        storage.save()
+
+        new_storage = FileStorage()
+        new_storage.reload()
+        retrieved_state = new_storage.get(State, new_state.id)
+
+        self.assertIsNotNone(retrieved_state)
+        self.assertEqual(retrieved_state.name, "Oregon")
+
+    def test_file_storage_delete_method(self):
+        """Test delete method in FileStorage"""
+        storage = FileStorage()
+        new_state = State(name="Washington")
+        storage.new(new_state)
+        storage.save()
+
+        storage.delete(new_state)
+        self.assertIsNone(storage.get(State, new_state.id))
+        self.assertNotIn(
+            type(new_state).__name__ + '.' + new_state.id, storage.all())
 
 
 if __name__ == "__main__":
