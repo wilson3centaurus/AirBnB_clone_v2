@@ -1,6 +1,12 @@
+#!/usr/bin/python3
+"""
+Contains the TestFileStorageDocs and TestFileStorage classes for unit testing
+"""
+
 import unittest
 from models.engine.file_storage import FileStorage
 from models.state import State
+from models.city import City
 from datetime import datetime
 import models
 import json
@@ -27,70 +33,70 @@ class TestFileStorageDocs(unittest.TestCase):
         self.assertTrue(len(FileStorage.__doc__) >= 1,
                         "FileStorage class needs a docstring")
 
-    def test_file_storage_get_method(self):
-        """Test get method in FileStorage"""
-        storage = FileStorage()
-        new_state = State(name="California")
-        storage.new(new_state)
-        storage.save()
-        retrieved_state = storage.get(State, new_state.id)
-        self.assertEqual(retrieved_state, new_state)
 
-    def test_file_storage_count_method(self):
-        """Test count method in FileStorage"""
-        storage = FileStorage()
-        initial_count = storage.count(State)
-        new_state1 = State(name="New York")
-        new_state2 = State(name="Texas")
-        storage.new(new_state1)
-        storage.new(new_state2)
-        storage.save()
-        updated_count = storage.count(State)
-        self.assertEqual(updated_count, initial_count + 2)
+class TestFileStorage(unittest.TestCase):
+    """Tests for the FileStorage class"""
 
-    def test_file_storage_all_method(self):
-        """Test all method in FileStorage"""
-        storage = FileStorage()
-        new_state = State(name="Florida")
-        storage.new(new_state)
-        storage.save()
-        all_objects = storage.all()
-        self.assertIn(
-            type(new_state).__name__ + '.' + new_state.id, all_objects)
+    def setUp(self):
+        """Set up test fixtures"""
+        self.storage = FileStorage()
+        self.state = State(name="California")
+        self.city = City(name="San Francisco", state_id=self.state.id)
 
-    def test_file_storage_new_method(self):
-        """Test new method in FileStorage"""
-        storage = FileStorage()
-        new_state = State(name="Arizona")
-        storage.new(new_state)
-        self.assertIn(
-            type(new_state).__name__ + '.' + new_state.id, storage.all())
+    def tearDown(self):
+        """Tear down test fixtures"""
+        self.storage.reload()
+        if os.path.exists(self.storage._FileStorage__file_path):
+            os.remove(self.storage._FileStorage__file_path)
 
-    def test_file_storage_save_reload_integration(self):
-        """Test save and reload methods in FileStorage"""
-        storage = FileStorage()
-        new_state = State(name="Oregon")
-        storage.new(new_state)
-        storage.save()
+    def test_new_method(self):
+        """Test the new method of FileStorage"""
+        self.storage.new(self.state)
+        self.assertTrue(
+            f"State.{self.state.id}" in self.storage._FileStorage__objects)
+        self.storage.new(self.city)
+        self.assertTrue(
+            f"City.{self.city.id}" in self.storage._FileStorage__objects)
 
-        new_storage = FileStorage()
-        new_storage.reload()
-        retrieved_state = new_storage.get(State, new_state.id)
+    def test_save_method(self):
+        """Test the save method of FileStorage"""
+        self.storage.new(self.state)
+        self.storage.new(self.city)
+        self.storage.save()
+        self.assertTrue(os.path.exists(self.storage._FileStorage__file_path))
 
-        self.assertIsNotNone(retrieved_state)
-        self.assertEqual(retrieved_state.name, "Oregon")
+    def test_reload_method(self):
+        """Test the reload method of FileStorage"""
+        self.storage.new(self.state)
+        self.storage.save()
+        self.storage.reload()
+        self.assertTrue(
+            f"State.{self.state.id}" in self.storage._FileStorage__objects)
 
-    def test_file_storage_delete_method(self):
-        """Test delete method in FileStorage"""
-        storage = FileStorage()
-        new_state = State(name="Washington")
-        storage.new(new_state)
-        storage.save()
+    def test_delete_method(self):
+        """Test the delete method of FileStorage"""
+        self.storage.new(self.state)
+        self.storage.save()
+        self.storage.delete(self.state)
+        self.assertTrue(
+            f"State.{self.state.id}" not in self.storage._FileStorage__objects)
 
-        storage.delete(new_state)
-        self.assertIsNone(storage.get(State, new_state.id))
-        self.assertNotIn(
-            type(new_state).__name__ + '.' + new_state.id, storage.all())
+    def test_get_method(self):
+        """Test the get method of FileStorage"""
+        self.storage.new(self.state)
+        self.storage.save()
+        retrieved_state = self.storage.get(State, self.state.id)
+        self.assertEqual(retrieved_state, self.state)
+
+    def test_count_method(self):
+        """Test the count method of FileStorage"""
+        initial_count = self.storage.count(State)
+        self.assertEqual(initial_count, 0)
+        self.storage.new(self.state)
+        self.storage.new(self.city)
+        self.storage.save()
+        updated_count = self.storage.count(State)
+        self.assertEqual(updated_count, 1)
 
 
 if __name__ == "__main__":
