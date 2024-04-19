@@ -32,7 +32,7 @@ def all_cities(state_id, cities=None):
         return make_response(jsonify(data), 201)
 
     elif request.method == 'HEAD':
-        return make_response(jsonify(""), 404)
+        return make_response(jsonify(""), 200)
 
 
 @app_views.route('/cities/<city_id>', methods=['GET', 'DELETE', 'PUT'],
@@ -62,4 +62,4 @@ def city_obj(city_id):
         return make_response(jsonify(city_inst.to_dict()), 200)
 
     elif request.method == 'HEAD':
-        return make_response(jsonify(""), 404)
+        return make_response(jsonify(""), 200)

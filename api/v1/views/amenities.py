@@ -27,7 +27,7 @@ def get_or_post_amenities():
         return make_response(jsonify(data), 201)
 
     elif request.method == 'HEAD':
-        return make_response(jsonify(""), 404)
+        return make_response(jsonify(""), 200)
 
 
 @app_views.route('/amenities/<amenity_id>', methods=['GET', 'PUT', 'DELETE'],
@@ -56,4 +56,4 @@ def get_or_update_amenity(amenity_id):
         return make_response(jsonify({}), 200)
 
     elif request.method == 'HEAD':
-        return make_response(jsonify(""), 404)
+        return make_response(jsonify(""), 200)

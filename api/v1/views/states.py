@@ -30,7 +30,7 @@ def all_states(state_id=None):
             return make_response(jsonify(data), 201)
 
         elif request.method == 'HEAD':
-            return make_response(jsonify(""), 404)
+            return make_response(jsonify(""), 200)
 
     obj_inst = storage.get('State', state_id)
     if not obj_inst:
@@ -55,4 +55,4 @@ def all_states(state_id=None):
         return make_response(jsonify(obj_inst.to_dict()), 200)
 
     elif request.method == 'HEAD':
-        return make_response(jsonify(""), 404)
+        return make_response(jsonify(""), 200)
