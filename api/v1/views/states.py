@@ -49,8 +49,8 @@ def delete_state(state_id):
     """
     state = storage.get(State, state_id)
     if state:
-        # Delete the State object
         storage.delete(state)
+        storage.save()
         return jsonify({}), 200
     else:
         # Return a 404 error if State object not found
