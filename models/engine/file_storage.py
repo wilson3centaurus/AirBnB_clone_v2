@@ -69,7 +69,6 @@ class FileStorage:
             if key in self.__objects:
                 del self.__objects[key]
 
-
     def get(self, cls, id):
         '''
             A method to retrieve one object
