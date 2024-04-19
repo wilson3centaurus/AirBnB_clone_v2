@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""API endpoints for general system status and statistics."""
+""""""
 
 from flask import jsonify
 from api.v1.views import app_views
@@ -12,27 +12,22 @@ from models.state import State
 from models.user import User
 
 
+if __name__ == "__main__":
+    pass  # Add any additional logic if required
+
+
 @app_views.route('/status', strict_slashes=False)
-def system_status():
-    """Returns the current status of the system as JSON."""
+def status():
+    """returns a JSON"""
     return jsonify({"status": "OK"})
 
 
 @app_views.route('/stats', methods=['GET'], strict_slashes=False)
-def object_statistics():
-    """Returns a count of each object type in the system."""
-    object_types = {
-        "amenities": Amenity,
-        "cities": City,
-        "places": Place,
-        "reviews": Review,
-        "states": State,
-        "users": User
-    }
-    stats = {object_type: storage.count(cls)
-             for object_type, cls in object_types.items()}
-    return jsonify(stats)
-
-
-if __name__ == "__main__":
-    pass  # This can be used for additional configurations or tests.
+def stats():
+    """Retrieves the number of each objects by type"""
+    classes = {"amenities": Amenity, "cities": City, "places": Place,
+               "reviews": Review, "states": State, "users": User}
+    count_dict = {}
+    for key, value in classes.items():
+        count_dict[key] = storage.count(value)
+    return jsonify(count_dict)

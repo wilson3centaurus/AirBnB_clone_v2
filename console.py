@@ -18,7 +18,7 @@ cls_dict = {
 }
 
 
-class CommandPrompt(cmd.Cmd):
+class HBNBCommand(cmd.Cmd):
     """HBNH prompt"""
     prompt = '(hbnb) '
 
@@ -184,4 +184,4 @@ class CommandPrompt(cmd.Cmd):
 
 
 if __name__ == '__main__':
-    CommandPrompt().cmdloop()
+    HBNBCommand().cmdloop()
