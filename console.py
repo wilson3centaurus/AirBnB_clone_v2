@@ -2,6 +2,7 @@
 """ console """
 
 import cmd
+from datetime import datetime
 import models
 from models.amenity import Amenity
 from models.base_model import BaseModel
@@ -33,7 +34,7 @@ class HBNBCommand(cmd.Cmd):
         return True
 
     def _key_value_parser(self, args):
-        """Creates a dictionary from a list of strings."""
+        """creates a dictionary from a list of strings"""
         new_dict = {}
         for arg in args:
             if "=" in arg:
@@ -124,9 +125,7 @@ class HBNBCommand(cmd.Cmd):
     def do_update(self, arg):
         """Update an instance based on the class name, id, attribute & value"""
         args = shlex.split(arg)
-        integers = ["number_rooms",
-                    "number_bathrooms",
-                    "max_guest",
+        integers = ["number_rooms", "number_bathrooms", "max_guest",
                     "price_by_night"]
         floats = ["latitude", "longitude"]
         if len(args) == 0:
