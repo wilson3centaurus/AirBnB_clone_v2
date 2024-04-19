@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+""" Module initializing the app instance """
 import os
 from flask import Flask, Blueprint
 from models import storage

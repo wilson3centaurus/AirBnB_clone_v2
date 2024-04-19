@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+""" Module containing all routes belonging to app_views"""
 from api.v1.views import app_views
 from flask import jsonify
 
