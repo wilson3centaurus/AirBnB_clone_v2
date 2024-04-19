@@ -29,6 +29,9 @@ def all_states(state_id=None):
             data = storage.get("State", new_inst.id).to_dict()
             return make_response(jsonify(data), 201)
 
+        elif request.method == 'HEAD':
+            return make_response(jsonify(""), 404)
+
     obj_inst = storage.get('State', state_id)
     if not obj_inst:
         abort(404)
@@ -50,3 +53,6 @@ def all_states(state_id=None):
                 setattr(obj_inst, key, data[key])
         obj_inst.save()
         return make_response(jsonify(obj_inst.to_dict()), 200)
+
+    elif request.method == 'HEAD':
+        return make_response(jsonify(""), 404)

@@ -31,6 +31,9 @@ def all_cities(state_id, cities=None):
         data = storage.get(City, new_inst.id).to_dict()
         return make_response(jsonify(data), 201)
 
+    elif request.method == 'HEAD':
+        return make_response(jsonify(""), 404)
+
 
 @app_views.route('/cities/<city_id>', methods=['GET', 'DELETE', 'PUT'],
                  strict_slashes=False)
@@ -57,3 +60,6 @@ def city_obj(city_id):
                 setattr(city_inst, key, data[key])
         city_inst.save()
         return make_response(jsonify(city_inst.to_dict()), 200)
+
+    elif request.method == 'HEAD':
+        return make_response(jsonify(""), 404)
