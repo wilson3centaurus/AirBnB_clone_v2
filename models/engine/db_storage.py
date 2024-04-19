@@ -1,36 +1,36 @@
 #!/usr/bin/python3
-'''
-    Module for DBStorage class
-'''
+# This module contains the class DBStorage for interacting with the MySQL database.
+
+import models
 from models.amenity import Amenity
-from models.base_model import Base
+from models.base_model import BaseModel, Base
 from models.city import City
 from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
 from os import getenv
+import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
-classes = {"Amenity": Amenity, "City": City,
-           "Place": Place, "Review": Review,
-           "State": State, "User": User}
+classes = {
+    "Amenity": Amenity,
+    "City": City,
+    "Place": Place,
+    "Review": Review,
+    "State": State,
+    "User": User
+}
 
 
 class DBStorage:
-    '''
-        A class for DBStorage
-    '''
-    # Private class attributes
+    """Interacts with the MySQL database"""
     __engine = None
     __session = None
 
     def __init__(self):
-        '''
-            Constructor for DBStorage
-        '''
-        # Environment variables
+        """Instantiate a DBStorage object"""
         HBNB_MYSQL_USER = getenv('HBNB_MYSQL_USER')
         HBNB_MYSQL_PWD = getenv('HBNB_MYSQL_PWD')
         HBNB_MYSQL_HOST = getenv('HBNB_MYSQL_HOST')
@@ -45,10 +45,7 @@ class DBStorage:
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
-        '''
-            A method to return a dictionary of objects.
-            Returns a dictionary of objects of the cls class
-        '''
+        """Query on the current database session"""
         new_dict = {}
         for clss in classes:
             if cls is None or cls is classes[clss] or cls is clss:
@@ -56,87 +53,44 @@ class DBStorage:
                 for obj in objs:
                     key = obj.__class__.__name__ + '.' + obj.id
                     new_dict[key] = obj
-
-        return (new_dict)
+        return new_dict
 
     def new(self, obj):
-        '''
-            A method to add the object to the current database session
-        '''
+        """Add the object to the current database session"""
         self.__session.add(obj)
 
     def save(self):
-        '''
-            A method to commit all changes of the current database session
-        '''
+        """Commit all changes of the current database session"""
         self.__session.commit()
 
     def delete(self, obj=None):
-        '''
-            A method to delete obj from the current database session
-        '''
+        """Delete from the current database session obj if not None"""
         if obj is not None:
             self.__session.delete(obj)
 
     def reload(self):
-        '''
-            A method to create all tables in the database
-        '''
+        """Reloads data from the database"""
         Base.metadata.create_all(self.__engine)
-        sess_factory = sessionmaker(bind=self.__engine,
-                                    expire_on_commit=False)
+        sess_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(sess_factory)
         self.__session = Session
 
-    def get(self, cls, id):
-        '''
-            A method to retrieve one object
-            Returns object based on the class and its ID, or None if not found
-        '''
-        if cls in classes.values() and id:
-            obj = self.__session.query(cls).filter_by(id=id).first()
-            if obj:
-                return obj
-            else:
-                return None
-
     def count(self, cls=None):
-        '''
-            A method to count the number of objects in storage
-            If no class is passed, returns the count of all objects in storage
-        '''
-        if cls is None:
-            total_objects = 0
-            for cls in classes.values():
-                objs = self.__session.query(cls).all()
-                total_objects += len(objs)
-            return total_objects
-
+        """
+        Method that returns the number of objects in storage matching the given class.
+        If no class is passed, returns the count of all objects in storage
+        """
+        if cls is not None:
+            return len(self.all(cls))
         else:
-            if cls in classes.values():
-                objs = self.__session.query(cls).all()
-                return len(objs)
+            return len(self.all())
+
+    def get(self, cls, id):
+        """Retrieve one object"""
+        if cls and id:
+            return self.__session.query(cls).filter_by(id=id).first()
+        return None
 
     def close(self):
-        '''
-            A method to close the session
-        '''
+        """Call remove() method on the private session attribute"""
         self.__session.remove()
-
-    def get(self, cls, id):
-        '''
-            get object by id
-        '''
-        return self.__session.query(cls).get(id)
-
-    def count(self, cls=None):
-        '''
-            count objects
-        '''
-        if cls:
-            return self.__session.query(cls).count()
-        else:
-            total_count = 0
-            for clss in classes.values():
-                total_count += self.__session.query(clss).count()
-            return total_count
