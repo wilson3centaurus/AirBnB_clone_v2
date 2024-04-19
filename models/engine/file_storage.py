@@ -27,7 +27,8 @@ classes: Dict[str, Type[BaseModel]] = {
 
 
 class FileStorage:
-    """Serializes instances to a JSON file and deserializes JSON file to instances"""
+    """Serializes instances to a JSON file and
+    deserializes JSON file to instances"""
 
     def __init__(self) -> None:
         """Initialize FileStorage with an empty dictionary for objects"""
@@ -52,7 +53,8 @@ class FileStorage:
         """Deserializes the JSON file to populate the stored objects"""
         try:
             with open(self.__file_path, mode="r", encoding="utf-8") as f:
-                self.__objects = {k: classes[k.split('.')[0]](**v) for k, v in json.load(f).items()}
+                self.__objects = {k: classes[
+                    k.split('.')[0]](**v) for k, v in json.load(f).items()}
         except FileNotFoundError:
             pass
 
@@ -69,9 +71,11 @@ class FileStorage:
         return self.__objects.get(key)
 
     def count(self, cls: Optional[Type[BaseModel]] = None) -> int:
-        """Counts the number of objects in storage, optionally filtered by class type"""
+        """Counts the number of objects in storage,
+        optionally filtered by class type"""
         if cls:
-            return sum(1 for obj in self.__objects.values() if isinstance(obj, cls))
+            return sum(
+                1 for obj in self.__objects.values() if isinstance(obj, cls))
         else:
             return len(self.__objects)
 
