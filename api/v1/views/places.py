@@ -8,10 +8,11 @@ from models.city import City
 from models.place import Place
 from models.user import User
 from models import storage
-from flasgger.utils import swag_from
 
 
-@app_views.route('/cities/<city_id>/places', methods=['GET'], strict_slashes=False)
+@app_views.route(
+        '/cities/<city_id>/places', methods=['GET'], strict_slashes=False
+        )
 def get_places(city_id):
     """
         Returns all places of a given city
@@ -59,6 +60,7 @@ def delete_place(place_id):
 def post_place(city_id):
     """
     Creates a Place
+    Return JSON
     """
     city = storage.get(City, city_id)
 
@@ -86,6 +88,7 @@ def post_place(city_id):
     place = Place(**data)
     place.save()
     return jsonify(place.to_dict()), 201
+
 
 @app_views.route('/places/<place_id>', methods=['PUT'], strict_slashes=False)
 def put_place(place_id):
