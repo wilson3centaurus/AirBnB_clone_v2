@@ -10,6 +10,8 @@ from flask_cors import CORS
 app = Flask(__name__)
 app.url_map.strict_slashes = False
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
+# Cors allows different domaisn to connect to us
+# It allows request from different origin
 cors = CORS(app, resources={r"/api/v1/*": {"origins": "0.0.0.0"}})
 
 
