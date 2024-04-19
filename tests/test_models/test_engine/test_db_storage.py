@@ -86,3 +86,30 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+@unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """Test that get returns the correct object"""
+        # Test getting an existing object
+        obj = models.storage.get(BaseModel, self.obj.id)
+        self.assertIsNone(obj)
+
+        # Test getting a non-existing object
+        obj = models.storage.get(BaseModel, "fake_id")
+        self.assertIsNone(obj)
+        # Test with None parameters
+        self.assertIsNone(models.storage.get(None, None))
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        """Test the count method"""
+        # Test counting all objects
+        count = models.storage.count()
+        self.assertEqual(count, 1)
+
+        # Test counting objects of a specific class
+        count = models.storage.count(BaseModel)
+        self.assertEqual(count, 1)
+
+        # Test counting objects of a non-existing class
+        count = models.storage.count("NonExistingClass")
+        self.assertEqual(count, 0)
