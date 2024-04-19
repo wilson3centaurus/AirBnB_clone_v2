@@ -1,31 +1,25 @@
 #!/usr/bin/python3
-# This module contains the class DBStorage for interacting with the MySQL database.
+"""
+Contains the class DBStorage
+"""
 
-import models
 from models.amenity import Amenity
-from models.base_model import BaseModel, Base
+from models.base_model import Base
 from models.city import City
 from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
 from os import getenv
-import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
-classes = {
-    "Amenity": Amenity,
-    "City": City,
-    "Place": Place,
-    "Review": Review,
-    "State": State,
-    "User": User
-}
+classes = {"Amenity": Amenity, "City": City,
+           "Place": Place, "Review": Review, "State": State, "User": User}
 
 
 class DBStorage:
-    """Interacts with the MySQL database"""
+    """interaacts with the MySQL database"""
     __engine = None
     __session = None
 
@@ -45,7 +39,7 @@ class DBStorage:
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
-        """Query on the current database session"""
+        """query on the current database session"""
         new_dict = {}
         for clss in classes:
             if cls is None or cls is classes[clss] or cls is clss:
@@ -53,44 +47,53 @@ class DBStorage:
                 for obj in objs:
                     key = obj.__class__.__name__ + '.' + obj.id
                     new_dict[key] = obj
-        return new_dict
+        return (new_dict)
 
     def new(self, obj):
-        """Add the object to the current database session"""
+        """add the object to the current database session"""
         self.__session.add(obj)
 
     def save(self):
-        """Commit all changes of the current database session"""
+        """commit all changes of the current database session"""
         self.__session.commit()
 
     def delete(self, obj=None):
-        """Delete from the current database session obj if not None"""
+        """delete from the current database session obj if not None"""
         if obj is not None:
             self.__session.delete(obj)
 
     def reload(self):
-        """Reloads data from the database"""
+        """reloads data from the database"""
         Base.metadata.create_all(self.__engine)
         sess_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(sess_factory)
         self.__session = Session
 
-    def count(self, cls=None):
-        """
-        Method that returns the number of objects in storage matching the given class.
-        If no class is passed, returns the count of all objects in storage
-        """
-        if cls is not None:
-            return len(self.all(cls))
-        else:
-            return len(self.all())
-
     def get(self, cls, id):
-        """Retrieve one object"""
-        if cls and id:
-            return self.__session.query(cls).filter_by(id=id).first()
-        return None
+        '''
+            A method to retrieve one object
+            Return object based on the class and its ID, or None if not found
+        '''
+        if cls in classes.values() and id:
+            obj = self.__session.query(cls).filter_by(id=id).first()
+            if obj:
+                return obj
+            else:
+                return None
+
+    def count(self, cls=None):
+        if cls is None:
+            total_objects = 0
+            for cls in classes.values():
+                objs = self.__session.query(cls).all()
+                total_objects += len(objs)
+            return total_objects
+
+        else:
+            if cls in classes.values():
+                objs = self.__session.query(cls).all()
+                return len(objs)
 
     def close(self):
-        """Call remove() method on the private session attribute"""
+        """call remove() method on the private session attribute"""
         self.__session.remove()
