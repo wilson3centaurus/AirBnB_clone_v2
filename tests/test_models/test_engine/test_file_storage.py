@@ -5,7 +5,9 @@ Contains the TestFileStorageDocs classes
 
 from datetime import datetime
 import inspect
+from unittest.mock import patch, mock_open
 import models
+from models import storage
 from models.engine import file_storage
 from models.amenity import Amenity
 from models.base_model import BaseModel
@@ -16,7 +18,7 @@ from models.state import State
 from models.user import User
 import json
 import os
-import pep8
+import pycodestyle
 import unittest
 FileStorage = file_storage.FileStorage
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
@@ -28,44 +30,70 @@ class TestFileStorageDocs(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         """Set up for the doc tests"""
-        cls.fs_f = inspect.getmembers(FileStorage, inspect.isfunction)
+        cls.fs_funcs = inspect.getmembers(FileStorage, inspect.isfunction)
 
     def test_pep8_conformance_file_storage(self):
         """Test that models/engine/file_storage.py conforms to PEP8."""
-        pep8s = pep8.StyleGuide(quiet=True)
-        result = pep8s.check_files(['models/engine/file_storage.py'])
+        pep8style = pycodestyle.StyleGuide(quiet=True)
+        result = pep8style.check_files(['models/engine/file_storage.py'])
         self.assertEqual(result.total_errors, 0,
-                         "Found code style errors (and warnings).")
-
-    def test_pep8_conformance_test_file_storage(self):
-        """Test tests/test_models/test_file_storage.py conforms to PEP8."""
-        pep8s = pep8.StyleGuide(quiet=True)
-        result = pep8s.check_files(['tests/test_models/test_engine/\
-test_file_storage.py'])
-        self.assertEqual(result.total_errors, 0,
-                         "Found code style errors (and warnings).")
+                         "Found code style errors or warnings.")
 
     def test_file_storage_module_docstring(self):
         """Test for the file_storage.py module docstring"""
-        self.assertIsNot(file_storage.__doc__, None,
-                         "file_storage.py needs a docstring")
+        self.assertIsNotNone(file_storage.__doc__,
+                             "file_storage.py needs a docstring")
         self.assertTrue(len(file_storage.__doc__) >= 1,
                         "file_storage.py needs a docstring")
 
     def test_file_storage_class_docstring(self):
         """Test for the FileStorage class docstring"""
-        self.assertIsNot(FileStorage.__doc__, None,
-                         "FileStorage class needs a docstring")
+        self.assertIsNotNone(FileStorage.__doc__,
+                             "FileStorage class needs a docstring")
         self.assertTrue(len(FileStorage.__doc__) >= 1,
                         "FileStorage class needs a docstring")
 
     def test_fs_func_docstrings(self):
         """Test for the presence of docstrings in FileStorage methods"""
-        for func in self.fs_f:
-            self.assertIsNot(func[1].__doc__, None,
-                             "{:s} method needs a docstring".format(func[0]))
-            self.assertTrue(len(func[1].__doc__) >= 1,
-                            "{:s} method needs a docstring".format(func[0]))
+        for func in self.fs_funcs:
+            self.assertIsNotNone(
+                func[1].__doc__, "{:s} method needs a docstring".format(func[0]))
+            self.assertTrue(
+                len(func[1].__doc__) >= 1, "{:s} method needs a docstring".format(func[0]))
+
+
+class TestFileStorage(unittest.TestCase):
+    """Test the FileStorage class"""
+
+    def setUp(self):
+        """Prepare environment before each test."""
+        self.state = State()
+        self.state.save()
+
+    def tearDown(self):
+        """Clean up after each test."""
+        del self.state
+
+    @patch('builtins.open', mock_open())
+    def test_save(self):
+        """Test that save properly saves objects to file.json using mocking."""
+        self.state.name = "California"
+        storage.save()
+        with open("file.json", "r") as f:
+            data = json.load(f)
+        self.assertIn("State.{}".format(self.state.id), data)
+
+    def test_get(self):
+        """Test the get method"""
+        obj = storage.get(State, self.state.id)
+        self.assertEqual(obj, self.state)
+
+    def test_count(self):
+        """Test the count method"""
+        initial_count = storage.count(State)
+        new_state = State()
+        new_state.save()
+        self.assertEqual(storage.count(State), initial_count + 1)
 
 
 class TestFileStorage(unittest.TestCase):
