@@ -113,3 +113,30 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+        
+         def test_get(self):
+        """Test the get method"""
+        # Test getting an existing object
+        obj = models.storage.get(BaseModel, self.obj.id)
+        self.assertEqual(obj, self.obj)
+
+        # Test getting a non-existing object
+        obj = models.storage.get(BaseModel, "non_existing_id")
+        self.assertIsNone(obj)
+
+        # Test with None parameters
+        self.assertIsNone(models.storage.get(None, None))
+
+    def test_count(self):
+        """Test the count method"""
+        # Test counting all objects
+        count = models.storage.count()
+        self.assertEqual(count, 1)
+
+        # Test counting objects of a specific class
+        count = models.storage.count(BaseModel)
+        self.assertEqual(count, 1)
+
+        # Test counting objects of a non-existing class
+        count = models.storage.count("NonExistingClass")
+        self.assertEqual(count, 0)
