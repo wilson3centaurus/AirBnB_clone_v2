@@ -1,30 +1,19 @@
 #!/usr/bin/python3
-'''
-    Module for City class
-
-'''
+"""BACKUP VERSION"""
 from models.base_model import BaseModel, Base
-from os import getenv
 from sqlalchemy import Column, String, ForeignKey
 from sqlalchemy.orm import relationship
+from os import getenv
 
 
 class City(BaseModel, Base):
-    '''
-        Class City that inherits from BaseModel and Base
-    '''
+    """ The city class, contains state ID and name """
+
     __tablename__ = 'cities'
 
-    # Class attributes
-    name = Column(String(128),
-                  nullable=False)
+    name = Column(String(128), nullable=False)
+    state_id = Column(String(60), ForeignKey('states.id'), nullable=False)
 
-    state_id = Column(String(60),
-                      ForeignKey('states.id'),
-                      nullable=False)
-
+    # Relationships
     if getenv("HBNB_TYPE_STORAGE") == "db":
-        # Relationship with State
-        places = relationship('Place',
-                              backref='cities',
-                              cascade='all, delete')
+        places = relationship('Place', backref='cities', cascade='all, delete')
