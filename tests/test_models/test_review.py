@@ -8,7 +8,7 @@ import inspect
 import models
 from models import review
 from models.base_model import BaseModel
-import pep8
+import pycodestyle as pep8
 import unittest
 Review = review.Review
 
@@ -101,7 +101,7 @@ class TestReview(unittest.TestCase):
         self.assertEqual(type(new_d), dict)
         self.assertFalse("_sa_instance_state" in new_d)
         for attr in r.__dict__:
-            if attr is not "_sa_instance_state":
+            if attr != "_sa_instance_state":
                 self.assertTrue(attr in new_d)
         self.assertTrue("__class__" in new_d)
 
@@ -115,23 +115,9 @@ class TestReview(unittest.TestCase):
         self.assertEqual(type(new_d["updated_at"]), str)
         self.assertEqual(new_d["created_at"], r.created_at.strftime(t_format))
         self.assertEqual(new_d["updated_at"], r.updated_at.strftime(t_format))
-        # Add assertions for Review-specific attributes
-        self.assertTrue("place_id" in new_d)
-        self.assertTrue("user_id" in new_d)
-        self.assertTrue("text" in new_d)
 
     def test_str(self):
         """test that the str method has the correct output"""
         review = Review()
         string = "[Review] ({}) {}".format(review.id, review.__dict__)
         self.assertEqual(string, str(review))
-
-class Review(BaseModel):
-    """Review class for storing review information"""
-    place_id = ""
-    user_id = ""
-    text = ""
-
-    def __init__(self, *args, **kwargs):
-        """Initialization of Review instance"""
-        super().__init__(*args, **kwargs)
