@@ -128,7 +128,6 @@ class TestReview(unittest.TestCase):
 
 class Review(BaseModel):
     """Review class for storing review information"""
-
     place_id = ""
     user_id = ""
     text = ""
