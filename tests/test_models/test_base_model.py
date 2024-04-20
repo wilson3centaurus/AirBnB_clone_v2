@@ -15,14 +15,14 @@ class TestBaseModelDocs(unittest.TestCase):
     """Tests to check the documentation and style of BaseModel class"""
 
     @classmethod
-    def setUpClass(cls):
+    def setUpClass(self):
         """Set up for docstring tests"""
-        cls.base_funcs = inspect.getmembers(BaseModel, inspect.isfunction)
+        self.base_funcs = inspect.getmembers(BaseModel, inspect.isfunction)
 
     def test_pep8_conformance(self):
         """Test that models/base_model.py conforms to PEP8."""
         for path in ['models/base_model.py',
-                 'tests/test_models/test_base_model.py']:
+                     'tests/test_models/test_base_model.py']:
             with self.subTest(path=path):
                 errors = pycodestyle.Checker(path).check_all()
                 self.assertEqual(errors, 0)
@@ -85,7 +85,7 @@ class TestBaseModel(unittest.TestCase):
         tic = datetime.now()
         inst1 = BaseModel()
         toc = datetime.now()
-        self.assertTrue(tic <= inst1.created_at <= toc + datetime.timedelta(seconds=2))
+        self.assertTrue(tic <= inst1.created_at <= toc)
         time.sleep(1e-4)
         tic = datetime.now()
         inst2 = BaseModel()
