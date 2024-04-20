@@ -1,27 +1,20 @@
 import unittest
-import json
 from models.engine.file_storage import FileStorage
 from models.base_model import BaseModel
 from models.state import State
-from datetime import datetime
 import os
 
 
 class TestFileStorage(unittest.TestCase):
-    """Test cases for the FileStorage class."""
-
     def setUp(self):
-        """Set up for test methods."""
         self.file_path = "file.json"
         self.storage = FileStorage()
 
     def tearDown(self):
-        """Clean up after each test."""
         if os.path.exists(self.file_path):
             os.remove(self.file_path)
 
     def test_all(self):
-        """Test the all() method."""
         # Initially, all() should return an empty dictionary
         self.assertEqual(self.storage.all(), {})
 
@@ -40,7 +33,6 @@ class TestFileStorage(unittest.TestCase):
         self.assertEqual(self.storage.all()[key], obj)
 
     def test_new(self):
-        """Test the new() method."""
         # Create a new State instance and use new() to add it to storage
         state = State(name="California")
         self.storage.new(state)
@@ -51,7 +43,6 @@ class TestFileStorage(unittest.TestCase):
         self.assertEqual(self.storage.all()[key], state)
 
     def test_save_reload(self):
-        """Test the save() and reload() methods."""
         # Create a new State instance and save it
         state = State(name="California")
         self.storage.new(state)
@@ -68,7 +59,6 @@ class TestFileStorage(unittest.TestCase):
         self.assertEqual(self.storage.all()[key].name, "California")
 
     def test_delete(self):
-        """Test the delete() method."""
         # Create a new State instance and add it to storage
         state = State(name="California")
         self.storage.new(state)
