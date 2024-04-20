@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """Test BaseModel for expected behavior and documentation"""
 from datetime import datetime
-from datetime import timedelta
 import inspect
 import models
 import pycodestyle
@@ -12,7 +11,7 @@ BaseModel = models.base_model.BaseModel
 module_doc = models.base_model.__doc__
 
 
-class TestBaseModel(unittest.TestCase):
+class TestBaseModelDocs(unittest.TestCase):
     """Tests to check the documentation and style of BaseModel class"""
 
     @classmethod
@@ -83,17 +82,20 @@ class TestBaseModel(unittest.TestCase):
         """Test that two BaseModel instances have different datetime objects
         and that upon creation have identical updated_at and created_at
         value."""
+        tic = datetime.now()
         inst1 = BaseModel()
-        inst1_created_at = inst1.created_at
-        inst1_updated_at = inst1.updated_at
-        time.sleep(0.1)  # Ensure enough time has passed for updated_at to change
+        toc = datetime.now()
+        self.assertTrue(tic <= inst1.created_at <= toc)
+        time.sleep(1e-4)
+        tic = datetime.now()
         inst2 = BaseModel()
-    
-        self.assertEqual(inst1.created_at, inst1_created_at)
-        self.assertEqual(inst1.updated_at, inst1_updated_at)
+        toc = datetime.now()
+        self.assertTrue(tic <= inst2.created_at <= toc)
+        self.assertEqual(inst1.created_at, inst1.updated_at)
+        self.assertEqual(inst2.created_at, inst2.updated_at)
         self.assertNotEqual(inst1.created_at, inst2.created_at)
         self.assertNotEqual(inst1.updated_at, inst2.updated_at)
-    
+
     def test_uuid(self):
         """Test that id is a valid uuid"""
         inst1 = BaseModel()
