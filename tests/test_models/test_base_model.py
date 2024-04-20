@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """Test BaseModel for expected behavior and documentation"""
 from datetime import datetime
+import timedelta
 import inspect
 import models
 import pycodestyle
