@@ -125,3 +125,14 @@ class TestReview(unittest.TestCase):
         review = Review()
         string = "[Review] ({}) {}".format(review.id, review.__dict__)
         self.assertEqual(string, str(review))
+
+class Review(BaseModel):
+    """Review class for storing review information"""
+
+    place_id = ""
+    user_id = ""
+    text = ""
+
+    def __init__(self, *args, **kwargs):
+        """Initialization of Review instance"""
+        super().__init__(*args, **kwargs)
