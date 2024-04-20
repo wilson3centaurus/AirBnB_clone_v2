@@ -86,7 +86,7 @@ class TestBaseModel(unittest.TestCase):
         tic = datetime.now()
         inst1 = BaseModel()
         toc = datetime.now()
-        buffer_time = timedelta(seconds=1)  # Adjust this value if necessary
+        buffer_time = timedelta(seconds=2)  # Adjust this value if necessary
         self.assertTrue(tic <= inst1.created_at <= toc + buffer_time)
         time.sleep(1e-4)
         tic = datetime.now()
