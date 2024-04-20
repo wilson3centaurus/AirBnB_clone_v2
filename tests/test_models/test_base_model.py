@@ -89,7 +89,7 @@ class TestBaseModel(unittest.TestCase):
         toc = datetime.now()
         self.assertTrue(tic <= inst1.created_at <= toc)
         self.assertTrue(abs(inst1.created_at - tic) < buffer_time)
-        time.sleep(1e-4)
+        time.sleep(0.1)  # Ensure enough time has passed for updated_at to change
         tic = datetime.now()
         inst2 = BaseModel()
         toc = datetime.now()
