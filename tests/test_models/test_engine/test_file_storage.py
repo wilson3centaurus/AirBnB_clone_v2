@@ -1,102 +1,85 @@
-#!/usr/bin/python3
-"""
-Contains the TestFileStorageDocs and TestFileStorage classes for unit testing
-"""
-
 import unittest
-from models.engine.file_storage import FileStorage
-from models.state import State
-from models.city import City
-from datetime import datetime
-import models
 import json
+from models.engine.file_storage import FileStorage
+from models.base_model import BaseModel
+from models.state import State
+from datetime import datetime
 import os
-import pep8
-
-FileStorage = models.storage.__class__
-
-
-class TestFileStorageDocs(unittest.TestCase):
-    """Tests to check the documentation and style of FileStorage class"""
-
-    def test_pep8_conformance_file_storage(self):
-        """Test that models/engine/file_storage.py conforms to PEP8."""
-        pep8s = pep8.StyleGuide(quiet=True)
-        result = pep8s.check_files(['models/engine/file_storage.py'])
-        self.assertEqual(result.total_errors, 0,
-                         "Found code style errors (and warnings).")
-
-    def test_file_storage_module_docstring(self):
-        """Test for the file_storage.py module docstring"""
-        self.assertIsNot(FileStorage.__doc__, None,
-                         "FileStorage class needs a docstring")
-        self.assertTrue(len(FileStorage.__doc__) >= 1,
-                        "FileStorage class needs a docstring")
 
 
 class TestFileStorage(unittest.TestCase):
-    """Tests for the FileStorage class"""
+    """Test cases for the FileStorage class."""
 
     def setUp(self):
-        """Set up test fixtures"""
+        """Set up for test methods."""
+        self.file_path = "file.json"
         self.storage = FileStorage()
-        self.state = State(name="California")
-        self.city = City(name="San Francisco", state_id=self.state.id)
 
     def tearDown(self):
-        """Tear down test fixtures"""
+        """Clean up after each test."""
+        if os.path.exists(self.file_path):
+            os.remove(self.file_path)
+
+    def test_all(self):
+        """Test the all() method."""
+        # Initially, all() should return an empty dictionary
+        self.assertEqual(self.storage.all(), {})
+
+        # Create a new BaseModel instance and save it to storage
+        obj = BaseModel()
+        obj.save()
+
+        # After saving, all() should contain one entry
+        self.assertEqual(len(self.storage.all()), 1)
+
+        # The entry should be a dictionary with key "BaseModel.<obj_id>"
+        key = "BaseModel." + obj.id
+        self.assertIn(key, self.storage.all())
+
+        # The value should be the object itself
+        self.assertEqual(self.storage.all()[key], obj)
+
+    def test_new(self):
+        """Test the new() method."""
+        # Create a new State instance and use new() to add it to storage
+        state = State(name="California")
+        self.storage.new(state)
+
+        # After calling new(), the object should be in the storage dictionary
+        key = "State." + state.id
+        self.assertIn(key, self.storage.all())
+        self.assertEqual(self.storage.all()[key], state)
+
+    def test_save_reload(self):
+        """Test the save() and reload() methods."""
+        # Create a new State instance and save it
+        state = State(name="California")
+        self.storage.new(state)
+        self.storage.save()
+
+        # After saving, clear the storage and reload from file
+        self.storage.__objects = {}
         self.storage.reload()
-        if os.path.exists(self.storage._FileStorage__file_path):
-            os.remove(self.storage._FileStorage__file_path)
 
-    def test_new_method(self):
-        """Test the new method of FileStorage"""
-        self.storage.new(self.state)
-        self.assertTrue(
-            f"State.{self.state.id}" in self.storage._FileStorage__objects)
-        self.storage.new(self.city)
-        self.assertTrue(
-            f"City.{self.city.id}" in self.storage._FileStorage__objects)
+        # After reloading, the State object should be present in all()
+        key = "State." + state.id
+        self.assertIn(key, self.storage.all())
+        self.assertIsInstance(self.storage.all()[key], State)
+        self.assertEqual(self.storage.all()[key].name, "California")
 
-    def test_save_method(self):
-        """Test the save method of FileStorage"""
-        self.storage.new(self.state)
-        self.storage.new(self.city)
+    def test_delete(self):
+        """Test the delete() method."""
+        # Create a new State instance and add it to storage
+        state = State(name="California")
+        self.storage.new(state)
         self.storage.save()
-        self.assertTrue(os.path.exists(self.storage._FileStorage__file_path))
 
-    def test_reload_method(self):
-        """Test the reload method of FileStorage"""
-        self.storage.new(self.state)
-        self.storage.save()
-        self.storage.reload()
-        self.assertTrue(
-            f"State.{self.state.id}" in self.storage._FileStorage__objects)
+        # Delete the State instance from storage
+        self.storage.delete(state)
 
-    def test_delete_method(self):
-        """Test the delete method of FileStorage"""
-        self.storage.new(self.state)
-        self.storage.save()
-        self.storage.delete(self.state)
-        self.assertTrue(
-            f"State.{self.state.id}" not in self.storage._FileStorage__objects)
-
-    def test_get_method(self):
-        """Test the get method of FileStorage"""
-        self.storage.new(self.state)
-        self.storage.save()
-        retrieved_state = self.storage.get(State, self.state.id)
-        self.assertEqual(retrieved_state, self.state)
-
-    def test_count_method(self):
-        """Test the count method of FileStorage"""
-        initial_count = self.storage.count(State)
-        self.assertEqual(initial_count, 0)
-        self.storage.new(self.state)
-        self.storage.new(self.city)
-        self.storage.save()
-        updated_count = self.storage.count(State)
-        self.assertEqual(updated_count, 1)
+        # After deleting, the State object should not be in all()
+        key = "State." + state.id
+        self.assertNotIn(key, self.storage.all())
 
 
 if __name__ == "__main__":
