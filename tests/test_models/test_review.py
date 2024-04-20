@@ -115,6 +115,10 @@ class TestReview(unittest.TestCase):
         self.assertEqual(type(new_d["updated_at"]), str)
         self.assertEqual(new_d["created_at"], r.created_at.strftime(t_format))
         self.assertEqual(new_d["updated_at"], r.updated_at.strftime(t_format))
+        # Add assertions for Review-specific attributes
+        self.assertTrue("place_id" in new_d)
+        self.assertTrue("user_id" in new_d)
+        self.assertTrue("text" in new_d)
 
     def test_str(self):
         """test that the str method has the correct output"""
